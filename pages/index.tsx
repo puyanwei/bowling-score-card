@@ -1,5 +1,9 @@
+import { Player } from '@/components/Player'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { data, Scores } from './data'
+
+const scores: Scores[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X']
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +16,17 @@ const Home: NextPage = () => {
 
       <main>
         <h1 className='bg-slate-200'>Bowling Scorecard</h1>
+        {data.map((player, index) => (
+          <Player data={player} key={index} />
+        ))}
+        <br />
+        <div>
+          {scores.map((score, index) => (
+            <button className='px-4 py-1 m-1 rounded bg-slate-200' key={index}>
+              {score}
+            </button>
+          ))}
+        </div>
       </main>
     </div>
   )
