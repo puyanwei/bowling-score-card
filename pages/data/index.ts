@@ -111,7 +111,7 @@ export const playerScores: PlayerScores[] = [
   },
 ]
 
-export const data: ScoreCard[] = [
+export const scoreCard: ScoreCard[] = [
   { name: 'Player 1', scores: playerScores },
   { name: 'Player 2', scores: playerScores },
 ]

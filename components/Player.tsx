@@ -1,26 +1,28 @@
 import { playerScores, ScoreCard } from '@/pages/data'
+import { ScoreBox } from './ScoreBox'
 
 interface PlayerProps {
-  data: ScoreCard
+  scoreCard: ScoreCard
 }
 
-export function Player(data: PlayerProps) {
-  const { name, scores } = data.data
+export function Player({ scoreCard: { name, scores } }: PlayerProps) {
+  if (!name) throw new Error('Player name not found')
+  if (!scores || !scores.length) throw new Error('Scorecard data not found')
+
   return (
-    <table className='w-full'>
-      <tr>
+    <table className='mt-[1px] outline-1 outline outline-black'>
+      <tr className='grid grid-cols-11'>
+        <th />
         {scores.map(({ frame }, index) => (
-          <th key={index}>{frame}</th>
+          <th key={index}>Frame {frame}</th>
         ))}
       </tr>
-      {scores.map((frame, index) => (
-        <tr key={index}>
-          <th>{name}</th>
-          <td>data</td>
-          <td>data</td>
-          <td>data</td>
-        </tr>
-      ))}
+      <tr className='grid grid-cols-11'>
+        <td className='font-bold'>{name}</td>
+        {scores.map((score, index) => (
+          <ScoreBox key={index} scores={score} />
+        ))}
+      </tr>
     </table>
   )
 }
