@@ -1,4 +1,5 @@
-import { playerScores, ScoreCard } from '@/pages/data'
+import { playerScores } from '@/pages/data'
+import { ScoreCard } from '@/pages/data/types'
 import { Frame } from './Frame'
 
 interface PlayerProps {
@@ -10,17 +11,17 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
   if (!frames || !frames.length) throw new Error('Scorecard data not found')
 
   return (
-    <table className='grid grid-cols-11 grid-rows-2 text-2xl '>
-      <th className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
+    <div className='grid grid-cols-11 grid-rows-2 text-2xl '>
+      <div className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
         <div className='mt-20'>{name}</div>
-      </th>
+      </div>
       {frames.map(({ frameNumber }, index) => (
-        <th
+        <div
           className='h-12 self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
           key={index}
         >
           Frame {frameNumber}
-        </th>
+        </div>
       ))}
       {frames.map((frame, index) => (
         <Frame
@@ -30,6 +31,6 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
           isTenthFrame={frame.frameNumber === 10}
         />
       ))}
-    </table>
+    </div>
   )
 }

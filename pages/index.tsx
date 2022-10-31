@@ -1,9 +1,6 @@
-import { Player } from '@/components/Player'
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import { scoreCard, Scores } from './data'
-
-const scores: Scores[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X']
+import { BowlingPage } from '@/components/BowlingPage'
+import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
   return (
@@ -14,23 +11,7 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='m-2'>
-        <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
-        {scoreCard.map((player, index) => (
-          <Player scoreCard={player} key={index} />
-        ))}
-        <br />
-        <div>
-          {scores.map((score, index) => (
-            <button className='px-4 py-1 m-1 rounded bg-slate-200' key={index}>
-              {score}
-            </button>
-          ))}
-        </div>
-        <ol className='p-4'>
-          <li> What are these hydration errors, not matching ui? </li>
-          <li>Outline css not quite lining up correctly</li>
-          <li>Is there a better way of doing the grid?</li>
-        </ol>
+        <BowlingPage />
       </main>
     </div>
   )

@@ -1,4 +1,4 @@
-import { Frame as FrameType } from '@/pages/data'
+import { Frame as FrameType } from '@/pages/data/types'
 
 interface FrameProps {
   className?: string
@@ -11,13 +11,18 @@ export const Frame = ({ frame, isTenthFrame, className }: FrameProps) => {
 
   const { currentScore, first, second, third } = { ...frame }
 
-  const bowlStyle = `w-8 h-8 outline-1 outline outline-black text-center row-start-1 row-end-2 items-start`
+  const bowlStyle = `w-8 h-8 outline-1 outline outline-black text-center`
   return (
-    <tr className={`outline-1 outline outline-black w-full h-24 ${className}`}>
-      <td className={bowlStyle}>{first}</td>
-      <td className={bowlStyle}>{second}</td>
-      {isTenthFrame && <td className={bowlStyle}>{third}</td>}
-      <td className='flex text-3xl'>{currentScore}</td>
-    </tr>
+    <div
+      className={`flex flex-col outline-1 outline outline-black w-full h-24 ${className}`}
+    >
+      <div className='flex'>
+        <span className={bowlStyle}>{first}</span>
+        <span className={bowlStyle}>{second}</span>
+        {isTenthFrame && <span className={bowlStyle}>{third}</span>}
+      </div>
+      <div className='flex flex-grow' />
+      <div className='p-2 text-3xl'>{currentScore}</div>
+    </div>
   )
 }
