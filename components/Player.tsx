@@ -14,16 +14,21 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
       <th className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
         <div className='mt-20'>{name}</div>
       </th>
-      {frames.map(({ frame }, index) => (
+      {frames.map(({ frameNumber }, index) => (
         <th
           className='h-12 self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
           key={index}
         >
-          Frame {frame}
+          Frame {frameNumber}
         </th>
       ))}
       {frames.map((frame, index) => (
-        <Frame className='row-start-2 row-end-3' key={index} frame={frame} />
+        <Frame
+          className='row-start-2 row-end-3'
+          key={index}
+          frame={frame}
+          isTenthFrame={frame.frameNumber === 10}
+        />
       ))}
     </table>
   )

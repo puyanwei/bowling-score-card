@@ -10,10 +10,10 @@ export type Scores =
   | '8'
   | '9'
   | 'X'
-  | 'n/a'
+  | ''
 
 export interface Frame {
-  frame: number
+  frameNumber: number
   first: Scores
   second: Scores
   third?: Scores
@@ -29,7 +29,7 @@ export interface ScoreCard {
 
 export const playerScores: Frame[] = [
   {
-    frame: 1,
+    frameNumber: 1,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -37,7 +37,7 @@ export const playerScores: Frame[] = [
     currentScore: 5,
   },
   {
-    frame: 2,
+    frameNumber: 2,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -45,7 +45,7 @@ export const playerScores: Frame[] = [
     currentScore: 10,
   },
   {
-    frame: 3,
+    frameNumber: 3,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -53,7 +53,7 @@ export const playerScores: Frame[] = [
     currentScore: 15,
   },
   {
-    frame: 4,
+    frameNumber: 4,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -61,7 +61,7 @@ export const playerScores: Frame[] = [
     currentScore: 20,
   },
   {
-    frame: 5,
+    frameNumber: 5,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -69,7 +69,7 @@ export const playerScores: Frame[] = [
     currentScore: 25,
   },
   {
-    frame: 6,
+    frameNumber: 6,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -77,7 +77,7 @@ export const playerScores: Frame[] = [
     currentScore: 30,
   },
   {
-    frame: 7,
+    frameNumber: 7,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -85,7 +85,7 @@ export const playerScores: Frame[] = [
     currentScore: 35,
   },
   {
-    frame: 8,
+    frameNumber: 8,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -93,7 +93,7 @@ export const playerScores: Frame[] = [
     currentScore: 40,
   },
   {
-    frame: 9,
+    frameNumber: 9,
     first: '2',
     second: '3',
     didPrevFrameStrike: false,
@@ -101,10 +101,10 @@ export const playerScores: Frame[] = [
     currentScore: 45,
   },
   {
-    frame: 10,
+    frameNumber: 10,
     first: '2',
     second: '3',
-    third: 'n/a',
+    third: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     currentScore: 5,
