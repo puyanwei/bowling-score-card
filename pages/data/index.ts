@@ -12,7 +12,7 @@ export type Scores =
   | 'X'
   | 'n/a'
 
-export interface PlayerScores {
+export interface Frame {
   frame: number
   first: Scores
   second: Scores
@@ -24,10 +24,10 @@ export interface PlayerScores {
 
 export interface ScoreCard {
   name: string
-  scores: PlayerScores[]
+  frames: Frame[]
 }
 
-export const playerScores: PlayerScores[] = [
+export const playerScores: Frame[] = [
   {
     frame: 1,
     first: '2',
@@ -112,6 +112,6 @@ export const playerScores: PlayerScores[] = [
 ]
 
 export const scoreCard: ScoreCard[] = [
-  { name: 'Player 1', scores: playerScores },
-  { name: 'Player 2', scores: playerScores },
+  { name: 'Player 1', frames: playerScores },
+  { name: 'Player 2', frames: playerScores },
 ]

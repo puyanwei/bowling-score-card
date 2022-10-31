@@ -1,28 +1,30 @@
 import { playerScores, ScoreCard } from '@/pages/data'
-import { ScoreBox } from './ScoreBox'
+import { Frame } from './Frame'
 
 interface PlayerProps {
   scoreCard: ScoreCard
 }
 
-export function Player({ scoreCard: { name, scores } }: PlayerProps) {
+export function Player({ scoreCard: { name, frames } }: PlayerProps) {
   if (!name) throw new Error('Player name not found')
-  if (!scores || !scores.length) throw new Error('Scorecard data not found')
+  if (!frames || !frames.length) throw new Error('Scorecard data not found')
 
   return (
-    <table className='mt-[1px] outline-1 outline outline-black'>
-      <tr className='grid grid-cols-11'>
-        <th />
-        {scores.map(({ frame }, index) => (
-          <th key={index}>Frame {frame}</th>
-        ))}
-      </tr>
-      <tr className='grid grid-cols-11'>
-        <td className='font-bold'>{name}</td>
-        {scores.map((score, index) => (
-          <ScoreBox key={index} scores={score} />
-        ))}
-      </tr>
+    <table className='grid grid-cols-11 grid-rows-2 text-2xl '>
+      <th className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
+        <div className='mt-20'>{name}</div>
+      </th>
+      {frames.map(({ frame }, index) => (
+        <th
+          className='h-12 self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
+          key={index}
+        >
+          Frame {frame}
+        </th>
+      ))}
+      {frames.map((frame, index) => (
+        <Frame className='row-start-2 row-end-3' key={index} frame={frame} />
+      ))}
     </table>
   )
 }
