@@ -24,20 +24,20 @@ export const Frame = ({
       data-testid={testId}
     >
       <div className='flex'>
-        <span data-testId='first-bowl' className={bowlStyle}>
+        <span data-testid='first-bowl' className={bowlStyle}>
           {first}
         </span>
-        <span data-testId='second-bowl' className={bowlStyle}>
+        <span data-testid='second-bowl' className={bowlStyle}>
           {second}
         </span>
         {isTenthFrame && (
-          <span data-testId='third-bowl' className={bowlStyle}>
+          <span data-testid='third-bowl' className={bowlStyle}>
             {third}
           </span>
         )}
       </div>
       <div className='flex flex-grow' />
-      <div data-testId='total-score' className='p-2 text-3xl'>
+      <div data-testid='total-score' className='p-2 text-3xl'>
         {totalScore}
       </div>
     </div>

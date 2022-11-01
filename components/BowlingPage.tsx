@@ -30,9 +30,16 @@ export function BowlingPage() {
     setIsFirstBowl(!isFirstBowl)
     if (isFirstBowl === false) setFrameNumber(frameNumber + 1)
   }
-  console.log({ remainingPins })
+
+  function reset() {
+    setScoreCard(initialScoreCard)
+    setIsFirstBowl(true)
+    setFrameNumber(0)
+    setRemainingPins(10)
+  }
+
   return (
-    <>
+    <div data-testid='bowling-page'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
       {scoreCard.map((player, index) => (
         <Player scoreCard={player} key={index} />
@@ -49,8 +56,14 @@ export function BowlingPage() {
             {score}
           </button>
         ))}
+        <button
+          className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
+          onClick={() => reset()}
+        >
+          Reset
+        </button>
       </div>
-    </>
+    </div>
   )
 }
 
