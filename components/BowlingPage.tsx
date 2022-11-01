@@ -7,9 +7,14 @@ export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [isFirstBowl, setIsFirstBowl] = useState<boolean>(true)
   const [frameNumber, setFrameNumber] = useState<number>(0)
+  const [remainingPins, setRemainingPins] = useState<number>(10)
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const points = e.currentTarget.innerText as Scores
+
+    isFirstBowl
+      ? setRemainingPins(remainingPins - parseInt(points))
+      : setRemainingPins(10)
 
     const newFrames: Frame[] = scoreCard[0].frames.map((frame, index) => {
       if (index === frameNumber) {
@@ -25,6 +30,7 @@ export function BowlingPage() {
     setIsFirstBowl(!isFirstBowl)
     if (isFirstBowl === false) setFrameNumber(frameNumber + 1)
   }
+  console.log({ remainingPins })
   return (
     <>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
@@ -35,9 +41,10 @@ export function BowlingPage() {
       <div>
         {labels.map((score, index) => (
           <button
-            className='px-4 py-1 m-1 rounded bg-slate-200'
+            className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
             key={index}
             onClick={handleClick}
+            disabled={index > remainingPins}
           >
             {score}
           </button>
