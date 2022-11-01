@@ -20,7 +20,7 @@ export interface Frame {
   third?: Scores
   didPrevFrameStrike: boolean
   didPrevFrameSpare: boolean
-  currentScore: number
+  totalScore: number
 }
 
 export interface ScoreCard {

@@ -47,6 +47,5 @@ export function BowlingPage() {
   )
 }
 
-//  What are these hydration errors, not matching ui?
 //  Outline css not quite lining up correctly
 //  Is there a better way of doing the grid?

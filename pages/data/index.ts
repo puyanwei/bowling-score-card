@@ -7,7 +7,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 5,
+    totalScore: 5,
   },
   {
     frameNumber: 2,
@@ -15,7 +15,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 10,
+    totalScore: 10,
   },
   {
     frameNumber: 3,
@@ -23,7 +23,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 15,
+    totalScore: 15,
   },
   {
     frameNumber: 4,
@@ -31,7 +31,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 20,
+    totalScore: 20,
   },
   {
     frameNumber: 5,
@@ -39,7 +39,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 25,
+    totalScore: 25,
   },
   {
     frameNumber: 6,
@@ -47,7 +47,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 30,
+    totalScore: 30,
   },
   {
     frameNumber: 7,
@@ -55,7 +55,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 35,
+    totalScore: 35,
   },
   {
     frameNumber: 8,
@@ -63,7 +63,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 40,
+    totalScore: 40,
   },
   {
     frameNumber: 9,
@@ -71,7 +71,7 @@ export const playerScores: Frame[] = [
     second: '3',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 45,
+    totalScore: 45,
   },
   {
     frameNumber: 10,
@@ -80,7 +80,7 @@ export const playerScores: Frame[] = [
     third: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
-    currentScore: 5,
+    totalScore: 5,
   },
 ]
 
@@ -99,7 +99,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 2,
@@ -107,7 +107,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 3,
@@ -115,7 +115,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 4,
@@ -123,7 +123,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 5,
@@ -131,7 +131,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 6,
@@ -139,7 +139,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 7,
@@ -147,7 +147,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 8,
@@ -155,7 +155,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 9,
@@ -163,7 +163,7 @@ export const initialScoreCard: ScoreCard[] = [
         second: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
       {
         frameNumber: 10,
@@ -172,7 +172,7 @@ export const initialScoreCard: ScoreCard[] = [
         third: '',
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
-        currentScore: 0,
+        totalScore: 0,
       },
     ],
   },

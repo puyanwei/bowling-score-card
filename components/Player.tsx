@@ -25,6 +25,7 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
       ))}
       {frames.map((frame, index) => (
         <Frame
+          testId={`${name} frame-${index}`}
           className='row-start-2 row-end-3'
           key={index}
           frame={frame}
