@@ -89,6 +89,95 @@ export const scoreCard: ScoreCard[] = [
   { name: 'Player 2', frames: playerScores },
 ]
 
+export const initialScoreCard: ScoreCard[] = [
+  {
+    name: 'Player 1',
+    frames: [
+      {
+        frameNumber: 1,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 2,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 3,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 4,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 5,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 6,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 7,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 8,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 9,
+        first: '',
+        second: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+      {
+        frameNumber: 10,
+        first: '',
+        second: '',
+        third: '',
+        didPrevFrameStrike: false,
+        didPrevFrameSpare: false,
+        currentScore: 0,
+      },
+    ],
+  },
+]
+
 export const labels: Scores[] = [
   '0',
   '1',

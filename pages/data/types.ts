@@ -9,6 +9,7 @@ export type Scores =
   | '7'
   | '8'
   | '9'
+  | '/'
   | 'X'
   | ''
 
