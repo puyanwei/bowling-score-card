@@ -48,6 +48,7 @@ export function BowlingPage() {
       <div>
         {labels.map((score, index) => (
           <button
+            data-testid={`button-${index}`}
             className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
             key={index}
             onClick={handleClick}
@@ -57,6 +58,7 @@ export function BowlingPage() {
           </button>
         ))}
         <button
+          data-testid='button-reset'
           className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
           onClick={() => reset()}
         >
