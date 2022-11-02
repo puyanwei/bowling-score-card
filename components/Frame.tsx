@@ -15,7 +15,7 @@ export const Frame = ({
 }: FrameProps) => {
   if (!frame) throw new Error('Scorecard data not found')
 
-  const { totalScore, first, second, third } = { ...frame }
+  const { totalScore, first, second, third, frameNumber } = { ...frame }
 
   const bowlStyle = `w-8 h-8 outline-1 outline outline-black text-center`
   return (
@@ -24,14 +24,23 @@ export const Frame = ({
       data-testid={testId}
     >
       <div className='flex'>
-        <span data-testid='first-bowl' className={bowlStyle}>
+        <span
+          data-testid={`frame-${frameNumber}-first-bowl`}
+          className={bowlStyle}
+        >
           {first}
         </span>
-        <span data-testid='second-bowl' className={bowlStyle}>
+        <span
+          data-testid={`frame-${frameNumber}-second-bowl`}
+          className={bowlStyle}
+        >
           {second}
         </span>
         {isTenthFrame && (
-          <span data-testid='third-bowl' className={bowlStyle}>
+          <span
+            data-testid={`frame-${frameNumber}-third-bowl`}
+            className={bowlStyle}
+          >
             {third}
           </span>
         )}
