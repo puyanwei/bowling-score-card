@@ -22,7 +22,10 @@ export function BowlingPage() {
     const frames = resolveNewFrame(scoreCard, points, isFirstBowl, frameNumber)
     const newScoreCard: ScoreCard[] = [{ ...scoreCard[0], frames }]
     setScoreCard(newScoreCard)
+    boardPositionConfig(points)
+  }
 
+  function boardPositionConfig(points: Scores): void {
     if (isStrike(points)) {
       setRemainingPins(10)
       resolveBowlScorePosition(false, frameNumber, setFrameNumber)
