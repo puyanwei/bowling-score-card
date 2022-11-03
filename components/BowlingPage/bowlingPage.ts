@@ -34,7 +34,7 @@ export function resolveNewFrame(
       : resolvePotentialSpare(scoreCard, points, frameNumber)
 
     return isFirstBowl
-      ? { ...frame, first: `${resolvedPoints}` }
+      ? { ...frame, first: resolvePotentialStrike(points) }
       : { ...frame, second: `${resolvedPoints}` }
   })
 }
@@ -49,4 +49,12 @@ export function resolvePotentialSpare(
   return parseInt(firstBowl) + parseInt(secondBowl) === 10
     ? '/'
     : (secondBowl as Scores)
+}
+
+export function resolvePotentialStrike(points: Scores) {
+  return points === '10' ? 'X' : points
+}
+
+export function isStrike(points: Scores): boolean {
+  return points === '10'
 }

@@ -1,6 +1,7 @@
 // When asserts fail it still shows a pass in Cypress UI - https://github.com/cypress-io/cypress/issues/4742
 
 describe('Bowling Scorecard interactions only', () => {
+  // typescript-ignore
   beforeEach(() => {
     cy.visit('http://localhost:3000')
 
@@ -37,8 +38,7 @@ describe('Bowling Scorecard interactions only', () => {
     cy.get('[data-testid="button-9"]').as('button9')
     cy.get('[data-testid="button-10"]').as('button10')
     cy.get('[data-testid="button-reset"]').as('buttonReset')
-  })
-  it('pressing non spare or strike buttons renders the chosen numbers in the scorecard', async () => {
+
     cy.get('@frame1bowl1').should('have.text', '')
     cy.get('@frame1bowl2').should('have.text', '')
     cy.get('@frame2bowl1').should('have.text', '')
@@ -60,7 +60,8 @@ describe('Bowling Scorecard interactions only', () => {
     cy.get('@frame10bowl1').should('have.text', '')
     cy.get('@frame10bowl2').should('have.text', '')
     cy.get('@frame10bowl3').should('have.text', '')
-
+  })
+  it('pressing non spare or strike buttons renders the chosen numbers in the scorecard', async () => {
     cy.get('@button0').click().get('@frame1bowl1').should('have.text', '0')
     cy.get('@button1').click().get('@frame1bowl2').should('have.text', '1')
     cy.get('@button0').click().get('@frame2bowl1').should('have.text', '0')
@@ -82,32 +83,14 @@ describe('Bowling Scorecard interactions only', () => {
     cy.get('@button0').click().get('@frame10bowl1').should('have.text', '0')
     cy.get('@button10').click().get('@frame10bowl2').should('have.text', '10')
   })
-  it('a forward slash should show to represent a spare', async () => {
-    cy.get('@frame1bowl1').should('have.text', '')
-    cy.get('@frame1bowl2').should('have.text', '')
-    cy.get('@frame2bowl1').should('have.text', '')
-    cy.get('@frame2bowl2').should('have.text', '')
-    cy.get('@frame3bowl1').should('have.text', '')
-    cy.get('@frame3bowl2').should('have.text', '')
-    cy.get('@frame4bowl1').should('have.text', '')
-    cy.get('@frame4bowl2').should('have.text', '')
-    cy.get('@frame5bowl1').should('have.text', '')
-    cy.get('@frame5bowl2').should('have.text', '')
-    cy.get('@frame6bowl1').should('have.text', '')
-    cy.get('@frame6bowl2').should('have.text', '')
-    cy.get('@frame7bowl1').should('have.text', '')
-    cy.get('@frame7bowl2').should('have.text', '')
-    cy.get('@frame8bowl1').should('have.text', '')
-    cy.get('@frame8bowl2').should('have.text', '')
-    cy.get('@frame9bowl1').should('have.text', '')
-    cy.get('@frame9bowl2').should('have.text', '')
-    cy.get('@frame10bowl1').should('have.text', '')
-    cy.get('@frame10bowl2').should('have.text', '')
-    cy.get('@frame10bowl3').should('have.text', '')
-
+  it('a forward slash should show in the UI to represent a spare', async () => {
     cy.get('@button6').click().get('@frame1bowl1').should('have.text', '6')
     cy.get('@button4').click().get('@frame1bowl2').should('have.text', '/')
     cy.get('@button0').click().get('@frame2bowl1').should('have.text', '0')
     cy.get('@button10').click().get('@frame2bowl2').should('have.text', '/')
+  })
+  it('a X should show in the UI to represent a strike', async () => {
+    cy.get('@button10').click().get('@frame1bowl1').should('have.text', 'X')
+    cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
   })
 })

@@ -178,7 +178,7 @@ export const initialScoreCard: ScoreCard[] = [
   },
 ]
 
-export const labels: Scores[] = [
+export const labels: ButtonLabels[] = [
   '0',
   '1',
   '2',
@@ -190,5 +190,4 @@ export const labels: Scores[] = [
   '8',
   '9',
   '10',
-  '',
 ]

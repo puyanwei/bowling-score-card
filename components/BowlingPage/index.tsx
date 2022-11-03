@@ -6,6 +6,7 @@ import {
   resolveRemainingPins,
   resolveNewFrame,
   resolveBowlScorePosition,
+  isStrike,
 } from './bowlingPage'
 
 export function BowlingPage() {
@@ -22,8 +23,13 @@ export function BowlingPage() {
     const newScoreCard: ScoreCard[] = [{ ...scoreCard[0], frames }]
     setScoreCard(newScoreCard)
 
-    setIsFirstBowl(!isFirstBowl)
-    resolveBowlScorePosition(isFirstBowl, frameNumber, setFrameNumber)
+    if (isStrike(points)) {
+      setRemainingPins(10)
+      resolveBowlScorePosition(false, frameNumber, setFrameNumber)
+    } else {
+      setIsFirstBowl(!isFirstBowl)
+      resolveBowlScorePosition(isFirstBowl, frameNumber, setFrameNumber)
+    }
   }
 
   function reset() {
