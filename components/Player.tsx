@@ -17,7 +17,7 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
       </div>
       {frames.map(({ frameNumber }, index) => (
         <div
-          className='h-12 self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
+          className='h-26 text-center self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
           key={index}
         >
           Frame {frameNumber}
