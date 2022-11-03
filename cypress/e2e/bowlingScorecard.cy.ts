@@ -80,7 +80,7 @@ describe('Bowling Scorecard interactions only', () => {
     cy.get('@button0').click().get('@frame9bowl1').should('have.text', '0')
     cy.get('@button9').click().get('@frame9bowl2').should('have.text', '9')
     cy.get('@button0').click().get('@frame10bowl1').should('have.text', '0')
-    cy.get('@button10').click().get('@frame10bowl2').should('have.text', 'X')
+    cy.get('@button10').click().get('@frame10bowl2').should('have.text', '10')
   })
   it('a forward slash should show to represent a spare', async () => {
     cy.get('@frame1bowl1').should('have.text', '')
@@ -106,6 +106,8 @@ describe('Bowling Scorecard interactions only', () => {
     cy.get('@frame10bowl3').should('have.text', '')
 
     cy.get('@button6').click().get('@frame1bowl1').should('have.text', '6')
-    cy.get('@button4').click().get('@frame1bowl1').should('have.text', '/')
+    cy.get('@button4').click().get('@frame1bowl2').should('have.text', '/')
+    cy.get('@button0').click().get('@frame2bowl1').should('have.text', '0')
+    cy.get('@button10').click().get('@frame2bowl2').should('have.text', '/')
   })
 })

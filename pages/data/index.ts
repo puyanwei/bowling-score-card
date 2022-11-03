@@ -189,5 +189,6 @@ export const labels: Scores[] = [
   '7',
   '8',
   '9',
-  'X',
+  '10',
+  '',
 ]

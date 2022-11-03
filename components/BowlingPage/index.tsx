@@ -1,34 +1,29 @@
 import { useState, MouseEvent } from 'react'
 import { initialScoreCard, labels } from '@/pages/data'
-import { Player } from './Player'
-import { Frame, ScoreCard, Scores } from '@/pages/data/types'
+import { Player } from '../Player'
+import { FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
+import {
+  resolveRemainingPins,
+  resolveNewFrame,
+  resolveBowlScorePosition,
+} from './bowlingPage'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [isFirstBowl, setIsFirstBowl] = useState<boolean>(true)
-  const [frameNumber, setFrameNumber] = useState<number>(0)
-  const [remainingPins, setRemainingPins] = useState<number>(10)
+  const [frameNumber, setFrameNumber] = useState<FrameNumber>(0)
+  const [remainingPins, setRemainingPins] = useState<FrameNumber>(10)
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const points = e.currentTarget.innerText as Scores
+    resolveRemainingPins(points, isFirstBowl, remainingPins, setRemainingPins)
 
-    isFirstBowl
-      ? setRemainingPins(remainingPins - parseInt(points))
-      : setRemainingPins(10)
-
-    const newFrames: Frame[] = scoreCard[0].frames.map((frame, index) => {
-      if (index === frameNumber) {
-        return isFirstBowl
-          ? { ...frame, first: `${points}` }
-          : { ...frame, second: `${points}` }
-      }
-      return frame
-    })
-
-    const newScoreCard: ScoreCard[] = [{ ...scoreCard[0], frames: newFrames }]
+    const frames = resolveNewFrame(scoreCard, points, isFirstBowl, frameNumber)
+    const newScoreCard: ScoreCard[] = [{ ...scoreCard[0], frames }]
     setScoreCard(newScoreCard)
+
     setIsFirstBowl(!isFirstBowl)
-    if (isFirstBowl === false) setFrameNumber(frameNumber + 1)
+    resolveBowlScorePosition(isFirstBowl, frameNumber, setFrameNumber)
   }
 
   function reset() {

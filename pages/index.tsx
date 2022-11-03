@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { BowlingPage } from '@/components/BowlingPage'
 import type { NextPage } from 'next'
+import { BowlingPage } from '@/components/BowlingPage'
 
 const Home: NextPage = () => {
   return (
