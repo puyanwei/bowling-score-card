@@ -46,7 +46,10 @@ export const Frame = ({
         )}
       </div>
       <div className='flex flex-grow' />
-      <div data-testid='total-score' className='p-2 text-3xl'>
+      <div
+        data-testid={`frame-${frameNumber}-total-score`}
+        className='p-2 text-3xl'
+      >
         {totalScore}
       </div>
     </div>
