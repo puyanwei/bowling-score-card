@@ -1,7 +1,7 @@
 import { useState, MouseEvent } from 'react'
 import { initialScoreCard, labels } from '@/pages/data'
 import { Player } from '../Player'
-import { FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
+import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import {
   resolveRemainingPins,
   resolveNewFrame,
@@ -20,9 +20,15 @@ export function BowlingPage() {
     resolveRemainingPins(points, isFirstBowl, remainingPins, setRemainingPins)
 
     const frames = resolveNewFrame(scoreCard, points, isFirstBowl, frameNumber)
-    const newScoreCard: ScoreCard[] = [{ ...scoreCard[0], frames }]
-    setScoreCard(newScoreCard)
+    resolveNewScoreCard(frames)
     boardPositionConfig(points)
+  }
+
+  function resolveNewScoreCard(frames: Frame[]): void {
+    const newScoreCard = [{ ...scoreCard[0], frames }]
+    // Add aacumulator to add up the total score
+    // Add logic to include the bonus points
+    setScoreCard(newScoreCard)
   }
 
   function boardPositionConfig(points: Scores): void {

@@ -10,9 +10,8 @@ export type Scores =
   | '8'
   | '9'
   | '10'
-  | ''
-  | '/'
   | 'X'
+  | '/'
 
 export type ButtonLabels =
   | '0'
