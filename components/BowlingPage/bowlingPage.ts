@@ -1,5 +1,11 @@
 import { Dispatch, SetStateAction } from 'react'
-import { FrameNumber, Scores, ScoreCard, Frame } from '@/pages/data/types'
+import {
+  FrameNumber,
+  Scores,
+  ScoreCard,
+  Frame,
+  Points,
+} from '@/pages/data/types'
 
 export function resolveBowlScorePosition(
   isFirstBowl: boolean,
@@ -29,14 +35,41 @@ export function resolveNewFrame(
   return scoreCard[0].frames.map((frame, index) => {
     if (index !== frameNumber) return frame
 
-    const resolvedPoints = isFirstBowl
-      ? points
+    const first = isFirstBowl ? resolvePotentialStrike(points) : frame.first
+    const second = isFirstBowl
+      ? frame.second
       : resolvePotentialSpare(scoreCard, points, frameNumber)
+    const frameScore = resolveTotalScore(
+      first,
+      second,
+      isFirstBowl,
+      frame.totalScore
+    )
 
-    return isFirstBowl
-      ? { ...frame, first: resolvePotentialStrike(points) }
-      : { ...frame, second: `${resolvedPoints}` }
+    const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
+    const totalScore = frameScore + prevFrameTotalScore
+
+    return { ...frame, first, second, totalScore }
   })
+  // Add logic to include the bonus points
+}
+
+function resolveTotalScore(
+  first: Scores,
+  second: Scores,
+  isFirstBowl: boolean,
+  currentTotalScore: number
+): Points {
+  if (isFirstBowl)
+    return (convertToNumberScore(first) + currentTotalScore) as Points
+  return (convertToNumberScore(first) + convertToNumberScore(second)) as Points
+}
+
+export function convertToNumberScore(points: Scores): Points {
+  if (points === 'X') return 10
+  if (points === '/') return 10
+  if (points === '') return 0
+  return parseInt(points) as Points
 }
 
 export function resolvePotentialSpare(

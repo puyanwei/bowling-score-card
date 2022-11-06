@@ -20,14 +20,12 @@ export function BowlingPage() {
     resolveRemainingPins(points, isFirstBowl, remainingPins, setRemainingPins)
 
     const frames = resolveNewFrame(scoreCard, points, isFirstBowl, frameNumber)
-    resolveNewScoreCard(frames)
+    updateScoreCard(frames)
     boardPositionConfig(points)
   }
 
-  function resolveNewScoreCard(frames: Frame[]): void {
+  function updateScoreCard(frames: Frame[]): void {
     const newScoreCard = [{ ...scoreCard[0], frames }]
-    // Add aacumulator to add up the total score
-    // Add logic to include the bonus points
     setScoreCard(newScoreCard)
   }
 
