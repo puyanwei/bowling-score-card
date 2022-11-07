@@ -52,6 +52,10 @@ export function resolveNewFrames(
       didPrevFrameStrike
     )
 
+    if (didPrevFrameSpare && isFirstBowl)
+      scoreCard[0].frames[index - 1].totalScore =
+        scoreCard[0].frames[index - 1].totalScore + parseInt(first)
+
     const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
     const totalScore = frameScore + prevFrameTotalScore
 
@@ -77,8 +81,6 @@ function resolveTotalScore(
   const first = convertToNumberScore(firstBowl)
   const second = convertToNumberScore(secondBowl)
 
-  if (isFirstBowl && didPrevFrameSpare)
-    return (first + first + currentTotalScore) as Points
   if (isFirstBowl) return (first + currentTotalScore) as Points
   if (secondBowl === '/') return 10
   return (first + second) as Points

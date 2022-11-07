@@ -180,7 +180,7 @@ describe('', () => {
         .should('have.text', '74')
     })
 
-    it("total points with spares should add 10 to that current frame, then add the first bowl's score to it the frame after", () => {
+    it.only("total points with spares should add 10 to that current frame, then add the first bowl's score to it the frame after", () => {
       cy.get('@button1')
         .click()
         .get('@button3')
