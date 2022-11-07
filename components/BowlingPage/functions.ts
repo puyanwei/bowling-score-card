@@ -7,6 +7,49 @@ import {
   Points,
 } from '@/pages/data/types'
 
+export function resolveNewFrames(
+  scoreCard: ScoreCard[],
+  points: Scores,
+  isFirstBowl: boolean,
+  frameNumber: FrameNumber
+): Frame[] {
+  return scoreCard[0].frames.map((frame, index) => {
+    if (index !== frameNumber) return frame
+
+    const first = isFirstBowl ? resolveFirstBowl(points) : frame.first
+    const second = isFirstBowl
+      ? frame.second
+      : resolveSecondBowl(scoreCard, points, frameNumber)
+
+    const didPrevFrameSpare = resolveDidPrevFrameSpare(scoreCard, index)
+    const didPrevFrameStrike = resolveDidPrevFrameStrike(scoreCard, index)
+
+    const frameScore = resolveTotalScore(
+      first,
+      second,
+      isFirstBowl,
+      frame.totalScore,
+      didPrevFrameSpare,
+      didPrevFrameStrike
+    )
+
+    if (didPrevFrameSpare && isFirstBowl)
+      updatePreviousFrameTotalScore(scoreCard, index, first)
+
+    const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
+    const totalScore = frameScore + prevFrameTotalScore
+
+    return {
+      ...frame,
+      first,
+      second,
+      totalScore,
+      didPrevFrameSpare,
+      didPrevFrameStrike,
+    }
+  })
+}
+
 export function resolveBowlScorePosition(
   isFirstBowl: boolean,
   frameNumber: FrameNumber,
@@ -26,48 +69,14 @@ export function resolveRemainingPins(
     : setRemainingPins(10)
 }
 
-export function resolveNewFrames(
+function updatePreviousFrameTotalScore(
   scoreCard: ScoreCard[],
-  points: Scores,
-  isFirstBowl: boolean,
-  frameNumber: FrameNumber
-): Frame[] {
-  return scoreCard[0].frames.map((frame, index) => {
-    if (index !== frameNumber) return frame
-
-    const first = isFirstBowl ? resolvePotentialStrike(points) : frame.first
-    const second = isFirstBowl
-      ? frame.second
-      : resolvePotentialSpare(scoreCard, points, frameNumber)
-
-    const didPrevFrameSpare = resolveDidPrevFrameSpare(scoreCard, index)
-    const didPrevFrameStrike = resolveDidPrevFrameStrike(scoreCard, index)
-
-    const frameScore = resolveTotalScore(
-      first,
-      second,
-      isFirstBowl,
-      frame.totalScore,
-      didPrevFrameSpare,
-      didPrevFrameStrike
-    )
-
-    if (didPrevFrameSpare && isFirstBowl)
-      scoreCard[0].frames[index - 1].totalScore =
-        scoreCard[0].frames[index - 1].totalScore + parseInt(first)
-
-    const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
-    const totalScore = frameScore + prevFrameTotalScore
-
-    return {
-      ...frame,
-      first,
-      second,
-      totalScore,
-      didPrevFrameSpare,
-      didPrevFrameStrike,
-    }
-  })
+  index: number,
+  first: Scores
+): void {
+  const prevFrameTotalScore = scoreCard[0].frames[index - 1].totalScore
+  scoreCard[0].frames[index - 1].totalScore =
+    prevFrameTotalScore + parseInt(first)
 }
 
 function resolveTotalScore(
@@ -92,7 +101,7 @@ export function convertToNumberScore(points: Scores): Points {
   return parseInt(points) as Points
 }
 
-export function resolvePotentialSpare(
+export function resolveSecondBowl(
   scoreCard: ScoreCard[],
   points: string,
   frameNumber: FrameNumber
@@ -104,7 +113,7 @@ export function resolvePotentialSpare(
     : (secondBowl as Scores)
 }
 
-export function resolvePotentialStrike(points: Scores) {
+export function resolveFirstBowl(points: Scores) {
   return points === '10' ? 'X' : points
 }
 
