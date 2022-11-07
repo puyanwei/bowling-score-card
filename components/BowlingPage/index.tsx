@@ -4,10 +4,10 @@ import { Player } from '../Player'
 import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import {
   resolveRemainingPins,
-  resolveNewFrame,
+  resolveNewFrames,
   resolveBowlScorePosition,
   isStrike,
-} from './bowlingPage'
+} from './functions'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -18,10 +18,10 @@ export function BowlingPage() {
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const points = e.currentTarget.innerText as Scores
     resolveRemainingPins(points, isFirstBowl, remainingPins, setRemainingPins)
-
-    const frames = resolveNewFrame(scoreCard, points, isFirstBowl, frameNumber)
+    const frames = resolveNewFrames(scoreCard, points, isFirstBowl, frameNumber)
+    console.log({ frames })
     updateScoreCard(frames)
-    boardPositionConfig(points)
+    updateBoardPosition(points)
   }
 
   function updateScoreCard(frames: Frame[]): void {
@@ -29,7 +29,7 @@ export function BowlingPage() {
     setScoreCard(newScoreCard)
   }
 
-  function boardPositionConfig(points: Scores): void {
+  function updateBoardPosition(points: Scores): void {
     if (isStrike(points)) {
       setRemainingPins(10)
       resolveBowlScorePosition(false, frameNumber, setFrameNumber)

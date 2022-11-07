@@ -26,7 +26,7 @@ export function resolveRemainingPins(
     : setRemainingPins(10)
 }
 
-export function resolveNewFrame(
+export function resolveNewFrames(
   scoreCard: ScoreCard[],
   points: Scores,
   isFirstBowl: boolean,
@@ -48,8 +48,17 @@ export function resolveNewFrame(
 
     const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
     const totalScore = frameScore + prevFrameTotalScore
+    const didPrevFrameSpare = resolveDidPrevFrameSpare(scoreCard, index)
+    const didPrevFrameStrike = resolveDidPrevFrameStrike(scoreCard, index)
 
-    return { ...frame, first, second, totalScore }
+    return {
+      ...frame,
+      first,
+      second,
+      totalScore,
+      didPrevFrameSpare,
+      didPrevFrameStrike,
+    }
   })
   // Add logic to include the bonus points
 }
@@ -62,12 +71,13 @@ function resolveTotalScore(
 ): Points {
   if (isFirstBowl)
     return (convertToNumberScore(first) + currentTotalScore) as Points
+  console.log({ first, second })
+  if (second === '/') return 10
   return (convertToNumberScore(first) + convertToNumberScore(second)) as Points
 }
 
 export function convertToNumberScore(points: Scores): Points {
   if (points === 'X') return 10
-  if (points === '/') return 10
   if (points === '') return 0
   return parseInt(points) as Points
 }
@@ -90,4 +100,17 @@ export function resolvePotentialStrike(points: Scores) {
 
 export function isStrike(points: Scores): boolean {
   return points === '10'
+}
+export function resolveDidPrevFrameSpare(
+  scoreCard: ScoreCard[],
+  index: number
+): boolean {
+  return scoreCard[0].frames[index - 1]?.second === '/'
+}
+
+export function resolveDidPrevFrameStrike(
+  scoreCard: ScoreCard[],
+  index: number
+): boolean {
+  return scoreCard[0].frames[index - 1]?.first === 'X'
 }
