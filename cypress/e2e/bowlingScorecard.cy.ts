@@ -202,7 +202,7 @@ describe('', () => {
         .get('@total3')
         .should('have.text', '27')
     })
-    it.only(`total points with strikes should add 10 to that current frame, then add the both bowl's score to it the frame after`, () => {
+    it(`total points with strikes should add 10 to that current frame, then add the both bowl's score to it the frame after`, () => {
       cy.get('@button10').click().get('@total1').should('have.text', '10')
       cy.get('@button4').click().get('@total1').should('have.text', '10')
       cy.get('@button4')
@@ -212,8 +212,25 @@ describe('', () => {
         .get('@total2')
         .should('have.text', '26')
     })
-    it('total points calculate correcly for multiple strikes', () => {})
-    it('total points with spares and strikes accumulate correctly', () => {})
-    it('total points for perfect game equals 300 points', () => {})
+    it('total points calculate correcly for double strikes', () => {
+      cy.get('@button10')
+        .click()
+        .get('@button10')
+        .click()
+        .get('@button8')
+        .click()
+        .get('@button1')
+        .click()
+        .get('@total1')
+        .should('have.text', '28')
+        .get('@total2')
+        .should('have.text', '47')
+        .get('@total3')
+        .should('have.text', '56')
+    })
+    // it('total points with spares and strikes accumulate correctly', () => {})
+    // it('total points for perfect game equals 300 points', () => {})
   })
 })
+
+// Tenth frame calculations

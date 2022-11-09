@@ -90,9 +90,30 @@ function updatePreviousFrameTotalScoreIfStrike(
   first: Scores,
   second: Scores
 ): void {
-  const prevFrameTotalScore = scoreCard[0].frames[index - 1].totalScore
-  scoreCard[0].frames[index - 1].totalScore =
-    prevFrameTotalScore + parseInt(first) + parseInt(second)
+  const isDoubleStrike = scoreCard[0].frames[index - 1].didPrevFrameStrike
+  if (isDoubleStrike) {
+    const prevTwoFramesTotalScore = scoreCard[0].frames[index - 2].totalScore
+    const newTotalScore = prevTwoFramesTotalScore + 10 + parseInt(first)
+    updateFrameTotal(scoreCard, index - 2, newTotalScore)
+    const prevFrameTotalScore =
+      newTotalScore + 10 + parseInt(first) + parseInt(second)
+    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+  } else {
+    const prevFrameTotalScore =
+      scoreCard[0].frames[index - 1].totalScore +
+      parseInt(first) +
+      parseInt(second)
+    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+  }
+}
+
+function updateFrameTotal(
+  scoreCard: ScoreCard[],
+  targetFrameFromIndex: number,
+  totalScore: number
+) {
+  if (!scoreCard || !scoreCard.length) return null
+  scoreCard[0].frames[targetFrameFromIndex].totalScore = totalScore
 }
 
 function resolveTotalScore(
