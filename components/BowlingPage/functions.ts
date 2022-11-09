@@ -39,8 +39,6 @@ export function resolveNewFrames(
     if (didPrevFrameStrike && !isFirstBowl)
       updatePreviousFrameTotalScoreIfStrike(scoreCard, index, first, second)
 
-    // Need to account for 2 strikes in a row as another condition
-
     const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
     const totalScore = frameScore + prevFrameTotalScore
 
@@ -89,14 +87,29 @@ function updatePreviousFrameTotalScoreIfStrike(
   index: number,
   first: Scores,
   second: Scores
-): void {
+) {
   const isDoubleStrike = scoreCard[0].frames[index - 1].didPrevFrameStrike
+  const isTripleStrike =
+    isDoubleStrike && scoreCard[0].frames[index - 2].didPrevFrameStrike
+
+  if (isTripleStrike) {
+    const prevThreeFramesTotalScore = scoreCard[0].frames[index - 3].totalScore
+    const newPrevThreeFramesTotalScore = prevThreeFramesTotalScore + 20
+    updateFrameTotal(scoreCard, index - 3, newPrevThreeFramesTotalScore)
+
+    const newPrevTwoFramesTotalScore = newPrevThreeFramesTotalScore + 10
+    updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
+    const prevFrameTotalScore =
+      newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
+    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+  }
   if (isDoubleStrike) {
     const prevTwoFramesTotalScore = scoreCard[0].frames[index - 2].totalScore
-    const newTotalScore = prevTwoFramesTotalScore + 10 + parseInt(first)
-    updateFrameTotal(scoreCard, index - 2, newTotalScore)
+    const newPrevTwoFramesTotalScore =
+      prevTwoFramesTotalScore + 10 + parseInt(first)
+    updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
     const prevFrameTotalScore =
-      newTotalScore + 10 + parseInt(first) + parseInt(second)
+      newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
     updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
   } else {
     const prevFrameTotalScore =
