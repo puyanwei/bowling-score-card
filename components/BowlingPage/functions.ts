@@ -33,11 +33,11 @@ export function resolveNewFrames(
       didPrevFrameStrike
     )
 
-    if (didPrevFrameSpare && isFirstBowl)
-      updatePreviousFrameTotalScoreIfSpare(scoreCard, index, first)
+    // if (didPrevFrameSpare && isFirstBowl)
+    //   updatePreviousFrameTotalScoreIfSpare(scoreCard, index, first)
 
-    if (didPrevFrameStrike && !isFirstBowl)
-      updatePreviousFrameTotalScoreIfStrike(scoreCard, index, first, second)
+    // if (didPrevFrameStrike && !isFirstBowl)
+    //   updatePreviousFrameTotalScoreIfStrike(scoreCard, index, first, second)
 
     const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
     const totalScore = frameScore + prevFrameTotalScore
@@ -53,14 +53,6 @@ export function resolveNewFrames(
   })
 }
 
-export function resolveBowlScorePosition(
-  isFirstBowl: boolean,
-  frameNumber: FrameNumber,
-  setFrameNumber: Dispatch<SetStateAction<FrameNumber>>
-) {
-  if (isFirstBowl === false) setFrameNumber((frameNumber + 1) as FrameNumber)
-}
-
 export function resolveRemainingPins(
   points: Scores,
   isFirstBowl: boolean,
@@ -72,53 +64,65 @@ export function resolveRemainingPins(
     : setRemainingPins(10)
 }
 
-function updatePreviousFrameTotalScoreIfSpare(
-  scoreCard: ScoreCard[],
-  index: number,
-  first: Scores
-): void {
-  const prevFrameTotalScore = scoreCard[0].frames[index - 1].totalScore
-  scoreCard[0].frames[index - 1].totalScore =
-    prevFrameTotalScore + parseInt(first)
+export function updateNextTwoBowls(
+  frames: Frame[],
+  frameNumber: FrameNumber
+): Frame[] {
+  const currentBowls = [frames[frameNumber]?.first, frames[frameNumber]?.second]
+
+  if (!!frames[frameNumber - 1])
+    frames[frameNumber - 1].nextTwoBowls = currentBowls as [Scores, Scores]
+
+  return [...frames]
 }
 
-function updatePreviousFrameTotalScoreIfStrike(
-  scoreCard: ScoreCard[],
-  index: number,
-  first: Scores,
-  second: Scores
-) {
-  const isDoubleStrike = scoreCard[0].frames[index - 1].didPrevFrameStrike
-  const isTripleStrike =
-    isDoubleStrike && scoreCard[0].frames[index - 2].didPrevFrameStrike
+// function updatePreviousFrameTotalScoreIfSpare(
+//   scoreCard: ScoreCard[],
+//   index: number,
+//   first: Scores
+// ): void {
+//   const prevFrameTotalScore = scoreCard[0].frames[index - 1].totalScore
+//   scoreCard[0].frames[index - 1].totalScore =
+//     prevFrameTotalScore + parseInt(first)
+// }
 
-  if (isTripleStrike) {
-    const prevThreeFramesTotalScore = scoreCard[0].frames[index - 3].totalScore
-    const newPrevThreeFramesTotalScore = prevThreeFramesTotalScore + 20
-    updateFrameTotal(scoreCard, index - 3, newPrevThreeFramesTotalScore)
+// function updatePreviousFrameTotalScoreIfStrike(
+//   scoreCard: ScoreCard[],
+//   index: number,
+//   first: Scores,
+//   second: Scores
+// ) {
+//   const isDoubleStrike = scoreCard[0].frames[index - 1].didPrevFrameStrike
+//   const isTripleStrike =
+//     isDoubleStrike && scoreCard[0].frames[index - 2].didPrevFrameStrike
 
-    const newPrevTwoFramesTotalScore = newPrevThreeFramesTotalScore + 10
-    updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
-    const prevFrameTotalScore =
-      newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
-    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
-  }
-  if (isDoubleStrike) {
-    const prevTwoFramesTotalScore = scoreCard[0].frames[index - 2].totalScore
-    const newPrevTwoFramesTotalScore =
-      prevTwoFramesTotalScore + 10 + parseInt(first)
-    updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
-    const prevFrameTotalScore =
-      newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
-    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
-  } else {
-    const prevFrameTotalScore =
-      scoreCard[0].frames[index - 1].totalScore +
-      parseInt(first) +
-      parseInt(second)
-    updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
-  }
-}
+//   if (isTripleStrike) {
+//     const prevThreeFramesTotalScore = scoreCard[0].frames[index - 3].totalScore
+//     const newPrevThreeFramesTotalScore = prevThreeFramesTotalScore + 20
+//     updateFrameTotal(scoreCard, index - 3, newPrevThreeFramesTotalScore)
+
+//     const newPrevTwoFramesTotalScore = newPrevThreeFramesTotalScore + 10
+//     updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
+//     const prevFrameTotalScore =
+//       newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
+//     updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+//   }
+//   if (isDoubleStrike) {
+//     const prevTwoFramesTotalScore = scoreCard[0].frames[index - 2].totalScore
+//     const newPrevTwoFramesTotalScore =
+//       prevTwoFramesTotalScore + 10 + parseInt(first)
+//     updateFrameTotal(scoreCard, index - 2, newPrevTwoFramesTotalScore)
+//     const prevFrameTotalScore =
+//       newPrevTwoFramesTotalScore + 10 + parseInt(first) + parseInt(second)
+//     updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+//   } else {
+//     const prevFrameTotalScore =
+//       scoreCard[0].frames[index - 1].totalScore +
+//       parseInt(first) +
+//       parseInt(second)
+//     updateFrameTotal(scoreCard, index - 1, prevFrameTotalScore)
+//   }
+// }
 
 function updateFrameTotal(
   scoreCard: ScoreCard[],

@@ -5,8 +5,8 @@ import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import {
   resolveRemainingPins,
   resolveNewFrames,
-  resolveBowlScorePosition,
   isStrike,
+  updateNextTwoBowls,
 } from './functions'
 
 export function BowlingPage() {
@@ -24,18 +24,19 @@ export function BowlingPage() {
     updateBoardPosition(points)
   }
 
-  function updateScoreCard(frames: Frame[]): void {
-    const newScoreCard = [{ ...scoreCard[0], frames }]
+  function updateScoreCard(frames: Frame[]) {
+    const updatedTupleFrames = updateNextTwoBowls(frames, frameNumber)
+    const newScoreCard = [{ ...scoreCard[0], frames: updatedTupleFrames }]
     setScoreCard(newScoreCard)
   }
 
-  function updateBoardPosition(points: Scores): void {
+  function updateBoardPosition(points: Scores) {
     if (isStrike(points)) {
       setRemainingPins(10)
-      resolveBowlScorePosition(false, frameNumber, setFrameNumber)
     } else {
       setIsFirstBowl(!isFirstBowl)
-      resolveBowlScorePosition(isFirstBowl, frameNumber, setFrameNumber)
+      if (isFirstBowl === false)
+        setFrameNumber((frameNumber + 1) as FrameNumber)
     }
   }
 

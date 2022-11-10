@@ -1,4 +1,3 @@
-import { playerScores } from '@/pages/data'
 import { ScoreCard } from '@/pages/data/types'
 import { Frame } from './Frame'
 
@@ -8,8 +7,8 @@ interface PlayerProps {
 
 export function Player({ scoreCard: { name, frames } }: PlayerProps) {
   if (!name) throw new Error('Player name not found')
-  if (!frames || !frames.length) throw new Error('Scorecard data not found')
-
+  // if (!frames || !frames.length) throw new Error('Scorecard data not found')
+  console.log({ frames }, 'IN PLAYER.TSX')
   return (
     <div className='grid grid-cols-11 grid-rows-2 text-2xl '>
       <div className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>

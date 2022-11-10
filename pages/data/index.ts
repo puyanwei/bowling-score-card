@@ -1,93 +1,4 @@
-import { Frame, ScoreCard, Scores } from './types'
-
-export const playerScores: Frame[] = [
-  {
-    frameNumber: 1,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 5,
-  },
-  {
-    frameNumber: 2,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 10,
-  },
-  {
-    frameNumber: 3,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 15,
-  },
-  {
-    frameNumber: 4,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 20,
-  },
-  {
-    frameNumber: 5,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 25,
-  },
-  {
-    frameNumber: 6,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 30,
-  },
-  {
-    frameNumber: 7,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 35,
-  },
-  {
-    frameNumber: 8,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 40,
-  },
-  {
-    frameNumber: 9,
-    first: '2',
-    second: '3',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 45,
-  },
-  {
-    frameNumber: 10,
-    first: '2',
-    second: '3',
-    third: '',
-    didPrevFrameStrike: false,
-    didPrevFrameSpare: false,
-    totalScore: 5,
-  },
-]
-
-export const scoreCard: ScoreCard[] = [
-  { name: 'Player 1', frames: playerScores },
-  { name: 'Player 2', frames: playerScores },
-]
+import { ButtonLabels, ScoreCard } from './types'
 
 export const initialScoreCard: ScoreCard[] = [
   {
@@ -100,6 +11,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 2,
@@ -108,6 +20,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 3,
@@ -116,6 +29,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 4,
@@ -124,6 +38,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 5,
@@ -132,6 +47,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 6,
@@ -140,6 +56,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 7,
@@ -148,6 +65,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 8,
@@ -156,6 +74,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 9,
@@ -164,6 +83,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
       {
         frameNumber: 10,
@@ -173,6 +93,7 @@ export const initialScoreCard: ScoreCard[] = [
         didPrevFrameStrike: false,
         didPrevFrameSpare: false,
         totalScore: 0,
+        nextTwoBowls: ['', ''],
       },
     ],
   },

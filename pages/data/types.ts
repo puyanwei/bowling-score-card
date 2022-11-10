@@ -38,6 +38,7 @@ export interface Frame {
   didPrevFrameStrike: boolean
   didPrevFrameSpare: boolean
   totalScore: number
+  nextTwoBowls: [Scores, Scores]
 }
 
 export interface ScoreCard {
