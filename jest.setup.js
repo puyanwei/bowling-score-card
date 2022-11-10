@@ -1,10 +1,4 @@
-import '@testing-library/jest-dom/extend-expect'
-
-// mock next/router
-jest.mock('next/router', () => require('next-router-mock'))
-
-// next head
-jest.mock('next/head', () => require('./__mocks__/next-head'))
+import '@testing-library/jest-dom'
 
 // mock match media
 Object.defineProperty(window, 'matchMedia', {
