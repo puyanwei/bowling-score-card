@@ -73,13 +73,11 @@ export function updateNextTwoBowls(
 
   // If current fram is a strike, update previous frame
   if (currentFrame.first === 'X') {
-    console.log('current frame is a strike')
     previousFrame.nextTwoBowls = ['X', '']
   }
 
   // If previous frame is a strike, update previous frame and the one before it
   if (currentFrame.didPrevFrameStrike && !previousFrame.didPrevFrameStrike) {
-    console.log('previous frame is a strike')
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     if (currentFrame.frameNumber > 2)
       twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
@@ -92,7 +90,6 @@ export function updateNextTwoBowls(
     previousFrame.didPrevFrameStrike &&
     !twoFramesBack.didPrevFrameStrike
   ) {
-    console.log('2 strikes in a row')
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
     if (currentFrame.frameNumber > 3) threeFramesBack.nextTwoBowls = ['X', 'X']
@@ -105,7 +102,6 @@ export function updateNextTwoBowls(
     previousFrame.didPrevFrameStrike &&
     twoFramesBack.didPrevFrameStrike
   ) {
-    console.log('3 strikes in a row')
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
     threeFramesBack.nextTwoBowls = ['X', 'X']
