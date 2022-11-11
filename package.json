@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "test": "jest --watch",
-    "cypress": "yarn run cypress open",
+    "cy": "yarn cypress open",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
