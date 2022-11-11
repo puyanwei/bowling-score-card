@@ -67,6 +67,16 @@ export function updateNextTwoBowls(
   const twoFramesBack = frames[frameNumber - 3]
   const previousFrame = frames[frameNumber - 2]
   const currentFrame = frames[frameNumber - 1]
+  const isSingleStrike =
+    currentFrame.didPrevFrameStrike && !previousFrame.didPrevFrameStrike
+  const isDoubleStrike =
+    currentFrame.didPrevFrameStrike &&
+    previousFrame.didPrevFrameStrike &&
+    !twoFramesBack.didPrevFrameStrike
+  const isTripleStrike =
+    currentFrame.didPrevFrameStrike &&
+    previousFrame.didPrevFrameStrike &&
+    twoFramesBack.didPrevFrameStrike
 
   // No need to update previuos frame if it is the first frame
   if (currentFrame.frameNumber === 1) return frames
@@ -76,32 +86,22 @@ export function updateNextTwoBowls(
     previousFrame.nextTwoBowls = ['X', '']
   }
 
-  // If previous frame is a strike, update previous frame and the one before it
-  if (currentFrame.didPrevFrameStrike && !previousFrame.didPrevFrameStrike) {
+  if (isSingleStrike) {
+    // If previous frame is a strike, update previous frame and the one before it
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     if (currentFrame.frameNumber > 2)
       twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
     return frames
   }
 
-  // 2 strikes in a row
-  if (
-    currentFrame.didPrevFrameStrike &&
-    previousFrame.didPrevFrameStrike &&
-    !twoFramesBack.didPrevFrameStrike
-  ) {
+  if (isDoubleStrike) {
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
     if (currentFrame.frameNumber > 3) threeFramesBack.nextTwoBowls = ['X', 'X']
     return frames
   }
 
-  // 3 strikes in a row
-  if (
-    currentFrame.didPrevFrameStrike &&
-    previousFrame.didPrevFrameStrike &&
-    twoFramesBack.didPrevFrameStrike
-  ) {
+  if (isTripleStrike) {
     previousFrame.nextTwoBowls = [currentFrame.first, currentFrame.second]
     twoFramesBack.nextTwoBowls = ['X', currentFrame.first]
     threeFramesBack.nextTwoBowls = ['X', 'X']
