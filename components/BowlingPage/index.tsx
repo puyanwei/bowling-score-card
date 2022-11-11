@@ -12,7 +12,7 @@ import {
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [isFirstBowl, setIsFirstBowl] = useState<boolean>(true)
-  const [frameNumber, setFrameNumber] = useState<FrameNumber>(0)
+  const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
   const [remainingPins, setRemainingPins] = useState<FrameNumber>(10)
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
@@ -25,14 +25,15 @@ export function BowlingPage() {
   }
 
   function updateScoreCard(frames: Frame[]) {
-    const updatedTupleFrames = updateNextTwoBowls(frames, frameNumber)
-    const newScoreCard = [{ ...scoreCard[0], frames: updatedTupleFrames }]
+    const updatedFrames = updateNextTwoBowls(frames, frameNumber)
+    const newScoreCard = [{ ...scoreCard[0], frames: updatedFrames }]
     setScoreCard(newScoreCard)
   }
 
   function updateBoardPosition(points: Scores) {
     if (isStrike(points)) {
       setRemainingPins(10)
+      setFrameNumber((frameNumber + 1) as FrameNumber)
     } else {
       setIsFirstBowl(!isFirstBowl)
       if (isFirstBowl === false)
@@ -43,7 +44,7 @@ export function BowlingPage() {
   function reset() {
     setScoreCard(initialScoreCard)
     setIsFirstBowl(true)
-    setFrameNumber(0)
+    setFrameNumber(1)
     setRemainingPins(10)
   }
 
