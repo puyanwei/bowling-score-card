@@ -2,12 +2,7 @@ import { useState, MouseEvent } from 'react'
 import { initialScoreCard, labels } from '@/pages/data'
 import { Player } from '../Player'
 import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
-import {
-  resolveRemainingPins,
-  resolveNewFrames,
-  isStrike,
-  updateNextTwoBowls,
-} from './functions'
+import { resolveRemainingPins, resolveNewFrames, isStrike } from './functions'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -20,14 +15,8 @@ export function BowlingPage() {
     resolveRemainingPins(points, isFirstBowl, remainingPins, setRemainingPins)
     const frames = resolveNewFrames(scoreCard, points, isFirstBowl, frameNumber)
     console.log({ frames })
-    updateScoreCard(frames)
+    setScoreCard([{ ...scoreCard[0], frames }])
     updateBoardPosition(points)
-  }
-
-  function updateScoreCard(frames: Frame[]) {
-    const updatedFrames = updateNextTwoBowls(frames, frameNumber)
-    const newScoreCard = [{ ...scoreCard[0], frames: updatedFrames }]
-    setScoreCard(newScoreCard)
   }
 
   function updateBoardPosition(points: Scores) {

@@ -12,8 +12,8 @@ export const frames: Frame[] = [
   },
   {
     frameNumber: 2,
-    first: '3',
-    second: '3',
+    first: '',
+    second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 10,

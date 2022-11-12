@@ -1,6 +1,4 @@
-// When asserts fail it still shows a pass in Cypress UI - https://github.com/cypress-io/cypress/issues/4742
-
-describe('', () => {
+describe('Bowling Scorecard tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000')
 
@@ -116,8 +114,8 @@ describe('', () => {
       cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
     })
   })
-  context('Accumulated score calculations', () => {
-    it('total points (no strikes or spares) accumulate correctly', () => {
+  context.only('Accumulated score calculations', () => {
+    it.only('total points (no strikes or spares) accumulate correctly', () => {
       cy.get('@button1')
         .click()
         .get('@button3')
