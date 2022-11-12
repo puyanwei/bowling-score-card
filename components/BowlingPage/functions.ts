@@ -6,7 +6,6 @@ import {
   Frame,
   Points,
 } from '@/pages/data/types'
-import next from 'next'
 
 export function resolveNewFrames(
   scoreCard: ScoreCard[],
@@ -40,7 +39,6 @@ export function resolveNewFrames(
       second,
       didPrevFrameSpare,
       didPrevFrameStrike,
-      nextTwoBowls,
     })
 
     return {
@@ -62,11 +60,11 @@ export function updateNextTwoBowls(
   second: Scores,
   didPrevFrameStrike: boolean
 ): [Scores, Scores] {
-  const fourFramesBack = frames[frameNumber - 5]
-  const threeFramesBack = frames[frameNumber - 4]
-  const twoFramesBack = frames[frameNumber - 3]
-  const previousFrame = frames[frameNumber - 2]
   const currentFrame = frames[frameNumber - 1]
+  const previousFrame = frames[frameNumber - 2]
+  const twoFramesBack = frames[frameNumber - 3]
+  const threeFramesBack = frames[frameNumber - 4]
+  const fourFramesBack = frames[frameNumber - 5]
   const isSingleStrike = didPrevFrameStrike && !previousFrame.didPrevFrameStrike
   const isDoubleStrike =
     didPrevFrameStrike &&
@@ -80,27 +78,28 @@ export function updateNextTwoBowls(
   if (currentFrame.frameNumber === 1) return ['', '']
 
   // If current fram is a strike, update previous frame
-  if (first === 'X') {
-    previousFrame.nextTwoBowls = ['X', '']
+  if (first === '10') {
+    previousFrame.nextTwoBowls = ['10', '']
   }
 
   if (isSingleStrike) {
     // If previous frame is a strike, update previous frame and the one before it
     previousFrame.nextTwoBowls = [first, second]
-    if (currentFrame.frameNumber > 2) twoFramesBack.nextTwoBowls = ['X', first]
+    if (currentFrame.frameNumber > 2) twoFramesBack.nextTwoBowls = ['10', first]
   }
 
   if (isDoubleStrike) {
     previousFrame.nextTwoBowls = [first, second]
-    twoFramesBack.nextTwoBowls = ['X', first]
-    if (currentFrame.frameNumber > 3) threeFramesBack.nextTwoBowls = ['X', 'X']
+    twoFramesBack.nextTwoBowls = ['10', first]
+    if (currentFrame.frameNumber > 3)
+      threeFramesBack.nextTwoBowls = ['10', '10']
   }
 
   if (isTripleStrike) {
     previousFrame.nextTwoBowls = [first, second]
-    twoFramesBack.nextTwoBowls = ['X', first]
-    threeFramesBack.nextTwoBowls = ['X', 'X']
-    if (currentFrame.frameNumber > 4) fourFramesBack.nextTwoBowls = ['X', 'X']
+    twoFramesBack.nextTwoBowls = ['10', first]
+    threeFramesBack.nextTwoBowls = ['10', '10']
+    if (currentFrame.frameNumber > 4) fourFramesBack.nextTwoBowls = ['10', '10']
   }
   // Default is to update previous frame's next two bowls which is the current frame's first and second bowls if no strikes
   previousFrame.nextTwoBowls = [first, second]
@@ -115,7 +114,6 @@ interface UpdateTotalScores {
   second: Scores
   didPrevFrameSpare: boolean
   didPrevFrameStrike: boolean
-  nextTwoBowls: [Scores, Scores]
 }
 
 export function updateTotalScores({
@@ -126,43 +124,67 @@ export function updateTotalScores({
   second: resolvedSecond,
   didPrevFrameSpare,
   didPrevFrameStrike,
-  nextTwoBowls,
 }: UpdateTotalScores): number {
-  const first = convertToNumberScore(resolvedFirst)
-  const second = convertToNumberScore(resolvedSecond)
+  const currentFrameFirst = convertToNumberScore(resolvedFirst)
+  const currentFrameSecond = convertToNumberScore(resolvedSecond)
 
-  const previousFrame = frames[frameNumber - 2]
   const currentFrame = frames[frameNumber - 1]
+  const previousFrame = frames[frameNumber - 2]
+  const twoFramesBack = frames[frameNumber - 3]
+  const threeFramesBack = frames[frameNumber - 4]
+  const didPrevFrameSingleStrike =
+    didPrevFrameStrike && !previousFrame?.didPrevFrameStrike
+  const didPrevFrameDoubleStrike =
+    didPrevFrameStrike &&
+    previousFrame?.didPrevFrameStrike &&
+    !twoFramesBack?.didPrevFrameStrike
 
+  console.log(
+    didPrevFrameStrike,
+    previousFrame?.didPrevFrameStrike,
+    twoFramesBack?.didPrevFrameStrike
+  )
   // If first frame, return the total score
   if (frameNumber === 1) {
-    currentFrame.totalScore = first + second
-    return first + second
+    currentFrame.totalScore = currentFrameFirst + currentFrameSecond
+    return currentFrameFirst + currentFrameSecond
   }
 
   // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score
   if (didPrevFrameSpare) {
-    if (isFirstBowl) previousFrame.totalScore += first
-    return previousFrame.totalScore + first + second
+    if (isFirstBowl) previousFrame.totalScore += currentFrameFirst
+    return previousFrame.totalScore + currentFrameFirst + currentFrameSecond
   }
 
   // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
-  if (didPrevFrameStrike) {
-    const [nextFirst, nextSecond] = previousFrame.nextTwoBowls
-    const first = convertToNumberScore(nextFirst)
-    const second = convertToNumberScore(nextSecond)
+  if (didPrevFrameSingleStrike) {
+    console.log('single')
+    const [first, second] = previousFrame.nextTwoBowls
+    const nextFirst = convertToNumberScore(first)
+    const nextSecond = convertToNumberScore(second)
 
     isFirstBowl
-      ? (previousFrame.totalScore += first)
-      : (previousFrame.totalScore += second)
-    return previousFrame.totalScore + first + second
-    // return previousFrame.totalScore + second
+      ? (previousFrame.totalScore += nextFirst)
+      : (previousFrame.totalScore += nextSecond)
+    return previousFrame.totalScore + nextFirst + nextSecond
   }
 
-  // double and triple strikes
+  if (didPrevFrameDoubleStrike) {
+    console.log('double')
+    const [first, second] = twoFramesBack.nextTwoBowls
+    const nextFirst = convertToNumberScore(first)
+    const nextSecond = convertToNumberScore(second)
+    if (isFirstBowl) {
+      twoFramesBack.totalScore += currentFrameFirst
+      previousFrame.totalScore += currentFrameFirst
+      return previousFrame.totalScore + currentFrameFirst
+    }
+    previousFrame.totalScore += currentFrameFirst + currentFrameSecond
+  }
 
-  currentFrame.totalScore = previousFrame.totalScore + first + second
-  return previousFrame.totalScore + first + second
+  currentFrame.totalScore =
+    previousFrame.totalScore + currentFrameFirst + currentFrameSecond
+  return previousFrame.totalScore + currentFrameFirst + currentFrameSecond
 }
 
 export function convertToNumberScore(points: Scores): Points {

@@ -1,7 +1,7 @@
 import { useState, MouseEvent } from 'react'
 import { initialScoreCard, labels } from '@/pages/data'
 import { Player } from '../Player'
-import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
+import { FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import { resolveRemainingPins, resolveNewFrames, isStrike } from './functions'
 
 export function BowlingPage() {
