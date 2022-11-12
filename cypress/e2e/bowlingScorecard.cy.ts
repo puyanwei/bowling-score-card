@@ -79,7 +79,7 @@ describe('Bowling Scorecard tests', () => {
     cy.get('@total9').should('have.text', '0')
     cy.get('@total10').should('have.text', '0')
   })
-  describe('Bowl box score interactions only', () => {
+  context('Bowl box score interactions only', () => {
     it('pressing non spare or strike buttons renders the chosen numbers in the scorecard', () => {
       cy.get('@button0').click().get('@frame1bowl1').should('have.text', '0')
       cy.get('@button1').click().get('@frame1bowl2').should('have.text', '1')
@@ -202,7 +202,7 @@ describe('Bowling Scorecard tests', () => {
     })
     it(`total points with strikes should add 10 to that current frame, then add the both bowl's score to it the frame after`, () => {
       cy.get('@button10').click().get('@total1').should('have.text', '10')
-      cy.get('@button4').click().get('@total1').should('have.text', '10')
+      cy.get('@button4').click().get('@total1').should('have.text', '14')
       cy.get('@button4')
         .click()
         .get('@total1')
@@ -210,7 +210,7 @@ describe('Bowling Scorecard tests', () => {
         .get('@total2')
         .should('have.text', '26')
     })
-    it('total points calculate correcly for double strikes', () => {
+    it.only('total points calculate correcly for double strikes', () => {
       cy.get('@button10')
         .click()
         .get('@button10')

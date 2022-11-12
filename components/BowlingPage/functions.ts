@@ -6,6 +6,7 @@ import {
   Frame,
   Points,
 } from '@/pages/data/types'
+import next from 'next'
 
 export function resolveNewFrames(
   scoreCard: ScoreCard[],
@@ -133,22 +134,29 @@ export function updateTotalScores({
   const previousFrame = frames[frameNumber - 2]
   const currentFrame = frames[frameNumber - 1]
 
+  // If first frame, return the total score
   if (frameNumber === 1) {
-    // If first frame, return the total score
     currentFrame.totalScore = first + second
     return first + second
   }
 
+  // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score
   if (didPrevFrameSpare) {
-    console.log(123)
-    // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score
     if (isFirstBowl) previousFrame.totalScore += first
     return previousFrame.totalScore + first + second
   }
 
+  // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
   if (didPrevFrameStrike) {
-    // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
-    previousFrame.totalScore += first + second
+    const [nextFirst, nextSecond] = previousFrame.nextTwoBowls
+    const first = convertToNumberScore(nextFirst)
+    const second = convertToNumberScore(nextSecond)
+
+    isFirstBowl
+      ? (previousFrame.totalScore += first)
+      : (previousFrame.totalScore += second)
+    return previousFrame.totalScore + first + second
+    // return previousFrame.totalScore + second
   }
 
   // double and triple strikes
