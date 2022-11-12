@@ -79,7 +79,7 @@ describe('Bowling Scorecard tests', () => {
     cy.get('@total9').should('have.text', '0')
     cy.get('@total10').should('have.text', '0')
   })
-  context('Bowl box score interactions only', () => {
+  describe('Bowl box score interactions only', () => {
     it('pressing non spare or strike buttons renders the chosen numbers in the scorecard', () => {
       cy.get('@button0').click().get('@frame1bowl1').should('have.text', '0')
       cy.get('@button1').click().get('@frame1bowl2').should('have.text', '1')
@@ -115,7 +115,7 @@ describe('Bowling Scorecard tests', () => {
     })
   })
   context.only('Accumulated score calculations', () => {
-    it.only('total points (no strikes or spares) accumulate correctly', () => {
+    it('total points (no strikes or spares) accumulate correctly', () => {
       cy.get('@button1')
         .click()
         .get('@button3')

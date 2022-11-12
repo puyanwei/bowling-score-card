@@ -9,32 +9,38 @@ import {
 
 export function resolveNewFrames(
   scoreCard: ScoreCard[],
-  points: Scores,
+  currentBowl: Scores,
   isFirstBowl: boolean,
   frameNumber: FrameNumber
 ): Frame[] {
   return scoreCard[0].frames.map((frame: Frame, index) => {
     if (index !== frameNumber - 1) return frame
+    const previousFrame = scoreCard[0].frames[index - 1]
 
-    const first: Scores = isFirstBowl ? resolveFirstBowl(points) : frame.first
-    const second: Scores = isFirstBowl
-      ? frame.second
-      : resolveSecondBowl(scoreCard, points, (frameNumber - 1) as FrameNumber)
-    const didPrevFrameSpare = resolveDidPrevFrameSpare(scoreCard, index)
-    const didPrevFrameStrike = resolveDidPrevFrameStrike(scoreCard, index)
+    const first: Scores = isFirstBowl ? currentBowl : frame.first
+    const second: Scores = !isFirstBowl ? currentBowl : frame.second
 
-    const nextTwoBowls = updateNextTwoBowls(
+    const didPrevFrameSpare =
+      parseInt(previousFrame?.first) + parseInt(previousFrame?.second) === 10
+    const didPrevFrameStrike = parseInt(previousFrame?.first) === 10
+
+    const nextTwoBowls: [Scores, Scores] = updateNextTwoBowls(
       scoreCard[0].frames,
       frameNumber,
       first,
       second,
       didPrevFrameStrike
     )
-    // const totalScore = updateTotalscore(scoreCard[0].frames,
-    // frameNumber,
-    // first,
-    // second,
-    // didPrevFrameSpare, didPrevFrameStrike, nextTwoBowls)
+    const totalScore: number = updateTotalScores({
+      frames: scoreCard[0].frames,
+      isFirstBowl,
+      frameNumber,
+      first,
+      second,
+      didPrevFrameSpare,
+      didPrevFrameStrike,
+      nextTwoBowls,
+    })
 
     return {
       ...frame,
@@ -42,7 +48,7 @@ export function resolveNewFrames(
       second,
       didPrevFrameSpare,
       didPrevFrameStrike,
-      // totalScore,
+      totalScore,
       nextTwoBowls,
     }
   })
@@ -69,7 +75,6 @@ export function updateNextTwoBowls(
     didPrevFrameStrike &&
     previousFrame.didPrevFrameStrike &&
     twoFramesBack.didPrevFrameStrike
-  console.log({ previousFrame })
   // No need to update previuos frame if it is the first frame
   if (currentFrame.frameNumber === 1) return ['', '']
 
@@ -79,21 +84,18 @@ export function updateNextTwoBowls(
   }
 
   if (isSingleStrike) {
-    console.log(82)
     // If previous frame is a strike, update previous frame and the one before it
     previousFrame.nextTwoBowls = [first, second]
     if (currentFrame.frameNumber > 2) twoFramesBack.nextTwoBowls = ['X', first]
   }
 
   if (isDoubleStrike) {
-    console.log(89)
     previousFrame.nextTwoBowls = [first, second]
     twoFramesBack.nextTwoBowls = ['X', first]
     if (currentFrame.frameNumber > 3) threeFramesBack.nextTwoBowls = ['X', 'X']
   }
 
   if (isTripleStrike) {
-    console.log(96)
     previousFrame.nextTwoBowls = [first, second]
     twoFramesBack.nextTwoBowls = ['X', first]
     threeFramesBack.nextTwoBowls = ['X', 'X']
@@ -104,76 +106,55 @@ export function updateNextTwoBowls(
   return ['', '']
 }
 
-export function updateTotalScores(
-  frames: Frame[],
-  isFirstBowl: boolean,
-  totalScore: number,
-  setTotalScore: Dispatch<SetStateAction<number>>
-): Frame[] {
-  return frames.map((frame) => {
-    const {
-      first: firstBowl,
-      second: secondBowl,
-      didPrevFrameSpare,
-      didPrevFrameStrike,
-    } = frame
-    const first = convertToNumberScore(firstBowl)
-    const second = convertToNumberScore(secondBowl)
+interface UpdateTotalScores {
+  frames: Frame[]
+  isFirstBowl: boolean
+  frameNumber: FrameNumber
+  first: Scores
+  second: Scores
+  didPrevFrameSpare: boolean
+  didPrevFrameStrike: boolean
+  nextTwoBowls: [Scores, Scores]
+}
 
-    const isNormalFirstBowl =
-      isFirstBowl && !didPrevFrameSpare && !didPrevFrameStrike
-    const isNormalSecondBowl =
-      !isFirstBowl && !didPrevFrameSpare && !didPrevFrameStrike
-    const isPrevFrameSpareFirstBowl =
-      isFirstBowl && didPrevFrameSpare && !didPrevFrameStrike
-    const isPrevFrameSpareSecondBowl =
-      !isFirstBowl && didPrevFrameSpare && !didPrevFrameStrike
-    const isPrevFrameStrikeFirstBowl =
-      isFirstBowl && !didPrevFrameSpare && didPrevFrameStrike
-    const isPrevFrameStrikeSecondtBowl =
-      !isFirstBowl && !didPrevFrameSpare && didPrevFrameStrike
+export function updateTotalScores({
+  frames,
+  isFirstBowl,
+  frameNumber,
+  first: resolvedFirst,
+  second: resolvedSecond,
+  didPrevFrameSpare,
+  didPrevFrameStrike,
+  nextTwoBowls,
+}: UpdateTotalScores): number {
+  const first = convertToNumberScore(resolvedFirst)
+  const second = convertToNumberScore(resolvedSecond)
 
-    if (isNormalFirstBowl) {
-      setTotalScore(totalScore + first)
-      return { ...frame, totalScore }
-    }
-    if (isNormalSecondBowl) {
-      setTotalScore(totalScore + second)
-      return { ...frame, totalScore }
-    }
-    return frame
-  })
-  //   if (isNormalSecondBowl) return second === 10 ? second : first + second
-  //   if (isPrevFrameSpareFirstBowl) {
-  //     // Previous frame adjusted total score
-  //     scoreCard[0].frames[index - 1].totalScore += first
-  //     // Current frame adjusted total score
-  //     return scoreCard[0].frames[index].totalScore + first
-  //   }
-  //   if (isPrevFrameStrikeFirstBowl) {
-  //     // Double/triple strike
-  //   }
-  //   if (isPrevFrameStrikeSecondtBowl) {
-  //     // Previous frame adjusted total score
-  //     scoreCard[0].frames[index - 1].totalScore += first + second
-  //     // Current frame adjusted total score
-  //     return scoreCard[0].frames[index].totalScore
-  //   }
+  const previousFrame = frames[frameNumber - 2]
+  const currentFrame = frames[frameNumber - 1]
 
-  //   if (isPrevFrameSpareSecondBowl) return first + second
-  //   return 0
-  //   // const frameTotal = updateTotalScores(
-  //   //   first,
-  //   //   second,
-  //   //   isFirstBowl,
-  //   //   scoreCard,
-  //   //   didPrevFrameSpare,
-  //   //   didPrevFrameStrike,
-  //   //   index
-  //   // )
-  //   const prevFrameTotalScore = scoreCard[0].frames[index - 1]?.totalScore ?? 0
-  //   const totalScore = frameTotal + prevFrameTotalScore
-  // }
+  if (frameNumber === 1) {
+    // If first frame, return the total score
+    currentFrame.totalScore = first + second
+    return first + second
+  }
+
+  if (didPrevFrameSpare) {
+    console.log(123)
+    // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score
+    if (isFirstBowl) previousFrame.totalScore += first
+    return previousFrame.totalScore + first + second
+  }
+
+  if (didPrevFrameStrike) {
+    // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
+    previousFrame.totalScore += first + second
+  }
+
+  // double and triple strikes
+
+  currentFrame.totalScore = previousFrame.totalScore + first + second
+  return previousFrame.totalScore + first + second
 }
 
 export function convertToNumberScore(points: Scores): Points {
@@ -183,37 +164,12 @@ export function convertToNumberScore(points: Scores): Points {
   return parseInt(points) as Points
 }
 
-export function resolveSecondBowl(
-  scoreCard: ScoreCard[],
-  points: string,
-  frameNumber: FrameNumber
-): Scores {
-  const firstBowl = scoreCard[0].frames[frameNumber].first
-  const secondBowl = points
-  return parseInt(firstBowl) + parseInt(secondBowl) === 10
-    ? '/'
-    : (secondBowl as Scores)
-}
-
-export function resolveFirstBowl(points: Scores) {
+export function resolveFirstBowlSymbol(points: Scores) {
   return points === '10' ? 'X' : points
 }
 
 export function isStrike(points: Scores): boolean {
   return points === '10'
-}
-export function resolveDidPrevFrameSpare(
-  scoreCard: ScoreCard[],
-  index: number
-): boolean {
-  return scoreCard[0].frames[index - 1]?.second === '/'
-}
-
-export function resolveDidPrevFrameStrike(
-  scoreCard: ScoreCard[],
-  index: number
-): boolean {
-  return scoreCard[0].frames[index - 1]?.first === 'X'
 }
 
 export function resolveRemainingPins(
