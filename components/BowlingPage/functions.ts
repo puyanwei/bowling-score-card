@@ -157,7 +157,6 @@ export function updateTotalScores({
 
   // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
   if (didPrevFrameSingleStrike) {
-    console.log('single')
     const [first, second] = previousFrame.nextTwoBowls
     const nextFirst = convertToNumberScore(first)
     const nextSecond = convertToNumberScore(second)
@@ -169,7 +168,6 @@ export function updateTotalScores({
   }
 
   if (didPrevFrameDoubleStrike) {
-    console.log('double')
     if (isFirstBowl) {
       twoFramesBack.totalScore += currentFrameFirst
       previousFrame.totalScore += currentFrameFirst
@@ -179,9 +177,7 @@ export function updateTotalScores({
   }
 
   if (didPrevFrameTripleStrike) {
-    console.log('triple')
     if (isFirstBowl) {
-      console.log(threeFramesBack.totalScore)
       twoFramesBack.totalScore +=
         convertToNumberScore(previousFrame.first) + currentFrameFirst
       previousFrame.totalScore +=

@@ -24,7 +24,7 @@ export function BowlingPage() {
       isFirstBowl,
       frameNumber
     )
-    console.log({ frames })
+
     setScoreCard([{ ...scoreCard[0], frames }])
     updateBoardPosition(currentBowl)
   }
