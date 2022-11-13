@@ -138,12 +138,11 @@ export function updateTotalScores({
     didPrevFrameStrike &&
     previousFrame?.didPrevFrameStrike &&
     !twoFramesBack?.didPrevFrameStrike
-
-  console.log(
-    didPrevFrameStrike,
-    previousFrame?.didPrevFrameStrike,
+  const didPrevFrameTripleStrike =
+    didPrevFrameStrike &&
+    previousFrame?.didPrevFrameStrike &&
     twoFramesBack?.didPrevFrameStrike
-  )
+
   // If first frame, return the total score
   if (frameNumber === 1) {
     currentFrame.totalScore = currentFrameFirst + currentFrameSecond
@@ -171,12 +170,22 @@ export function updateTotalScores({
 
   if (didPrevFrameDoubleStrike) {
     console.log('double')
-    const [first, second] = twoFramesBack.nextTwoBowls
-    const nextFirst = convertToNumberScore(first)
-    const nextSecond = convertToNumberScore(second)
     if (isFirstBowl) {
       twoFramesBack.totalScore += currentFrameFirst
       previousFrame.totalScore += currentFrameFirst
+      return previousFrame.totalScore + currentFrameFirst
+    }
+    previousFrame.totalScore += currentFrameFirst + currentFrameSecond
+  }
+
+  if (didPrevFrameTripleStrike) {
+    console.log('triple')
+    if (isFirstBowl) {
+      console.log(threeFramesBack.totalScore)
+      twoFramesBack.totalScore +=
+        convertToNumberScore(previousFrame.first) + currentFrameFirst
+      previousFrame.totalScore +=
+        convertToNumberScore(previousFrame.first) + currentFrameFirst
       return previousFrame.totalScore + currentFrameFirst
     }
     previousFrame.totalScore += currentFrameFirst + currentFrameSecond
