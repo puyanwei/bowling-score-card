@@ -118,7 +118,7 @@ describe('Bowling Scorecard tests', () => {
     it('three strikes are allowed in the tenth frame', () => {})
     it('buttons should disappear to indicate that a game has been completed', () => {})
   })
-  context.only('Accumulated score calculations', () => {
+  context('Accumulated score calculations', () => {
     it('total points (no strikes or spares) accumulate correctly', () => {
       cy.get('@button1')
         .click()

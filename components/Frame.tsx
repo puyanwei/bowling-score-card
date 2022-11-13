@@ -28,20 +28,20 @@ export const Frame = ({
           data-testid={`frame-${frameNumber}-first-bowl`}
           className={bowlStyle}
         >
-          {first}
+          {parseInt(first) === 10 ? 'X' : first}
         </span>
         <span
           data-testid={`frame-${frameNumber}-second-bowl`}
           className={bowlStyle}
         >
-          {second}
+          {parseInt(first) + parseInt(second) === 10 ? '/' : second}
         </span>
         {isTenthFrame && (
           <span
             data-testid={`frame-${frameNumber}-third-bowl`}
             className={bowlStyle}
           >
-            {third}
+            {(!!third && parseInt(third) === 10 ? 'X' : third) || ''}
           </span>
         )}
       </div>
