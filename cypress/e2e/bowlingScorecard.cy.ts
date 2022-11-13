@@ -299,8 +299,8 @@ describe('Bowling Scorecard tests', () => {
     })
     // it('total points with spares and strikes accumulate correctly', () => {})
     // it('total points for perfect game equals 300 points', () => {})
-    context.only('Tenth frame interactions', () => {
-      it.only(`the tenth frame only allows two bowls if it's not a spare or a strike`, () => {
+    context('Tenth frame interactions', () => {
+      it(`the tenth frame only allows two bowls if it's not a spare or a strike`, () => {
         cy.get('@button1')
           .click()
           .get('@button3')

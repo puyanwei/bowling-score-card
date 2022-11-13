@@ -1,8 +1,9 @@
 import { useState, MouseEvent } from 'react'
 import { initialScoreCard, labels } from '@/pages/data/initialScoreCard'
 import { Player } from '../Player'
-import { FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
+import { Frame, FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import { resolveRemainingPins, resolveNewFrames, isStrike } from './functions'
+import { parse } from 'path'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -25,9 +26,35 @@ export function BowlingPage() {
       isFirstBowl,
       frameNumber
     )
-    console.log('frames :>> ', frames)
+
+    console.log({ frames })
     setScoreCard([{ ...scoreCard[0], frames }])
     updateBoardPosition(currentBowl)
+    if (isGameOver(frames, frameNumber)) setGameOver(true)
+  }
+
+  function isGameOver(frames: Frame[], frameNumber: FrameNumber): boolean {
+    const { first, second, third } = frames[frameNumber - 1]
+    const isNotSpare =
+      (parseInt(first) + parseInt(second) === 10 && second !== '') ||
+      parseInt(second)
+    console.log(
+      '%cindex.tsx line:38 first, second, third',
+      'color: #007acc;',
+      first,
+      Boolean(first),
+      second,
+      Boolean(second),
+      third,
+      Boolean(third)
+    )
+    if (frameNumber !== 10) return false
+
+    if (second === '' && third === '') return false
+    if (first === '10' && third === '') return false
+    if (parseInt(first) + parseInt(second) === 10 && third === '') return false
+    if (!!first && !!second && !!third) return true
+    return true
   }
 
   function updateBoardPosition(currentBowl: Scores) {
@@ -42,21 +69,17 @@ export function BowlingPage() {
 
     // Tenth frame first bowl strike
     if (isStrike(currentBowl) && frameNumber === 10) setRemainingPins(10)
-    // Tenth frame second bowl strike
-    // Tenth frame second bowl spare
-
-    if (frameNumber > 10) setGameOver(true)
     return
   }
 
   function reset() {
-    setScoreCard(initialScoreCard)
+    setScoreCard([...initialScoreCard])
     setIsFirstBowl(true)
     setFrameNumber(1)
     setRemainingPins(10)
     setGameOver(false)
+    console.log(scoreCard)
   }
-
   return (
     <div data-testid='bowling-page'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
