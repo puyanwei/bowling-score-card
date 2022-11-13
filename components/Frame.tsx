@@ -1,4 +1,4 @@
-import { Frame as FrameType } from '@/pages/data/types'
+import { Frame as FrameType, Scores } from '@/pages/data/types'
 
 interface FrameProps {
   className?: string
@@ -17,6 +17,19 @@ export const Frame = ({
 
   const { totalScore, first, second, third, frameNumber } = { ...frame }
 
+  function resolveSecondBowl(first: Scores, second: Scores): Scores {
+    const isTenthFrameDoubleStrike =
+      isTenthFrame && first === '10' && second === '10'
+    const isTenthFrameSpare =
+      isTenthFrame &&
+      first !== '10' &&
+      parseInt(first) + parseInt(second) === 10
+
+    if (isTenthFrameDoubleStrike) return 'X'
+    if (isTenthFrameSpare) return '/'
+    return parseInt(first) + parseInt(second) === 10 ? '/' : second
+  }
+
   const bowlStyle = `w-8 h-8 outline-1 outline outline-black text-center`
   return (
     <div
@@ -34,7 +47,7 @@ export const Frame = ({
           data-testid={`frame-${frameNumber}-second-bowl`}
           className={bowlStyle}
         >
-          {parseInt(first) + parseInt(second) === 10 ? '/' : second}
+          {resolveSecondBowl(first, second)}
         </span>
         {isTenthFrame && (
           <span

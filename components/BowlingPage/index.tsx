@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react'
-import { initialScoreCard, labels } from '@/pages/data'
+import { initialScoreCard, labels } from '@/pages/data/initialScoreCard'
 import { Player } from '../Player'
 import { FrameNumber, ScoreCard, Scores } from '@/pages/data/types'
 import { resolveRemainingPins, resolveNewFrames, isStrike } from './functions'
@@ -25,19 +25,26 @@ export function BowlingPage() {
       isFirstBowl,
       frameNumber
     )
-
+    console.log('frames :>> ', frames)
     setScoreCard([{ ...scoreCard[0], frames }])
     updateBoardPosition(currentBowl)
   }
 
   function updateBoardPosition(currentBowl: Scores) {
-    if (isStrike(currentBowl)) {
+    if (isStrike(currentBowl) && frameNumber !== 10) {
       setRemainingPins(10)
       setFrameNumber((frameNumber + 1) as FrameNumber)
       return
     }
     setIsFirstBowl(!isFirstBowl)
-    if (!isFirstBowl) setFrameNumber((frameNumber + 1) as FrameNumber)
+    if (!isFirstBowl && frameNumber !== 10)
+      setFrameNumber((frameNumber + 1) as FrameNumber)
+
+    // Tenth frame first bowl strike
+    if (isStrike(currentBowl) && frameNumber === 10) setRemainingPins(10)
+    // Tenth frame second bowl strike
+    // Tenth frame second bowl spare
+
     if (frameNumber > 10) setGameOver(true)
     return
   }

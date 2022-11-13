@@ -19,6 +19,7 @@ export function resolveNewFrames(
 
     const first: Scores = isFirstBowl ? currentBowl : frame.first
     const second: Scores = !isFirstBowl ? currentBowl : frame.second
+    const third: Scores = resolveThirdBowl(currentBowl, frame)
 
     const didPrevFrameSpare =
       parseInt(previousFrame?.first) + parseInt(previousFrame?.second) === 10
@@ -45,12 +46,26 @@ export function resolveNewFrames(
       ...frame,
       first,
       second,
+      third,
       didPrevFrameSpare,
       didPrevFrameStrike,
       totalScore,
       nextTwoBowls,
     }
   })
+}
+
+function resolveThirdBowl(currentBowl: Scores, frame: Frame): Scores {
+  if (frame.frameNumber === 10 && frame.first === '10') {
+    return currentBowl
+  }
+  if (
+    frame.frameNumber === 10 &&
+    parseInt(frame.first) + parseInt(frame.second) === 10
+  ) {
+    return currentBowl
+  }
+  return ''
 }
 
 export function updateNextTwoBowls(
