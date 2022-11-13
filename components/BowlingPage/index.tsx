@@ -9,6 +9,7 @@ export function BowlingPage() {
   const [isFirstBowl, setIsFirstBowl] = useState<boolean>(true)
   const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
   const [remainingPins, setRemainingPins] = useState<FrameNumber>(10)
+  const [gameOver, setGameOver] = useState<boolean>(false)
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const currentBowl = e.currentTarget.innerText as Scores
@@ -37,6 +38,7 @@ export function BowlingPage() {
     }
     setIsFirstBowl(!isFirstBowl)
     if (!isFirstBowl) setFrameNumber((frameNumber + 1) as FrameNumber)
+    if (frameNumber > 10) setGameOver(true)
     return
   }
 
@@ -45,6 +47,7 @@ export function BowlingPage() {
     setIsFirstBowl(true)
     setFrameNumber(1)
     setRemainingPins(10)
+    setGameOver(false)
   }
 
   return (
@@ -55,17 +58,23 @@ export function BowlingPage() {
       ))}
       <br />
       <div className='text-center'>
-        {labels.map((score, index) => (
-          <button
-            data-testid={`button-${index}`}
-            className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
-            key={index}
-            onClick={handleClick}
-            disabled={index > remainingPins}
-          >
-            {score}
-          </button>
-        ))}
+        {!gameOver &&
+          labels.map((score, index) => (
+            <button
+              data-testid={`button-${index}`}
+              className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
+              key={index}
+              onClick={handleClick}
+              disabled={index > remainingPins}
+            >
+              {score}
+            </button>
+          ))}
+        {gameOver && (
+          <div className='my-4 text-5xl' data-testid='game-over'>
+            <h2>Game Over!</h2>
+          </div>
+        )}
         <button
           data-testid='button-reset'
           className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
