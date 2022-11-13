@@ -131,7 +131,6 @@ export function updateTotalScores({
   const currentFrame = frames[frameNumber - 1]
   const previousFrame = frames[frameNumber - 2]
   const twoFramesBack = frames[frameNumber - 3]
-  const threeFramesBack = frames[frameNumber - 4]
   const didPrevFrameSingleStrike =
     didPrevFrameStrike && !previousFrame?.didPrevFrameStrike
   const didPrevFrameDoubleStrike =

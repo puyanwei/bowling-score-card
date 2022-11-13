@@ -33,11 +33,11 @@ export function BowlingPage() {
     if (isStrike(currentBowl)) {
       setRemainingPins(10)
       setFrameNumber((frameNumber + 1) as FrameNumber)
-    } else {
-      setIsFirstBowl(!isFirstBowl)
-      if (isFirstBowl === false)
-        setFrameNumber((frameNumber + 1) as FrameNumber)
+      return
     }
+    setIsFirstBowl(!isFirstBowl)
+    if (!isFirstBowl) setFrameNumber((frameNumber + 1) as FrameNumber)
+    return
   }
 
   function reset() {
@@ -54,7 +54,7 @@ export function BowlingPage() {
         <Player scoreCard={player} key={index} />
       ))}
       <br />
-      <div>
+      <div className='text-center'>
         {labels.map((score, index) => (
           <button
             data-testid={`button-${index}`}
