@@ -19,9 +19,9 @@ export const Frame = ({
 
   function resolveSecondBowl(first: Scores, second: Scores): Scores {
     const isTenthFrameDoubleStrike =
-      isTenthFrame && first === '10' && second === '10'
+      frame.frameNumber === 10 && first === '10' && second === '10'
     const isTenthFrameSpare =
-      isTenthFrame &&
+      frame.frameNumber === 10 &&
       first !== '10' &&
       parseInt(first) + parseInt(second) === 10
 

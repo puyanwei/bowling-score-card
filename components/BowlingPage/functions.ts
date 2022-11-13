@@ -17,9 +17,9 @@ export function resolveNewFrames(
     if (index !== frameNumber - 1) return frame
     const previousFrame = scoreCard[0].frames[index - 1]
 
-    const first: Scores = isFirstBowl ? currentBowl : frame.first
-    const second: Scores = !isFirstBowl ? currentBowl : frame.second
-    const third: Scores = resolveThirdBowl(currentBowl, frame)
+    const first: Scores = resolveFirstBowl(currentBowl, frame, isFirstBowl)
+    const second: Scores = resolveSecondBowl(currentBowl, frame, isFirstBowl)
+    const third: Scores = resolveThirdBowl(currentBowl, frame, isFirstBowl)
 
     const didPrevFrameSpare =
       parseInt(previousFrame?.first) + parseInt(previousFrame?.second) === 10
@@ -55,17 +55,32 @@ export function resolveNewFrames(
   })
 }
 
-function resolveThirdBowl(currentBowl: Scores, frame: Frame): Scores {
-  if (frame.frameNumber === 10 && frame.first === '10') {
-    return currentBowl
-  }
-  if (
-    frame.frameNumber === 10 &&
-    parseInt(frame.first) + parseInt(frame.second) === 10
-  ) {
-    return currentBowl
-  }
-  return ''
+function resolveFirstBowl(
+  currentBowl: Scores,
+  frame: Frame,
+  isFirstBowl: boolean
+): Scores {
+  if (frame.frameNumber !== 10) return isFirstBowl ? currentBowl : frame.first
+  return isFirstBowl && frame.first === '' ? currentBowl : frame.first
+}
+
+function resolveSecondBowl(
+  currentBowl: Scores,
+  frame: Frame,
+  isFirstBowl: boolean
+): Scores {
+  if (frame.frameNumber !== 10) !isFirstBowl ? currentBowl : frame.second
+  return !isFirstBowl && frame.second === '' ? currentBowl : frame.second
+}
+function resolveThirdBowl(
+  currentBowl: Scores,
+  frame: Frame,
+  isFirstBowl: boolean
+): Scores {
+  if (frame.frameNumber !== 10) return ''
+  return isFirstBowl && frame.first !== '' && frame.second !== ''
+    ? currentBowl
+    : ''
 }
 
 export function updateNextTwoBowls(
