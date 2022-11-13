@@ -113,6 +113,10 @@ describe('Bowling Scorecard tests', () => {
       cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
       cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
     })
+    it('a spare in the tenth frame should allow another bowl', () => {})
+    it('a strike in the tenth frame should allow two more bowls', () => {})
+    it('three strikes are allowed in the tenth frame', () => {})
+    it('buttons should disappear to indicate that a game has been completed', () => {})
   })
   context.only('Accumulated score calculations', () => {
     it('total points (no strikes or spares) accumulate correctly', () => {
