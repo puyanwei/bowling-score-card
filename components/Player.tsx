@@ -11,7 +11,7 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
   return (
     <div className='grid grid-cols-11 grid-rows-2 text-2xl '>
       <div className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
-        <div className='mt-20'>{name}</div>
+        <div className='pl-2 mt-20 '>{name}</div>
       </div>
       {frames.map(({ frameNumber }, index) => {
         const borderEndsX =
