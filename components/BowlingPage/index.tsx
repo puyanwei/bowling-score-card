@@ -64,12 +64,7 @@ export function BowlingPage() {
   }
 
   function reset() {
-    setScoreCard([...initialScoreCard])
-    setIsFirstBowl(true)
-    setFrameNumber(1)
-    setRemainingPins(10)
-    setGameOver(false)
-    console.log(scoreCard)
+    window.location.reload()
   }
 
   function resolveNewFrames(
