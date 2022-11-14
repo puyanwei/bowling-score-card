@@ -13,14 +13,20 @@ export function Player({ scoreCard: { name, frames } }: PlayerProps) {
       <div className='self-center col-start-1 col-end-2 row-start-1 row-end-3 font-bold'>
         <div className='mt-20'>{name}</div>
       </div>
-      {frames.map(({ frameNumber }, index) => (
-        <div
-          className='h-26 text-center self-end mb-[1px] ml-[1px] outline-1 outline outline-black p-2'
-          key={index}
-        >
-          Frame {frameNumber}
-        </div>
-      ))}
+      {frames.map(({ frameNumber }, index) => {
+        const borderEndsX =
+          index === frames.length - 1
+            ? 'border-r-[1px] border-l-[1px]'
+            : 'border-l-[1px]'
+        return (
+          <div
+            className={`self-end p-2 text-center border-black border-y-[1px] border-solid h-26 ${borderEndsX}`}
+            key={index}
+          >
+            Frame {frameNumber}
+          </div>
+        )
+      })}
       {frames.map((frame, index) => (
         <Frame
           testId={`${name} frame-${index + 1}`}

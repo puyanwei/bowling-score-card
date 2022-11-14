@@ -35,21 +35,8 @@ export function BowlingPage() {
 
   function isGameOver(frames: Frame[], frameNumber: FrameNumber): boolean {
     const { first, second, third } = frames[frameNumber - 1]
-    const isNotSpare =
-      (parseInt(first) + parseInt(second) === 10 && second !== '') ||
-      parseInt(second)
-    console.log(
-      '%cindex.tsx line:38 first, second, third',
-      'color: #007acc;',
-      first,
-      Boolean(first),
-      second,
-      Boolean(second),
-      third,
-      Boolean(third)
-    )
-    if (frameNumber !== 10) return false
 
+    if (frameNumber !== 10) return false
     if (second === '' && third === '') return false
     if (first === '10' && third === '') return false
     if (parseInt(first) + parseInt(second) === 10 && third === '') return false
@@ -116,6 +103,3 @@ export function BowlingPage() {
     </div>
   )
 }
-
-//  Outline css not quite lining up correctly
-//  Is there a better way of doing the grid?

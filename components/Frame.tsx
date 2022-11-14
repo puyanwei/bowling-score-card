@@ -29,11 +29,14 @@ export const Frame = ({
     if (isTenthFrameSpare) return '/'
     return parseInt(first) + parseInt(second) === 10 ? '/' : second
   }
+  const borderEndsX = isTenthFrame
+    ? 'border-r-[1px] border-l-[1px]'
+    : 'border-l-[1px]'
+  const bowlStyle = `w-8 h-8 border-r-[1px] border-b-[1px] border-black text-center`
 
-  const bowlStyle = `w-8 h-8 outline-1 outline outline-black text-center`
   return (
     <div
-      className={`flex flex-col outline-1 outline outline-black w-full h-24 ${className}`}
+      className={`flex flex-col border-black border-b-[1px] w-full h-24 ${borderEndsX} ${className}`}
       data-testid={testId}
     >
       <div className='flex'>
