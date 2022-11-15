@@ -336,6 +336,17 @@ export function BowlingPage() {
   return (
     <div data-testid='bowling-page'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
+      <div className='grid grid-cols-11 m-2 text-xl'>
+        <div className='col-span-11 col-start-2 space-x-2'>
+          <label className=''>{`First player's name?`}</label>
+          <input></input>
+          <button>Submit</button>
+        </div>
+        <div className='col-span-11 col-start-2 space-x-2'>
+          <label className=''>Add another player</label>
+          <button>Add</button>
+        </div>
+      </div>
       {scoreCard.map((player, index) => (
         <Player scoreCard={player} key={index} />
       ))}
