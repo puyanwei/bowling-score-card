@@ -31,7 +31,6 @@ export function BowlingPage() {
       frameNumber
     )
 
-    console.log({ frames })
     setScoreCard([{ ...scoreCard[0], frames }])
     updateBoardPosition(currentBowl)
     if (isGameOver(frames, frameNumber)) setGameOver(true)
@@ -98,6 +97,7 @@ export function BowlingPage() {
         frameNumber,
         first,
         second,
+        third,
         didPrevFrameSpare,
         didPrevFrameStrike,
       })
@@ -205,6 +205,7 @@ export function BowlingPage() {
     frameNumber: FrameNumber
     first: Scores
     second: Scores
+    third: Scores
     didPrevFrameSpare: boolean
     didPrevFrameStrike: boolean
   }
@@ -215,11 +216,13 @@ export function BowlingPage() {
     frameNumber,
     first: resolvedFirst,
     second: resolvedSecond,
+    third: resolvedThird,
     didPrevFrameSpare,
     didPrevFrameStrike,
   }: UpdateTotalScores): number {
     const currentFrameFirst = convertToNumberScore(resolvedFirst)
     const currentFrameSecond = convertToNumberScore(resolvedSecond)
+    const currentFrameThird = convertToNumberScore(resolvedThird)
 
     const currentFrame = frames[frameNumber - 1]
     const previousFrame = frames[frameNumber - 2]
@@ -234,6 +237,11 @@ export function BowlingPage() {
       didPrevFrameStrike &&
       previousFrame?.didPrevFrameStrike &&
       twoFramesBack?.didPrevFrameStrike
+    const isTenthFrameThirdBowl =
+      frameNumber === 10 &&
+      isFirstBowl &&
+      currentFrame.first !== '' &&
+      currentFrame.second !== ''
 
     // If first frame, return the total score
     if (frameNumber === 1) {
@@ -241,10 +249,17 @@ export function BowlingPage() {
       return currentFrameFirst + currentFrameSecond
     }
 
-    // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score
+    // If previous frame is a spare, add the first bowl of the current frame to the previous frame's total score, then use that as the current frame's total score, which is what is returned
     if (didPrevFrameSpare) {
       if (isFirstBowl) previousFrame.totalScore += currentFrameFirst
-      return previousFrame.totalScore + currentFrameFirst + currentFrameSecond
+      if (isTenthFrameThirdBowl)
+        return previousFrame.totalScore + currentFrameSecond + currentFrameThird
+      return (
+        previousFrame.totalScore +
+        currentFrameFirst +
+        currentFrameSecond +
+        currentFrameThird
+      )
     }
 
     // If previous frame is a strike, add the first and second bowls of the current frame to the previous frame's total score
@@ -256,7 +271,9 @@ export function BowlingPage() {
       isFirstBowl
         ? (previousFrame.totalScore += nextFirst)
         : (previousFrame.totalScore += nextSecond)
-      return previousFrame.totalScore + nextFirst + nextSecond
+      return (
+        previousFrame.totalScore + nextFirst + nextSecond + currentFrameThird
+      )
     }
 
     if (didPrevFrameDoubleStrike) {
@@ -265,7 +282,8 @@ export function BowlingPage() {
         previousFrame.totalScore += currentFrameFirst
         return previousFrame.totalScore + currentFrameFirst
       }
-      previousFrame.totalScore += currentFrameFirst + currentFrameSecond
+      previousFrame.totalScore +=
+        currentFrameFirst + currentFrameSecond + currentFrameThird
     }
 
     if (didPrevFrameTripleStrike) {
@@ -276,12 +294,21 @@ export function BowlingPage() {
           convertToNumberScore(previousFrame.first) + currentFrameFirst
         return previousFrame.totalScore + currentFrameFirst
       }
-      previousFrame.totalScore += currentFrameFirst + currentFrameSecond
+      previousFrame.totalScore +=
+        currentFrameFirst + currentFrameSecond + currentFrameThird
     }
 
     currentFrame.totalScore =
-      previousFrame.totalScore + currentFrameFirst + currentFrameSecond
-    return previousFrame.totalScore + currentFrameFirst + currentFrameSecond
+      previousFrame.totalScore +
+      currentFrameFirst +
+      currentFrameSecond +
+      currentFrameThird
+    return (
+      previousFrame.totalScore +
+      currentFrameFirst +
+      currentFrameSecond +
+      currentFrameThird
+    )
   }
 
   function convertToNumberScore(points: Scores): Points {
