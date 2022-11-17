@@ -25,9 +25,7 @@ export function updateNextTwoBowls(
   if (currentFrame.frameNumber === 1) return ['', '']
 
   // If current fram is a strike, update previous frame
-  if (first === 10) {
-    previousFrame.nextTwoBowls = [10, '']
-  }
+  if (first === 10) previousFrame.nextTwoBowls = [10, '']
 
   if (isSingleStrike) {
     // If previous frame is a strike, update previous frame and the one before it

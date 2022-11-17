@@ -1,8 +1,8 @@
-import { Frame, FrameNumber, Points } from '@/pages/data/types'
+import { BowlNumber, Frame, FrameNumber, Points } from '@/pages/data/types'
 
 interface UpdateTotalScores {
   frames: Frame[]
-  isFirstBowl: boolean
+  bowlNumber: BowlNumber
   frameNumber: FrameNumber
   first: Points
   second: Points
@@ -13,7 +13,7 @@ interface UpdateTotalScores {
 
 export function updateTotalScores({
   frames,
-  isFirstBowl,
+  bowlNumber,
   frameNumber,
   first: resolvedFirst,
   second: resolvedSecond,
@@ -24,10 +24,11 @@ export function updateTotalScores({
   const currentFrameFirst = convertToNumberScore(resolvedFirst)
   const currentFrameSecond = convertToNumberScore(resolvedSecond)
   const currentFrameThird = convertToNumberScore(resolvedThird)
-
   const currentFrame = frames[frameNumber - 1]
   const previousFrame = frames[frameNumber - 2]
   const twoFramesBack = frames[frameNumber - 3]
+  const isFirstBowl = bowlNumber === 1
+  const isThirdBowl = bowlNumber === 3
   const didPrevFrameSingleStrike =
     didPrevFrameStrike && !previousFrame?.didPrevFrameStrike
   const didPrevFrameDoubleStrike =
@@ -40,7 +41,7 @@ export function updateTotalScores({
     twoFramesBack?.didPrevFrameStrike
   const isTenthFrameThirdBowl =
     frameNumber === 10 &&
-    isFirstBowl &&
+    isThirdBowl &&
     currentFrame.first !== '' &&
     currentFrame.second !== ''
 
@@ -54,7 +55,12 @@ export function updateTotalScores({
   if (didPrevFrameSpare) {
     if (isFirstBowl) previousFrame.totalScore += currentFrameFirst
     if (isTenthFrameThirdBowl)
-      return previousFrame.totalScore + currentFrameSecond + currentFrameThird
+      return (
+        previousFrame.totalScore +
+        currentFrameFirst +
+        currentFrameSecond +
+        currentFrameThird
+      )
     return (
       previousFrame.totalScore +
       currentFrameFirst +
@@ -93,8 +99,13 @@ export function updateTotalScores({
         convertToNumberScore(previousFrame.first) + currentFrameFirst
       return previousFrame.totalScore + currentFrameFirst
     }
-    previousFrame.totalScore +=
-      currentFrameFirst + currentFrameSecond + currentFrameThird
+    isTenthFrameThirdBowl
+      ? previousFrame.totalScore +
+        currentFrameFirst +
+        currentFrameSecond +
+        currentFrameThird
+      : (previousFrame.totalScore +=
+          currentFrameFirst + currentFrameSecond + currentFrameThird)
   }
 
   currentFrame.totalScore =

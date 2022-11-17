@@ -1,24 +1,30 @@
 import { useState, MouseEvent, Dispatch, SetStateAction } from 'react'
 import { initialScoreCard, labels } from '@/pages/data/initialScoreCard'
 import { Player } from '../Player'
-import { Frame, FrameNumber, Points, ScoreCard } from '@/pages/data/types'
+import {
+  BowlNumber,
+  Frame,
+  FrameNumber,
+  Points,
+  ScoreCard,
+} from '@/pages/data/types'
 import { updateNextTwoBowls } from './updateNextTwoBowls'
 import { updateTotalScores } from './updateTotalScores'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
-  const [isFirstBowl, setIsFirstBowl] = useState<boolean>(true)
+  const [bowlNumber, setBowlNumber] = useState<BowlNumber>(1)
   const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
   const [remainingPins, setRemainingPins] = useState<number>(10)
   const [gameOver, setGameOver] = useState<boolean>(false)
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const currentBowl = parseInt(e.currentTarget.innerText) as Points
-    resolveRemainingPins(currentBowl, isFirstBowl, remainingPins)
+    resolveRemainingPins(currentBowl, bowlNumber)
     const frames = resolveNewFrames(
       scoreCard,
       currentBowl,
-      isFirstBowl,
+      bowlNumber,
       frameNumber
     )
 
@@ -40,17 +46,22 @@ export function BowlingPage() {
   }
 
   function updateBoardPosition(currentBowl: Points) {
-    if (isStrike(currentBowl) && frameNumber !== 10) {
+    // Tenth frame first bowl strike
+    if (frameNumber === 10) {
+      if (bowlNumber === 1 && isStrike(currentBowl)) setRemainingPins(10)
+      if (bowlNumber === 1) setBowlNumber((bowlNumber + 1) as BowlNumber)
+      if (bowlNumber === 2) setBowlNumber((bowlNumber + 1) as BowlNumber)
+      return
+    }
+
+    // Strike on first bowl
+    if (isStrike(currentBowl)) {
       setRemainingPins(10)
       setFrameNumber((frameNumber + 1) as FrameNumber)
       return
     }
-    setIsFirstBowl(!isFirstBowl)
-    if (!isFirstBowl && frameNumber !== 10)
-      setFrameNumber((frameNumber + 1) as FrameNumber)
-
-    // Tenth frame first bowl strike
-    if (isStrike(currentBowl) && frameNumber === 10) setRemainingPins(10)
+    setBowlNumber(bowlNumber === 1 ? 2 : 1)
+    if (bowlNumber === 2) setFrameNumber((frameNumber + 1) as FrameNumber)
     return
   }
 
@@ -61,15 +72,15 @@ export function BowlingPage() {
   function resolveNewFrames(
     scoreCard: ScoreCard[],
     currentBowl: Points,
-    isFirstBowl: boolean,
+    bowlNumber: BowlNumber,
     frameNumber: FrameNumber
   ): Frame[] {
     return scoreCard[0].frames.map((frame: Frame, index) => {
       if (index !== frameNumber - 1) return frame
       const previousFrame = scoreCard[0].frames[index - 1]
-      const first = resolveFirstBowl(currentBowl, frame, isFirstBowl)
-      const second = resolveSecondBowl(currentBowl, frame, isFirstBowl)
-      const third = resolveThirdBowl(currentBowl, frame, isFirstBowl)
+      const first = resolveFirstBowl(currentBowl, frame, bowlNumber)
+      const second = resolveSecondBowl(currentBowl, frame, bowlNumber)
+      const third = resolveThirdBowl(currentBowl, frame, bowlNumber)
 
       const didPrevFrameSpare = resolveDidPrevFrameSpare(previousFrame)
       const didPrevFrameStrike = previousFrame?.first === 10
@@ -83,7 +94,7 @@ export function BowlingPage() {
       )
       const totalScore: number = updateTotalScores({
         frames: scoreCard[0].frames,
-        isFirstBowl,
+        bowlNumber,
         frameNumber,
         first,
         second,
@@ -103,13 +114,11 @@ export function BowlingPage() {
         nextTwoBowls,
       }
 
-      console.log('newFrame :>> ', newFrame)
       return newFrame
     })
   }
 
   function resolveDidPrevFrameSpare(previousFrame: Frame): boolean {
-    console.log({ previousFrame })
     if (previousFrame?.first === '') return false
     if (previousFrame?.second === '') return false
     return previousFrame?.first + previousFrame?.second === 10
@@ -118,8 +127,9 @@ export function BowlingPage() {
   function resolveFirstBowl(
     currentBowl: Points,
     frame: Frame,
-    isFirstBowl: boolean
+    bowlNumber: BowlNumber
   ): Points {
+    const isFirstBowl = bowlNumber === 1
     if (frame.frameNumber !== 10) return isFirstBowl ? currentBowl : frame.first
     return isFirstBowl && frame.first === '' ? currentBowl : frame.first
   }
@@ -127,18 +137,20 @@ export function BowlingPage() {
   function resolveSecondBowl(
     currentBowl: Points,
     frame: Frame,
-    isFirstBowl: boolean
+    bowlNumber: BowlNumber
   ): Points {
-    if (frame.frameNumber !== 10) !isFirstBowl ? currentBowl : frame.second
-    return !isFirstBowl && frame.second === '' ? currentBowl : frame.second
+    const isSecondBowl = bowlNumber === 2
+    if (frame.frameNumber !== 10) isSecondBowl ? currentBowl : frame.second
+    return isSecondBowl && frame.second === '' ? currentBowl : frame.second
   }
   function resolveThirdBowl(
     currentBowl: Points,
     frame: Frame,
-    isFirstBowl: boolean
+    bowlNumber: BowlNumber
   ): Points {
+    const isThirdBowl = bowlNumber === 3
     if (frame.frameNumber !== 10) return ''
-    return isFirstBowl && frame.first !== '' && frame.second !== ''
+    return isThirdBowl && frame.first !== '' && frame.second !== ''
       ? currentBowl
       : ''
   }
@@ -147,17 +159,12 @@ export function BowlingPage() {
     return points === 10
   }
 
-  function resolveRemainingPins(
-    points: Points,
-    isFirstBowl: boolean,
-    remainingPins: number
-  ): void {
+  function resolveRemainingPins(points: Points, bowlNumber: BowlNumber): void {
     if (points === '') return
-    isFirstBowl
-      ? setRemainingPins(remainingPins - points)
-      : setRemainingPins(10)
+    if (bowlNumber === 1) setRemainingPins(10 - points)
+    if (bowlNumber === 2) setRemainingPins(10)
+    return
   }
-
   return (
     <div data-testid='bowling-page'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
