@@ -1,4 +1,4 @@
-import { Frame, FrameNumber, Points } from '@/pages/data/types'
+import { Frame, FrameNumber, Points } from '@/constants/types'
 
 export function updateNextTwoBowls(
   frames: Frame[],

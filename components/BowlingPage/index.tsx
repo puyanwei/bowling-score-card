@@ -1,5 +1,5 @@
 import { useState, MouseEvent, Dispatch, SetStateAction } from 'react'
-import { initialScoreCard, labels } from '@/pages/data/initialScoreCard'
+import { initialScoreCard, labels } from '@/constants/initialScoreCard'
 import { Player } from '../Player'
 import {
   BowlNumber,
@@ -7,7 +7,7 @@ import {
   FrameNumber,
   Points,
   ScoreCard,
-} from '@/pages/data/types'
+} from '@/constants/types'
 import { updateNextTwoBowls } from './updateNextTwoBowls'
 import { updateTotalScores } from './updateTotalScores'
 

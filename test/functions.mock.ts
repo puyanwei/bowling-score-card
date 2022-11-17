@@ -1,10 +1,10 @@
-import { Frame } from '@/pages/data/types'
+import { Frame } from '@/constants/types'
 
 export const frames: Frame[] = [
   {
     frameNumber: 1,
-    first: '1',
-    second: '3',
+    first: 1,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
@@ -97,17 +97,17 @@ export const frames: Frame[] = [
 export const framesWithOneStrike: Frame[] = [
   {
     frameNumber: 1,
-    first: '1',
-    second: '3',
+    first: 1,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
-    nextTwoBowls: ['3', '3'],
+    nextTwoBowls: [3, 3],
   },
   {
     frameNumber: 2,
-    first: '3',
-    second: '3',
+    first: 3,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 10,
@@ -115,7 +115,7 @@ export const framesWithOneStrike: Frame[] = [
   },
   {
     frameNumber: 3,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
@@ -124,8 +124,8 @@ export const framesWithOneStrike: Frame[] = [
   },
   {
     frameNumber: 4,
-    first: '8',
-    second: '1',
+    first: 8,
+    second: 1,
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -190,8 +190,8 @@ export const framesWithOneStrike: Frame[] = [
 export const strikeFrame2: Frame[] = [
   {
     frameNumber: 1,
-    first: '0',
-    second: '3',
+    first: 0,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
@@ -199,7 +199,7 @@ export const strikeFrame2: Frame[] = [
   },
   {
     frameNumber: 2,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
@@ -208,8 +208,8 @@ export const strikeFrame2: Frame[] = [
   },
   {
     frameNumber: 3,
-    first: '2',
-    second: '2',
+    first: 2,
+    second: 2,
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -217,8 +217,8 @@ export const strikeFrame2: Frame[] = [
   },
   {
     frameNumber: 4,
-    first: '8',
-    second: '1',
+    first: 8,
+    second: 1,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -284,8 +284,8 @@ export const strikeFrame2: Frame[] = [
 export const strikeFrame3: Frame[] = [
   {
     frameNumber: 1,
-    first: '0',
-    second: '3',
+    first: 0,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
@@ -293,8 +293,8 @@ export const strikeFrame3: Frame[] = [
   },
   {
     frameNumber: 2,
-    first: '2',
-    second: '2',
+    first: 2,
+    second: 2,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 10,
@@ -302,7 +302,7 @@ export const strikeFrame3: Frame[] = [
   },
   {
     frameNumber: 3,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
@@ -311,8 +311,8 @@ export const strikeFrame3: Frame[] = [
   },
   {
     frameNumber: 4,
-    first: '8',
-    second: '1',
+    first: 8,
+    second: 1,
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -378,17 +378,17 @@ export const strikeFrame3: Frame[] = [
 export const framesWithADoubleStrike: Frame[] = [
   {
     frameNumber: 1,
-    first: '1',
-    second: '3',
+    first: 1,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
-    nextTwoBowls: ['3', '3'],
+    nextTwoBowls: [3, 3],
   },
   {
     frameNumber: 2,
-    first: '3',
-    second: '3',
+    first: 3,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 10,
@@ -396,7 +396,7 @@ export const framesWithADoubleStrike: Frame[] = [
   },
   {
     frameNumber: 3,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
@@ -405,7 +405,7 @@ export const framesWithADoubleStrike: Frame[] = [
   },
   {
     frameNumber: 4,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
@@ -414,8 +414,8 @@ export const framesWithADoubleStrike: Frame[] = [
   },
   {
     frameNumber: 5,
-    first: '4',
-    second: '4',
+    first: 4,
+    second: 4,
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -423,8 +423,8 @@ export const framesWithADoubleStrike: Frame[] = [
   },
   {
     frameNumber: 6,
-    first: '3',
-    second: '1',
+    first: 3,
+    second: 1,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -471,8 +471,8 @@ export const framesWithADoubleStrike: Frame[] = [
 export const framesWithATripleStrike: Frame[] = [
   {
     frameNumber: 1,
-    first: '1',
-    second: '3',
+    first: 1,
+    second: 3,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 4,
@@ -480,7 +480,7 @@ export const framesWithATripleStrike: Frame[] = [
   },
   {
     frameNumber: 2,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
@@ -489,7 +489,7 @@ export const framesWithATripleStrike: Frame[] = [
   },
   {
     frameNumber: 3,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
@@ -498,7 +498,7 @@ export const framesWithATripleStrike: Frame[] = [
   },
   {
     frameNumber: 4,
-    first: 'X',
+    first: 10,
     second: '',
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
@@ -507,8 +507,8 @@ export const framesWithATripleStrike: Frame[] = [
   },
   {
     frameNumber: 5,
-    first: '4',
-    second: '4',
+    first: 4,
+    second: 4,
     didPrevFrameStrike: true,
     didPrevFrameSpare: false,
     totalScore: 0,
@@ -516,8 +516,8 @@ export const framesWithATripleStrike: Frame[] = [
   },
   {
     frameNumber: 6,
-    first: '3',
-    second: '1',
+    first: 3,
+    second: 1,
     didPrevFrameStrike: false,
     didPrevFrameSpare: false,
     totalScore: 0,

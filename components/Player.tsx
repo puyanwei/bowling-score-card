@@ -1,4 +1,4 @@
-import { ScoreCard } from '@/pages/data/types'
+import { ScoreCard } from '@/constants/types'
 import { Frame } from './Frame'
 
 interface PlayerProps {

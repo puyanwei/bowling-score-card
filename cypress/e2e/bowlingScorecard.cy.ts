@@ -397,3 +397,5 @@ describe('Bowling Scorecard tests', () => {
     })
   })
 })
+
+export {}

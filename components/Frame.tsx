@@ -1,4 +1,4 @@
-import { Frame as FrameType, Points } from '@/pages/data/types'
+import { Frame as FrameType, Points } from '@/constants/types'
 
 interface FrameProps {
   className?: string

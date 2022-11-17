@@ -1,4 +1,4 @@
-import { BowlNumber, Frame, FrameNumber, Points } from '@/pages/data/types'
+import { BowlNumber, Frame, FrameNumber, Points } from '@/constants/types'
 
 interface UpdateTotalScores {
   frames: Frame[]
