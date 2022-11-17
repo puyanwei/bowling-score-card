@@ -1,19 +1,3 @@
-export type Scores =
-  | '0'
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | '10'
-  | 'X'
-  | '/'
-  | ''
-
 export type ButtonLabels =
   | '0'
   | '1'
@@ -28,17 +12,17 @@ export type ButtonLabels =
   | '10'
 
 export type FrameNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
-export type Points = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+export type Points = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ''
 
 export interface Frame {
   frameNumber: number
-  first: Scores
-  second: Scores
-  third?: Scores
+  first: Points
+  second: Points
+  third?: Points
   didPrevFrameStrike: boolean
   didPrevFrameSpare: boolean
   totalScore: number
-  nextTwoBowls: [Scores, Scores]
+  nextTwoBowls: [Points, Points]
 }
 
 export interface ScoreCard {
