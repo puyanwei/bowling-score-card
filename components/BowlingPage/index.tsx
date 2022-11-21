@@ -10,6 +10,7 @@ import {
 } from '@/constants/types'
 import { updateNextTwoBowls } from './updateNextTwoBowls'
 import { updateTotalScores } from './updateTotalScores'
+import { PointsButtons } from '../PointsButtons'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -165,49 +166,45 @@ export function BowlingPage() {
     if (bowlNumber === 2) setRemainingPins(10)
     return
   }
+
   return (
-    <div data-testid='bowling-page'>
+    <div data-testid='bowling-page border-2'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
-      <div className='grid grid-cols-11 m-2 text-xl'>
-        <div className='col-span-11 col-start-2 space-x-2'>
-          <label className=''>{`First player's name?`}</label>
-          <input></input>
-          <button>Submit</button>
-        </div>
-        <div className='col-span-11 col-start-2 space-x-2'>
-          <label className=''>Add another player</label>
-          <button>Add</button>
-        </div>
-      </div>
-      {scoreCard.map((player, index) => (
-        <Player scoreCard={player} key={index} />
-      ))}
-      <br />
-      <div className='text-center'>
-        {!gameOver &&
-          labels.map((score, index) => (
-            <button
-              data-testid={`button-${index}`}
-              className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
-              key={index}
-              onClick={handleClick}
-              disabled={index > remainingPins}
-            >
-              {score}
-            </button>
-          ))}
-        {gameOver && (
+      <PlayerForm />
+      <div className='p-2 m-2 border-2 rounded-md'>
+        {gameOver ? (
           <div className='my-4 text-5xl' data-testid='game-over'>
             <h2>Game Over!</h2>
           </div>
+        ) : (
+          <PointsButtons
+            className='grid grid-cols-11'
+            handleClick={handleClick}
+            remainingPins={remainingPins}
+            reset={reset}
+          />
         )}
-        <button
-          data-testid='button-reset'
-          className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
-          onClick={() => reset()}
-        >
-          Reset
-        </button>
+        {scoreCard.map((player, index) => (
+          <Player scoreCard={player} key={index} />
+        ))}
+      </div>
+      <br />
+    </div>
+  )
+}
+
+function PlayerForm() {
+  const buttonStyle = `px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white text-sm`
+  return (
+    <div className='p-2 m-2 space-y-2 text-xl border-2 rounded-md'>
+      <div>
+        <label>{`First player's name?`}</label>
+        <input className='border-[1px] border-slate-200 rounded-md ml-2' />
+        <button className={buttonStyle}>Submit</button>
+      </div>
+      <div>
+        <label>Add another player</label>
+        <button className={buttonStyle}>Add</button>
       </div>
     </div>
   )
