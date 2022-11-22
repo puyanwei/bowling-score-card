@@ -7,6 +7,7 @@ import {
 import { Player } from '../Player'
 import {
   BowlNumber,
+  CurrentPlayerNumber,
   Frame,
   FrameNumber,
   Points,
@@ -21,12 +22,13 @@ import { FrameTitle } from '../FrameTitle'
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [bowlNumber, setBowlNumber] = useState<BowlNumber>(1)
-  const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
+  const [frameNumber, setFrameNumber] = useState<FrameNumber>(1) // current frame number
+  const [currentPlayer, setCurrentPlayer] = useState<CurrentPlayerNumber>(1)
   const [remainingPins, setRemainingPins] = useState<number>(10)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
   const [hasGameStarted, setGameStarted] = useState<boolean>(false)
 
-  const playerNumber = scoreCard.length
+  const totalPlayers = scoreCard.length
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const currentBowl = parseInt(e.currentTarget.innerText) as Points
@@ -38,7 +40,7 @@ export function BowlingPage() {
       frameNumber
     )
 
-    setScoreCard([{ ...scoreCard[playerNumber - 1], frames }])
+    setScoreCard([{ ...scoreCard[totalPlayers - 1], frames }])
     updateBoardPosition(currentBowl)
     if (isTheGameOver(frames, frameNumber)) setIsGameOver(true)
   }
@@ -71,7 +73,11 @@ export function BowlingPage() {
       return
     }
     setBowlNumber(bowlNumber === 1 ? 2 : 1)
-    if (bowlNumber === 2) setFrameNumber((frameNumber + 1) as FrameNumber)
+    if (totalPlayers === scoreCard.length && bowlNumber === 2) {
+      setFrameNumber((frameNumber + 1) as FrameNumber)
+    }
+    if (bowlNumber === 2)
+      setCurrentPlayer((currentPlayer + 1) as CurrentPlayerNumber)
     return
   }
 
@@ -85,9 +91,9 @@ export function BowlingPage() {
     bowlNumber: BowlNumber,
     frameNumber: FrameNumber
   ): Frame[] {
-    return scoreCard[playerNumber - 1].frames.map((frame: Frame, index) => {
+    return scoreCard[totalPlayers - 1].frames.map((frame: Frame, index) => {
       if (index !== frameNumber - 1) return frame
-      const previousFrame = scoreCard[playerNumber - 1].frames[index - 1]
+      const previousFrame = scoreCard[totalPlayers - 1].frames[index - 1]
       const first = resolveFirstBowl(currentBowl, frame, bowlNumber)
       const second = resolveSecondBowl(currentBowl, frame, bowlNumber)
       const third = resolveThirdBowl(currentBowl, frame, bowlNumber)
@@ -96,14 +102,14 @@ export function BowlingPage() {
       const didPrevFrameStrike = previousFrame?.first === 10
 
       const nextTwoBowls: [Points, Points] = updateNextTwoBowls(
-        scoreCard[playerNumber - 1].frames,
+        scoreCard[totalPlayers - 1].frames,
         frameNumber,
         first,
         second,
         didPrevFrameStrike
       )
       const totalScore: number = updateTotalScores({
-        frames: scoreCard[playerNumber - 1].frames,
+        frames: scoreCard[totalPlayers - 1].frames,
         bowlNumber,
         frameNumber,
         first,
@@ -178,7 +184,7 @@ export function BowlingPage() {
 
   function updatePlayerName(playerName: string) {
     const updatedScoreCard = scoreCard.map((player, index) => {
-      if (index !== playerNumber - 1) return player
+      if (index !== totalPlayers - 1) return player
       return { ...player, name: playerName }
     })
     setScoreCard(updatedScoreCard)
@@ -187,7 +193,7 @@ export function BowlingPage() {
   function addPlayer() {
     const updatedScoreCard = [
       ...scoreCard,
-      { ...scoreCard[playerNumber - 1], name: `Player ${playerNumber + 1}` },
+      { ...scoreCard[totalPlayers - 1], name: `Player ${totalPlayers + 1}` },
     ]
     const newScoreCard = [...updatedScoreCard]
     setScoreCard(newScoreCard)
@@ -198,7 +204,7 @@ export function BowlingPage() {
     setGameStarted(true)
   }
 
-  console.log(playerNumber)
+  console.log(totalPlayers)
 
   return (
     <div data-testid='bowling-page border-2'>
@@ -208,12 +214,12 @@ export function BowlingPage() {
           updatePlayerName={updatePlayerName}
           addPlayer={addPlayer}
           startGame={startGame}
-          playerNumber={playerNumber}
+          totalPlayers={totalPlayers}
         />
       )}
       <div className='p-2 m-2 border-2 rounded-md'>
         {isGameOver ? (
-          <GameOverBanner />
+          <GameOverBanner reset={reset} />
         ) : (
           hasGameStarted && (
             <PointsButtons
@@ -244,10 +250,19 @@ export function BowlingPage() {
   )
 }
 
-function GameOverBanner() {
+function GameOverBanner({ reset }: { reset: () => void }) {
   return (
-    <div className='my-4 text-5xl' data-testid='game-over'>
-      <h2>Game Over! player X wins!!</h2>
-    </div>
+    <>
+      <div className='my-4 text-5xl' data-testid='game-over'>
+        <h2>Game Over! player X wins!!</h2>
+      </div>
+      <button
+        data-testid='button-reset-game-end'
+        className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
+        onClick={() => reset()}
+      >
+        Reset
+      </button>
+    </>
   )
 }
