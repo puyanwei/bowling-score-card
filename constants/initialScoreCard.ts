@@ -1,4 +1,4 @@
-import { ButtonLabels, ScoreCard } from './types'
+import { ButtonLabels, FrameNumber, ScoreCard } from './types'
 
 export const initialScoreCard: ScoreCard[] = [
   {
@@ -112,3 +112,4 @@ export const labels: ButtonLabels[] = [
   '9',
   '10',
 ]
+export const frameNumbers: FrameNumber[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

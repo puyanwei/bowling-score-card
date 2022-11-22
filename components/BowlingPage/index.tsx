@@ -1,5 +1,9 @@
 import { useState, MouseEvent, Dispatch, SetStateAction, useRef } from 'react'
-import { initialScoreCard, labels } from '@/constants/initialScoreCard'
+import {
+  frameNumbers,
+  initialScoreCard,
+  labels,
+} from '@/constants/initialScoreCard'
 import { Player } from '../Player'
 import {
   BowlNumber,
@@ -12,6 +16,7 @@ import { updateNextTwoBowls } from './updateNextTwoBowls'
 import { updateTotalScores } from './updateTotalScores'
 import { PointsButtons } from '../PointsButtons'
 import { PlayerForm } from '../PlayerForm'
+import { FrameTitle } from '../FrameTitle'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -207,6 +212,16 @@ export function BowlingPage() {
             reset={reset}
           />
         )}
+        <div className='grid grid-cols-11'>
+          <span className='col-span-1' />
+          {frameNumbers.map((frameNumber, index) => (
+            <FrameTitle
+              frameNumber={frameNumber}
+              isLastFrame={index === frameNumbers.length - 1}
+              key={index}
+            />
+          ))}
+        </div>
         {scoreCard.map((player, index) => (
           <Player scoreCard={player} key={index} />
         ))}

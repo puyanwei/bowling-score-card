@@ -34,7 +34,7 @@ export function PlayerForm({
   return (
     <div className='p-2 m-2 space-y-2 text-xl border-2 rounded-md'>
       <div>
-        <label htmlFor='name'>Name of Player One?</label>
+        <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[playerNumber]}?`}</label>
         <input
           className='border-[1px] border-slate-200 rounded-md ml-2 px-2 py-1 text-sm'
           id='name'
@@ -53,12 +53,14 @@ export function PlayerForm({
           Update
         </button>
       </div>
-      <div>
-        <label>Add another player</label> {/* Limit to 8 players max */}
-        <button className={buttonStyle} onClick={() => addPlayer()}>
-          Add
-        </button>
-      </div>
+      {playerNumber < 8 && (
+        <div>
+          <label>Add another player</label> {/* Limit to 8 players max */}
+          <button className={buttonStyle} onClick={() => addPlayer()}>
+            Add
+          </button>
+        </div>
+      )}
     </div>
   )
 }
