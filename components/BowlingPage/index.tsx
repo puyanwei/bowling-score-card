@@ -20,6 +20,8 @@ export function BowlingPage() {
   const [remainingPins, setRemainingPins] = useState<number>(10)
   const [gameOver, setGameOver] = useState<boolean>(false)
 
+  const playerNumber = scoreCard.length
+
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const currentBowl = parseInt(e.currentTarget.innerText) as Points
     resolveRemainingPins(currentBowl, bowlNumber)
@@ -30,7 +32,7 @@ export function BowlingPage() {
       frameNumber
     )
 
-    setScoreCard([{ ...scoreCard[0], frames }])
+    setScoreCard([{ ...scoreCard[playerNumber - 1], frames }])
     updateBoardPosition(currentBowl)
     if (isGameOver(frames, frameNumber)) setGameOver(true)
   }
@@ -77,9 +79,9 @@ export function BowlingPage() {
     bowlNumber: BowlNumber,
     frameNumber: FrameNumber
   ): Frame[] {
-    return scoreCard[0].frames.map((frame: Frame, index) => {
+    return scoreCard[playerNumber - 1].frames.map((frame: Frame, index) => {
       if (index !== frameNumber - 1) return frame
-      const previousFrame = scoreCard[0].frames[index - 1]
+      const previousFrame = scoreCard[playerNumber - 1].frames[index - 1]
       const first = resolveFirstBowl(currentBowl, frame, bowlNumber)
       const second = resolveSecondBowl(currentBowl, frame, bowlNumber)
       const third = resolveThirdBowl(currentBowl, frame, bowlNumber)
@@ -88,14 +90,14 @@ export function BowlingPage() {
       const didPrevFrameStrike = previousFrame?.first === 10
 
       const nextTwoBowls: [Points, Points] = updateNextTwoBowls(
-        scoreCard[0].frames,
+        scoreCard[playerNumber - 1].frames,
         frameNumber,
         first,
         second,
         didPrevFrameStrike
       )
       const totalScore: number = updateTotalScores({
-        frames: scoreCard[0].frames,
+        frames: scoreCard[playerNumber - 1].frames,
         bowlNumber,
         frameNumber,
         first,
@@ -169,16 +171,30 @@ export function BowlingPage() {
   }
 
   function updatePlayerName(playerName: string) {
-    setScoreCard([{ ...scoreCard[0], name: playerName }])
+    console.log({ playerNumber })
+    setScoreCard([{ ...scoreCard[playerNumber - 1], name: playerName }])
     return
   }
+
+  function addPlayer() {
+    const updatedScoreCard = [
+      ...scoreCard,
+      { ...scoreCard[playerNumber - 1], name: `Player ${playerNumber + 1}` },
+    ]
+    const newScoreCard = [...updatedScoreCard]
+    setScoreCard(newScoreCard)
+    return
+  }
+
+  console.log(playerNumber)
 
   return (
     <div data-testid='bowling-page border-2'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
       <PlayerForm
         updatePlayerName={updatePlayerName}
-        playerNumber={scoreCard.length}
+        addPlayer={addPlayer}
+        playerNumber={playerNumber}
       />
       <div className='p-2 m-2 border-2 rounded-md'>
         {gameOver ? (
