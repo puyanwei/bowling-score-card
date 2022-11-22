@@ -14,6 +14,7 @@ const numbersToWordedNumbers: Record<number, string> = {
 interface PlayerFormProps {
   updatePlayerName: (playerName: string) => void
   addPlayer: () => void
+  startGame: () => void
   playerNumber: number
 }
 
@@ -21,6 +22,7 @@ export function PlayerForm({
   updatePlayerName,
   playerNumber,
   addPlayer,
+  startGame,
 }: PlayerFormProps) {
   const [playerName, setPlayerName] = useState<string>(``)
 
@@ -55,12 +57,18 @@ export function PlayerForm({
       </div>
       {playerNumber < 8 && (
         <div>
-          <label>Add another player</label> {/* Limit to 8 players max */}
+          <label>Add another player</label>
           <button className={buttonStyle} onClick={() => addPlayer()}>
             Add
           </button>
         </div>
       )}
+      <div>
+        <label>Start game</label>
+        <button className={buttonStyle} onClick={() => startGame()}>
+          Start
+        </button>
+      </div>
     </div>
   )
 }

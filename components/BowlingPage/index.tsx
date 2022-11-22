@@ -23,7 +23,8 @@ export function BowlingPage() {
   const [bowlNumber, setBowlNumber] = useState<BowlNumber>(1)
   const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
   const [remainingPins, setRemainingPins] = useState<number>(10)
-  const [gameOver, setGameOver] = useState<boolean>(false)
+  const [isGameOver, setIsGameOver] = useState<boolean>(false)
+  const [hasGameStarted, setGameStarted] = useState<boolean>(false)
 
   const playerNumber = scoreCard.length
 
@@ -39,10 +40,10 @@ export function BowlingPage() {
 
     setScoreCard([{ ...scoreCard[playerNumber - 1], frames }])
     updateBoardPosition(currentBowl)
-    if (isGameOver(frames, frameNumber)) setGameOver(true)
+    if (isTheGameOver(frames, frameNumber)) setIsGameOver(true)
   }
 
-  function isGameOver(frames: Frame[], frameNumber: FrameNumber): boolean {
+  function isTheGameOver(frames: Frame[], frameNumber: FrameNumber): boolean {
     const { first, second, third } = frames[frameNumber - 1]
     if (first === '') return false
     if (!!first && second === '') return false
@@ -176,9 +177,11 @@ export function BowlingPage() {
   }
 
   function updatePlayerName(playerName: string) {
-    console.log({ playerNumber })
-    setScoreCard([{ ...scoreCard[playerNumber - 1], name: playerName }])
-    return
+    const updatedScoreCard = scoreCard.map((player, index) => {
+      if (index !== playerNumber - 1) return player
+      return { ...player, name: playerName }
+    })
+    setScoreCard(updatedScoreCard)
   }
 
   function addPlayer() {
@@ -191,26 +194,35 @@ export function BowlingPage() {
     return
   }
 
+  function startGame() {
+    setGameStarted(true)
+  }
+
   console.log(playerNumber)
 
   return (
     <div data-testid='bowling-page border-2'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
-      <PlayerForm
-        updatePlayerName={updatePlayerName}
-        addPlayer={addPlayer}
-        playerNumber={playerNumber}
-      />
+      {!hasGameStarted && (
+        <PlayerForm
+          updatePlayerName={updatePlayerName}
+          addPlayer={addPlayer}
+          startGame={startGame}
+          playerNumber={playerNumber}
+        />
+      )}
       <div className='p-2 m-2 border-2 rounded-md'>
-        {gameOver ? (
+        {isGameOver ? (
           <GameOverBanner />
         ) : (
-          <PointsButtons
-            className='grid grid-cols-11'
-            handleClick={handleClick}
-            remainingPins={remainingPins}
-            reset={reset}
-          />
+          hasGameStarted && (
+            <PointsButtons
+              className='grid grid-cols-11'
+              handleClick={handleClick}
+              remainingPins={remainingPins}
+              reset={reset}
+            />
+          )
         )}
         <div className='grid grid-cols-11'>
           <span className='col-span-1' />
@@ -222,9 +234,11 @@ export function BowlingPage() {
             />
           ))}
         </div>
-        {scoreCard.map((player, index) => (
-          <Player scoreCard={player} key={index} />
-        ))}
+        <div className='grid grid-cols-11 text-2xl'>
+          {scoreCard.map((player, index) => (
+            <Player scoreCard={player} key={index} />
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -233,7 +247,7 @@ export function BowlingPage() {
 function GameOverBanner() {
   return (
     <div className='my-4 text-5xl' data-testid='game-over'>
-      <h2>Game Over!</h2>
+      <h2>Game Over! player X wins!!</h2>
     </div>
   )
 }
