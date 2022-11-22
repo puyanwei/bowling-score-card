@@ -43,5 +43,5 @@ interface PlayerName {
 }
 
 function PlayerName({ name, className }: PlayerName) {
-  return <div className={`pl-2 ${className}`}>{name}</div>
+  return <div className={`pl-2 break-words ${className}`}>{name}</div>
 }

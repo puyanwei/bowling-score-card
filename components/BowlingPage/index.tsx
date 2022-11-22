@@ -1,4 +1,4 @@
-import { useState, MouseEvent, Dispatch, SetStateAction } from 'react'
+import { useState, MouseEvent, Dispatch, SetStateAction, useRef } from 'react'
 import { initialScoreCard, labels } from '@/constants/initialScoreCard'
 import { Player } from '../Player'
 import {
@@ -11,6 +11,7 @@ import {
 import { updateNextTwoBowls } from './updateNextTwoBowls'
 import { updateTotalScores } from './updateTotalScores'
 import { PointsButtons } from '../PointsButtons'
+import { PlayerForm } from '../PlayerForm'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -167,15 +168,21 @@ export function BowlingPage() {
     return
   }
 
+  function updatePlayerName(playerName: string) {
+    setScoreCard([{ ...scoreCard[0], name: playerName }])
+    return
+  }
+
   return (
     <div data-testid='bowling-page border-2'>
       <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
-      <PlayerForm />
+      <PlayerForm
+        updatePlayerName={updatePlayerName}
+        playerNumber={scoreCard.length}
+      />
       <div className='p-2 m-2 border-2 rounded-md'>
         {gameOver ? (
-          <div className='my-4 text-5xl' data-testid='game-over'>
-            <h2>Game Over!</h2>
-          </div>
+          <GameOverBanner />
         ) : (
           <PointsButtons
             className='grid grid-cols-11'
@@ -188,24 +195,14 @@ export function BowlingPage() {
           <Player scoreCard={player} key={index} />
         ))}
       </div>
-      <br />
     </div>
   )
 }
 
-function PlayerForm() {
-  const buttonStyle = `px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white text-sm`
+function GameOverBanner() {
   return (
-    <div className='p-2 m-2 space-y-2 text-xl border-2 rounded-md'>
-      <div>
-        <label>{`First player's name?`}</label>
-        <input className='border-[1px] border-slate-200 rounded-md ml-2' />
-        <button className={buttonStyle}>Submit</button>
-      </div>
-      <div>
-        <label>Add another player</label>
-        <button className={buttonStyle}>Add</button>
-      </div>
+    <div className='my-4 text-5xl' data-testid='game-over'>
+      <h2>Game Over!</h2>
     </div>
   )
 }
