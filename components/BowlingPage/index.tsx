@@ -22,7 +22,7 @@ import { FrameTitle } from '../FrameTitle'
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [bowlNumber, setBowlNumber] = useState<BowlNumber>(1)
-  const [frameNumber, setFrameNumber] = useState<FrameNumber>(1) // current frame number
+  const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
   const [currentPlayer, setCurrentPlayer] = useState<CurrentPlayerNumber>(1)
   const [remainingPins, setRemainingPins] = useState<number>(10)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
@@ -39,8 +39,11 @@ export function BowlingPage() {
       bowlNumber,
       frameNumber
     )
-
-    setScoreCard([{ ...scoreCard[totalPlayers - 1], frames }])
+    const updatedScoreCard = scoreCard.map((player, index) => {
+      if (index !== currentPlayer - 1) return player
+      return { ...player, frames }
+    })
+    setScoreCard([...updatedScoreCard])
     updateBoardPosition(currentBowl)
     if (isTheGameOver(frames, frameNumber)) setIsGameOver(true)
   }
@@ -58,6 +61,9 @@ export function BowlingPage() {
   }
 
   function updateBoardPosition(currentBowl: Points) {
+    const isLastPlayer = currentPlayer === scoreCard.length
+    const nextPlayer = ((currentPlayer % totalPlayers) +
+      1) as CurrentPlayerNumber
     // Tenth frame first bowl strike
     if (frameNumber === 10) {
       if (bowlNumber === 1 && isStrike(currentBowl)) setRemainingPins(10)
@@ -69,15 +75,16 @@ export function BowlingPage() {
     // Strike on first bowl
     if (isStrike(currentBowl)) {
       setRemainingPins(10)
-      setFrameNumber((frameNumber + 1) as FrameNumber)
-      return
+      setCurrentPlayer(nextPlayer)
+      setBowlNumber(1)
+      if (isLastPlayer) setFrameNumber((frameNumber + 1) as FrameNumber)
     }
-    setBowlNumber(bowlNumber === 1 ? 2 : 1)
-    if (totalPlayers === scoreCard.length && bowlNumber === 2) {
+
+    if (isLastPlayer && bowlNumber === 2)
       setFrameNumber((frameNumber + 1) as FrameNumber)
-    }
-    if (bowlNumber === 2)
-      setCurrentPlayer((currentPlayer + 1) as CurrentPlayerNumber)
+
+    if (bowlNumber === 2) setCurrentPlayer(nextPlayer)
+    if (!isStrike(currentBowl)) setBowlNumber(bowlNumber === 1 ? 2 : 1)
     return
   }
 
@@ -91,9 +98,9 @@ export function BowlingPage() {
     bowlNumber: BowlNumber,
     frameNumber: FrameNumber
   ): Frame[] {
-    return scoreCard[totalPlayers - 1].frames.map((frame: Frame, index) => {
+    return scoreCard[currentPlayer - 1].frames.map((frame: Frame, index) => {
       if (index !== frameNumber - 1) return frame
-      const previousFrame = scoreCard[totalPlayers - 1].frames[index - 1]
+      const previousFrame = scoreCard[currentPlayer - 1].frames[index - 1]
       const first = resolveFirstBowl(currentBowl, frame, bowlNumber)
       const second = resolveSecondBowl(currentBowl, frame, bowlNumber)
       const third = resolveThirdBowl(currentBowl, frame, bowlNumber)
@@ -102,14 +109,14 @@ export function BowlingPage() {
       const didPrevFrameStrike = previousFrame?.first === 10
 
       const nextTwoBowls: [Points, Points] = updateNextTwoBowls(
-        scoreCard[totalPlayers - 1].frames,
+        scoreCard[currentPlayer - 1].frames,
         frameNumber,
         first,
         second,
         didPrevFrameStrike
       )
       const totalScore: number = updateTotalScores({
-        frames: scoreCard[totalPlayers - 1].frames,
+        frames: scoreCard[currentPlayer - 1].frames,
         bowlNumber,
         frameNumber,
         first,
@@ -203,8 +210,6 @@ export function BowlingPage() {
   function startGame() {
     setGameStarted(true)
   }
-
-  console.log(totalPlayers)
 
   return (
     <div data-testid='bowling-page border-2'>
