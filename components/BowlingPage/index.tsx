@@ -49,7 +49,10 @@ export function BowlingPage() {
   }
 
   function isTheGameOver(frames: Frame[], frameNumber: FrameNumber): boolean {
+    const isLastPlayer = currentPlayer === scoreCard.length
     const { first, second, third } = frames[frameNumber - 1]
+
+    if (!isLastPlayer) return false
     if (first === '') return false
     if (!!first && second === '') return false
     if (frameNumber !== 10) return false
@@ -62,17 +65,21 @@ export function BowlingPage() {
 
   function updateBoardPosition(currentBowl: Points) {
     const isLastPlayer = currentPlayer === scoreCard.length
+    const isTenthFrame = frameNumber === 10
     const nextPlayer = ((currentPlayer % totalPlayers) +
       1) as CurrentPlayerNumber
-    // Tenth frame first bowl strike
-    if (frameNumber === 10) {
+
+    if (isTenthFrame) {
       if (bowlNumber === 1 && isStrike(currentBowl)) setRemainingPins(10)
       if (bowlNumber === 1) setBowlNumber((bowlNumber + 1) as BowlNumber)
       if (bowlNumber === 2) setBowlNumber((bowlNumber + 1) as BowlNumber)
+      if (bowlNumber === 3) {
+        setCurrentPlayer(nextPlayer)
+        setBowlNumber(1)
+      }
       return
     }
 
-    // Strike on first bowl
     if (isStrike(currentBowl)) {
       setRemainingPins(10)
       setCurrentPlayer(nextPlayer)
@@ -84,7 +91,8 @@ export function BowlingPage() {
       setFrameNumber((frameNumber + 1) as FrameNumber)
 
     if (bowlNumber === 2) setCurrentPlayer(nextPlayer)
-    if (!isStrike(currentBowl)) setBowlNumber(bowlNumber === 1 ? 2 : 1)
+    if (!isTenthFrame && !isStrike(currentBowl))
+      setBowlNumber(bowlNumber === 1 ? 2 : 1)
     return
   }
 
