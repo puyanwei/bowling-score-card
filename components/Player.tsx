@@ -1,4 +1,5 @@
 import { ScoreCard } from '@/constants/types'
+import { ReactNode } from 'react'
 import { Frame } from './Frame'
 
 interface PlayerProps {
@@ -12,10 +13,17 @@ export function Player({
 }: PlayerProps) {
   if (!name) throw new Error('Player name not found')
   if (!frames || !frames.length) throw new Error('Scorecard data not found')
-  const currentPlayerStyle = isCurrentPlayer ? 'underline' : 'none'
+
+  const currentPlayerStyle = isCurrentPlayer
+    ? 'border-[1px] border-slate-400 rounded p-2'
+    : 'none'
   return (
     <>
-      <PlayerName className={`${currentPlayerStyle} col-span-1`} name={name} />
+      <PlayerName>
+        <span className={`px-2 break-words self-center text-center col-span-1`}>
+          <p className={currentPlayerStyle}>{name}</p>
+        </span>
+      </PlayerName>
       {frames.map((frame, index) => (
         <Frame
           testId={`${name} frame-${index + 1}`}
@@ -29,13 +37,6 @@ export function Player({
   )
 }
 
-interface PlayerName {
-  name: string
-  className: string
-}
-
-function PlayerName({ name, className }: PlayerName) {
-  return (
-    <div className={`px-2 break-words self-center ${className}`}>{name}</div>
-  )
+function PlayerName({ children }: { children: ReactNode }) {
+  return <>{children}</>
 }
