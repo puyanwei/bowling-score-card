@@ -35,5 +35,7 @@ interface PlayerName {
 }
 
 function PlayerName({ name, className }: PlayerName) {
-  return <div className={`px-2 break-words ${className}`}>{name}</div>
+  return (
+    <div className={`px-2 break-words self-center ${className}`}>{name}</div>
+  )
 }
