@@ -3,14 +3,19 @@ import { Frame } from './Frame'
 
 interface PlayerProps {
   scoreCard: ScoreCard
+  isCurrentPlayer: boolean
 }
 
-export function Player({ scoreCard: { name, frames } }: PlayerProps) {
+export function Player({
+  scoreCard: { name, frames },
+  isCurrentPlayer,
+}: PlayerProps) {
   if (!name) throw new Error('Player name not found')
   if (!frames || !frames.length) throw new Error('Scorecard data not found')
+  const currentPlayerStyle = isCurrentPlayer ? 'underline' : 'none'
   return (
     <>
-      <PlayerName className='col-span-1' name={name} />
+      <PlayerName className={`${currentPlayerStyle} col-span-1`} name={name} />
       {frames.map((frame, index) => (
         <Frame
           testId={`${name} frame-${index + 1}`}
@@ -30,5 +35,5 @@ interface PlayerName {
 }
 
 function PlayerName({ name, className }: PlayerName) {
-  return <div className={`pl-2 break-words ${className}`}>{name}</div>
+  return <div className={`px-2 break-words ${className}`}>{name}</div>
 }

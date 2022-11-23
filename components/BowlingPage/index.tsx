@@ -255,7 +255,11 @@ export function BowlingPage() {
         </div>
         <div className='grid grid-cols-11 text-2xl'>
           {scoreCard.map((player, index) => (
-            <Player scoreCard={player} key={index} />
+            <Player
+              scoreCard={player}
+              isCurrentPlayer={currentPlayer === index + 1}
+              key={index}
+            />
           ))}
         </div>
       </div>
