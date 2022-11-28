@@ -232,7 +232,7 @@ export function BowlingPage() {
         />
       )}
       <div className='p-2 m-2 border-2 rounded-md'>
-        {hasGameStarted && isGameOver && (
+        {hasGameStarted && !isGameOver && (
           <PointsButtons
             className='grid grid-cols-11'
             handleClick={handleClick}
@@ -259,7 +259,7 @@ export function BowlingPage() {
             />
           ))}
         </div>
-        {isGameOver && <GameOverBanner reset={reset} winner={scoreCard} />}
+        {isGameOver && <GameOverBanner reset={reset} scoreCard={scoreCard} />}
       </div>
     </div>
   )

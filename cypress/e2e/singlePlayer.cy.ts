@@ -1,9 +1,8 @@
-describe('Bowling Scorecard tests', () => {
+describe('Single player tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000')
 
     cy.get('[data-testid="start-game-btn"]').click()
-
     cy.get('[data-testid="frame-1-first-bowl"]').as('frame1bowl1')
     cy.get('[data-testid="frame-1-second-bowl"]').as('frame1bowl2')
     cy.get('[data-testid="frame-2-first-bowl"]').as('frame2bowl1')

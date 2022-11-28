@@ -21,13 +21,16 @@ export function Player({
     <>
       <PlayerName>
         <span className={`px-2 break-words self-center text-center col-span-1`}>
-          <p className={currentPlayerStyle}>{name}</p>
+          <p data-testid={`name-${name}`} className={currentPlayerStyle}>
+            {name}
+          </p>
         </span>
       </PlayerName>
       {frames.map((frame, index) => (
         <Frame
           testId={`${name} frame-${index + 1}`}
           className=''
+          player={name}
           frame={frame}
           isTenthFrame={frame.frameNumber === 10}
           key={index}

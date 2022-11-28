@@ -1,18 +1,21 @@
 import { Frame as FrameType, Points } from '@/constants/types'
+import { ReactNode } from 'react'
 
 interface FrameProps {
   className?: string
   testId?: string
+  player: string
   frame: FrameType
   isTenthFrame: boolean
 }
 
-export const Frame = ({
+export function Frame({
   frame,
   isTenthFrame,
   className,
   testId,
-}: FrameProps) => {
+  player,
+}: FrameProps) {
   if (!frame) throw new Error('Scorecard data not found')
 
   const { totalScore, first, second, third, frameNumber } = { ...frame }
@@ -42,25 +45,16 @@ export const Frame = ({
       data-testid={testId}
     >
       <div className='flex'>
-        <span
-          data-testid={`frame-${frameNumber}-first-bowl`}
-          className={bowlStyle}
-        >
+        <Bowl className={bowlStyle} data-testid={`${player}-first-bowl`}>
           {first === 10 ? 'X' : first}
-        </span>
-        <span
-          data-testid={`frame-${frameNumber}-second-bowl`}
-          className={bowlStyle}
-        >
+        </Bowl>
+        <Bowl data-testid={`${player}-second-bowl`} className={bowlStyle}>
           {resolveSecondBowl(first, second)}
-        </span>
+        </Bowl>
         {isTenthFrame && (
-          <span
-            data-testid={`frame-${frameNumber}-third-bowl`}
-            className={bowlStyle}
-          >
+          <Bowl data-testid={`${player}-third-bowl`} className={bowlStyle}>
             {(!!third && third === 10 ? 'X' : third) || ''}
-          </span>
+          </Bowl>
         )}
       </div>
       <div className='flex flex-grow' />
@@ -71,5 +65,20 @@ export const Frame = ({
         {totalScore}
       </div>
     </div>
+  )
+}
+
+interface BowlProps {
+  className?: string
+  testId?: string
+  children: ReactNode
+}
+
+function Bowl({ children, className, testId }: BowlProps) {
+  console.log({ testId })
+  return (
+    <span className={className} data-testid={testId}>
+      {children}
+    </span>
   )
 }

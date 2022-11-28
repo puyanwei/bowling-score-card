@@ -63,7 +63,7 @@ export function PlayerForm({
         />
         <button
           className={buttonStyle}
-          data-testid='update-name-btn'
+          data-testid='update-player-btn'
           onClick={() => handleUpdateName()}
         >
           Update
