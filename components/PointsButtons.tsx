@@ -14,6 +14,8 @@ export function PointsButtons({
   reset,
   remainingPins,
 }: PointsButtonProps) {
+  const leftMarginInverted = '-ml-[1px]'
+
   return (
     <div className={`my-4 ${className}`}>
       <span className='col-span-1' />
@@ -21,7 +23,8 @@ export function PointsButtons({
         {labels.map((score, index) => (
           <button
             data-testid={`button-${index}`}
-            className='px-4 py-1 m-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none'
+            className={`px-4 py-1 mx-1 rounded enabled:hover:text-white bg-slate-200 enabled:hover:bg-slate-800 disabled:opacity-50 disabled:hover:none 
+            ${index === 0 && leftMarginInverted}`}
             key={index}
             onClick={handleClick}
             disabled={index > remainingPins}

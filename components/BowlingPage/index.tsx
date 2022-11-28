@@ -18,6 +18,7 @@ import { updateTotalScores } from './updateTotalScores'
 import { PointsButtons } from '../PointsButtons'
 import { PlayerForm } from '../PlayerForm'
 import { FrameTitle } from '../FrameTitle'
+import { GameOverBanner } from '../GameOverBanner'
 
 export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
@@ -63,7 +64,7 @@ export function BowlingPage() {
     return true
   }
 
-  function updateBoardPosition(currentBowl: Points) {
+  function updateBoardPosition(currentBowl: Points): void {
     const isLastPlayer = currentPlayer === scoreCard.length
     const isTenthFrame = frameNumber === 10
     const nextPlayer = ((currentPlayer % totalPlayers) +
@@ -231,17 +232,13 @@ export function BowlingPage() {
         />
       )}
       <div className='p-2 m-2 border-2 rounded-md'>
-        {isGameOver ? (
-          <GameOverBanner reset={reset} />
-        ) : (
-          hasGameStarted && (
-            <PointsButtons
-              className='grid grid-cols-11'
-              handleClick={handleClick}
-              remainingPins={remainingPins}
-              reset={reset}
-            />
-          )
+        {hasGameStarted && isGameOver && (
+          <PointsButtons
+            className='grid grid-cols-11'
+            handleClick={handleClick}
+            remainingPins={remainingPins}
+            reset={reset}
+          />
         )}
         <div className='grid grid-cols-11'>
           <span className='col-span-1' />
@@ -262,24 +259,8 @@ export function BowlingPage() {
             />
           ))}
         </div>
+        {isGameOver && <GameOverBanner reset={reset} winner={scoreCard} />}
       </div>
     </div>
-  )
-}
-
-function GameOverBanner({ reset }: { reset: () => void }) {
-  return (
-    <>
-      <div className='my-4 text-5xl' data-testid='game-over'>
-        <h2>Game Over! player X wins!!</h2>
-      </div>
-      <button
-        data-testid='button-reset-game-end'
-        className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
-        onClick={() => reset()}
-      >
-        Reset
-      </button>
-    </>
   )
 }

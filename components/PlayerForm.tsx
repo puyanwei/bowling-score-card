@@ -50,6 +50,7 @@ export function PlayerForm({
         <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[totalPlayers]}?`}</label>
         <input
           className='border-[1px] border-slate-200 rounded-md ml-2 px-2 py-1 text-sm'
+          data-testid='input-player-name'
           id='name'
           name='name'
           value={playerName}
@@ -60,21 +61,33 @@ export function PlayerForm({
           }
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyPress(e)}
         />
-        <button className={buttonStyle} onClick={() => handleUpdateName()}>
+        <button
+          className={buttonStyle}
+          data-testid='update-name-btn'
+          onClick={() => handleUpdateName()}
+        >
           Update
         </button>
       </div>
       {totalPlayers < 8 && (
         <div>
           <label>Add another player</label>
-          <button className={buttonStyle} onClick={() => handleAddPlayer()}>
+          <button
+            className={buttonStyle}
+            onClick={() => handleAddPlayer()}
+            data-testid='add-player-btn'
+          >
             Add
           </button>
         </div>
       )}
       <div>
         <label>Start game</label>
-        <button className={buttonStyle} onClick={() => startGame()}>
+        <button
+          className={buttonStyle}
+          onClick={() => startGame()}
+          data-testid='start-game-btn'
+        >
           Start
         </button>
       </div>
