@@ -256,6 +256,7 @@ export function BowlingPage() {
               scoreCard={player}
               isCurrentPlayer={currentPlayer === index + 1}
               key={index}
+              index={index as CurrentPlayerNumber}
             />
           ))}
         </div>

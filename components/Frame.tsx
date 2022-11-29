@@ -2,20 +2,12 @@ import { Frame as FrameType, Points } from '@/constants/types'
 import { ReactNode } from 'react'
 
 interface FrameProps {
-  className?: string
   testId?: string
-  player: string
   frame: FrameType
   isTenthFrame: boolean
 }
 
-export function Frame({
-  frame,
-  isTenthFrame,
-  className,
-  testId,
-  player,
-}: FrameProps) {
+export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
   if (!frame) throw new Error('Scorecard data not found')
 
   const { totalScore, first, second, third, frameNumber } = { ...frame }
@@ -39,20 +31,21 @@ export function Frame({
     ? 'border-r-[1px] border-l-[1px]'
     : 'border-l-[1px]'
   const bowlStyle = `w-8 h-8 border-r-[1px] border-b-[1px] border-black text-center`
+
   return (
     <div
-      className={`flex flex-col border-black border-b-[1px] w-full h-24 ${borderEndsX} ${className}`}
+      className={`flex flex-col border-black border-b-[1px] w-full h-24 ${borderEndsX}`}
       data-testid={testId}
     >
       <div className='flex'>
-        <Bowl className={bowlStyle} data-testid={`${player}-first-bowl`}>
+        <Bowl className={bowlStyle} testId={`${testId}-first-bowl`}>
           {first === 10 ? 'X' : first}
         </Bowl>
-        <Bowl data-testid={`${player}-second-bowl`} className={bowlStyle}>
+        <Bowl testId={`${testId}-second-bowl`} className={bowlStyle}>
           {resolveSecondBowl(first, second)}
         </Bowl>
         {isTenthFrame && (
-          <Bowl data-testid={`${player}-third-bowl`} className={bowlStyle}>
+          <Bowl testId={`${testId}-third-bowl`} className={bowlStyle}>
             {(!!third && third === 10 ? 'X' : third) || ''}
           </Bowl>
         )}
