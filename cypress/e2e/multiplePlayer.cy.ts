@@ -1,93 +1,160 @@
 describe('Multiple player tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000')
+  })
+  context('Default initial values', () => {
+    it.only('2 players should have the correct default values', () => {
+      cy.get('[data-testid="input-player-name"]').type('John')
+      cy.get('[data-testid="update-player-btn"]').click()
+      cy.get('[data-testid="add-player-btn"]').click()
+      cy.get('[data-testid="input-player-name"]').type('Bob')
+      cy.get('[data-testid="update-player-btn"]').click()
+      cy.get('[data-testid="start-game-btn"]').click()
 
-    cy.get('[data-testid="input-player-name"]').type('John')
-    cy.get('[data-testid="update-player-btn"]').click()
-    cy.get('[data-testid="add-player-btn"]').click()
-    cy.get('[data-testid="input-player-name"]').type('Bob')
-    cy.get('[data-testid="update-player-btn"]').click()
-    cy.get('[data-testid="start-game-btn"]').click()
+      cy.get('[data-testid="player-1-name"]').contains('John')
+      cy.get('[data-testid="player-2-name"]').contains('Bob')
 
-    cy.get('[data-testid="frame-1-first-bowl"]').as('frame1bowl1')
-    cy.get('[data-testid="frame-1-second-bowl"]').as('frame1bowl2')
-    cy.get('[data-testid="frame-2-first-bowl"]').as('frame2bowl1')
-    cy.get('[data-testid="frame-2-second-bowl"]').as('frame2bowl2')
-    cy.get('[data-testid="frame-3-first-bowl"]').as('frame3bowl1')
-    cy.get('[data-testid="frame-3-second-bowl"]').as('frame3bowl2')
-    cy.get('[data-testid="frame-4-first-bowl"]').as('frame4bowl1')
-    cy.get('[data-testid="frame-4-second-bowl"]').as('frame4bowl2')
-    cy.get('[data-testid="frame-5-first-bowl"]').as('frame5bowl1')
-    cy.get('[data-testid="frame-5-second-bowl"]').as('frame5bowl2')
-    cy.get('[data-testid="frame-6-first-bowl"]').as('frame6bowl1')
-    cy.get('[data-testid="frame-6-second-bowl"]').as('frame6bowl2')
-    cy.get('[data-testid="frame-7-first-bowl"]').as('frame7bowl1')
-    cy.get('[data-testid="frame-7-second-bowl"]').as('frame7bowl2')
-    cy.get('[data-testid="frame-8-first-bowl"]').as('frame8bowl1')
-    cy.get('[data-testid="frame-8-second-bowl"]').as('frame8bowl2')
-    cy.get('[data-testid="frame-9-first-bowl"]').as('frame9bowl1')
-    cy.get('[data-testid="frame-9-second-bowl"]').as('frame9bowl2')
-    cy.get('[data-testid="frame-10-first-bowl"]').as('frame10bowl1')
-    cy.get('[data-testid="frame-10-second-bowl"]').as('frame10bowl2')
-    cy.get('[data-testid="frame-10-third-bowl"]').as('frame10bowl3')
-    cy.get('[data-testid="frame-1-total-score"]').as('total1')
-    cy.get('[data-testid="frame-2-total-score"]').as('total2')
-    cy.get('[data-testid="frame-3-total-score"]').as('total3')
-    cy.get('[data-testid="frame-4-total-score"]').as('total4')
-    cy.get('[data-testid="frame-5-total-score"]').as('total5')
-    cy.get('[data-testid="frame-6-total-score"]').as('total6')
-    cy.get('[data-testid="frame-7-total-score"]').as('total7')
-    cy.get('[data-testid="frame-8-total-score"]').as('total8')
-    cy.get('[data-testid="frame-9-total-score"]').as('total9')
-    cy.get('[data-testid="frame-10-total-score"]').as('total10')
+      cy.get('[data-testid="player-1-frame-1-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-1-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-2-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-2-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-3-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-3-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-4-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-4-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-5-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-5-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-6-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-6-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-7-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-7-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-8-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-8-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-9-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-9-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-10-first-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-10-second-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-10-third-bowl"]').should(
+        'have.text',
+        ''
+      )
+      cy.get('[data-testid="player-1-frame-1-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-2-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-3-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-4-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-5-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-6-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-7-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-8-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-9-total-score"]').should(
+        'have.text',
+        '0'
+      )
+      cy.get('[data-testid="player-1-frame-10-total-score"]').should(
+        'have.text',
+        '0'
+      )
 
-    cy.get('[data-testid="button-0"]').as('button0')
-    cy.get('[data-testid="button-1"]').as('button1')
-    cy.get('[data-testid="button-2"]').as('button2')
-    cy.get('[data-testid="button-3"]').as('button3')
-    cy.get('[data-testid="button-4"]').as('button4')
-    cy.get('[data-testid="button-5"]').as('button5')
-    cy.get('[data-testid="button-6"]').as('button6')
-    cy.get('[data-testid="button-7"]').as('button7')
-    cy.get('[data-testid="button-8"]').as('button8')
-    cy.get('[data-testid="button-9"]').as('button9')
-    cy.get('[data-testid="button-10"]').as('button10')
-    cy.get('[data-testid="button-reset"]').as('buttonReset')
-
-    cy.get('@frame1bowl1').should('have.text', '')
-    cy.get('@frame1bowl2').should('have.text', '')
-    cy.get('@frame2bowl1').should('have.text', '')
-    cy.get('@frame2bowl2').should('have.text', '')
-    cy.get('@frame3bowl1').should('have.text', '')
-    cy.get('@frame3bowl2').should('have.text', '')
-    cy.get('@frame4bowl1').should('have.text', '')
-    cy.get('@frame4bowl2').should('have.text', '')
-    cy.get('@frame5bowl1').should('have.text', '')
-    cy.get('@frame5bowl2').should('have.text', '')
-    cy.get('@frame6bowl1').should('have.text', '')
-    cy.get('@frame6bowl2').should('have.text', '')
-    cy.get('@frame7bowl1').should('have.text', '')
-    cy.get('@frame7bowl2').should('have.text', '')
-    cy.get('@frame8bowl1').should('have.text', '')
-    cy.get('@frame8bowl2').should('have.text', '')
-    cy.get('@frame9bowl1').should('have.text', '')
-    cy.get('@frame9bowl2').should('have.text', '')
-    cy.get('@frame10bowl1').should('have.text', '')
-    cy.get('@frame10bowl2').should('have.text', '')
-    cy.get('@frame10bowl3').should('have.text', '')
-    cy.get('@total1').should('have.text', '0')
-    cy.get('@total2').should('have.text', '0')
-    cy.get('@total3').should('have.text', '0')
-    cy.get('@total4').should('have.text', '0')
-    cy.get('@total5').should('have.text', '0')
-    cy.get('@total6').should('have.text', '0')
-    cy.get('@total7').should('have.text', '0')
-    cy.get('@total8').should('have.text', '0')
-    cy.get('@total9').should('have.text', '0')
-    cy.get('@total10').should('have.text', '0')
+      cy.get('[data-testid="button-0"]').as('button0')
+      cy.get('[data-testid="button-1"]').as('button1')
+      cy.get('[data-testid="button-2"]').as('button2')
+      cy.get('[data-testid="button-3"]').as('button3')
+      cy.get('[data-testid="button-4"]').as('button4')
+      cy.get('[data-testid="button-5"]').as('button5')
+      cy.get('[data-testid="button-6"]').as('button6')
+      cy.get('[data-testid="button-7"]').as('button7')
+      cy.get('[data-testid="button-8"]').as('button8')
+      cy.get('[data-testid="button-9"]').as('button9')
+      cy.get('[data-testid="button-10"]').as('button10')
+      cy.get('[data-testid="button-reset"]').as('buttonReset')
+    })
   })
   context('Bowl box score interactions only', () => {
-    it.only('pressing non spare or strike buttons renders the chosen numbers in the scorecard', () => {
+    it('pressing non spare or strike buttons renders the chosen numbers in the scorecard', () => {
       cy.get('@button0').click().get('@frame1bowl1').should('have.text', '0')
       cy.get('@button1').click().get('@frame1bowl2').should('have.text', '1')
       cy.get('@button0').click().get('@frame2bowl1').should('have.text', '0')
