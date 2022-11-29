@@ -51,10 +51,7 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
         )}
       </div>
       <div className='flex flex-grow' />
-      <div
-        data-testid={`frame-${frameNumber}-total-score`}
-        className='p-2 text-3xl'
-      >
+      <div data-testid={`${testId}-total-score`} className='p-2 text-3xl'>
         {totalScore}
       </div>
     </div>
