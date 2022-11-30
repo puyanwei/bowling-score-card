@@ -10,7 +10,7 @@ interface FrameProps {
 export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
   if (!frame) throw new Error('Scorecard data not found')
 
-  const { totalScore, first, second, third, frameNumber } = { ...frame }
+  const { totalScore, first, second, third } = { ...frame }
   function resolveSecondBowl(first: Points, second: Points): string {
     const isTenthFrameDoubleStrike =
       frame.frameNumber === 10 && first === 10 && second === 10
@@ -65,7 +65,6 @@ interface BowlProps {
 }
 
 function Bowl({ children, className, testId }: BowlProps) {
-  console.log({ testId })
   return (
     <span className={className} data-testid={testId}>
       {children}

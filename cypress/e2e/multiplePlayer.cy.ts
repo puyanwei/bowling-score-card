@@ -213,7 +213,7 @@ describe('Multiple player tests', () => {
       cy.getById('player-2-frame-10-second-bowl').should('have.text', '1')
       cy.getById('player-2-frame-10-total-score').should('have.text', '73')
 
-      cy.getById('game-over').should('have.text', 'Game over - the winner is ')
+      cy.getById('game-over').should('have.text', 'Game over - the winner is Joanna')
     })
     //   it('a forward slash should show in the UI to represent a spare', () => {
     //     cy.get('@button6').click().get('@frame1bowl1').should('have.text', '6')

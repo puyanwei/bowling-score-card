@@ -8,13 +8,13 @@ interface GameOverBannerProps {
 export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
   function resolveWinner(scoreCard: ScoreCard[]): string {
     const winningScores = scoreCard.map((player) => player.frames[9].totalScore)
-    const maxScore = Math.max(...winningScores)
-    return ''
+    const topScore = Math.max(...winningScores)
+    const winningPlayerIndex = winningScores.indexOf(topScore)
+    const winner = scoreCard[winningPlayerIndex].name
+    return winner
   }
 
   const winner = resolveWinner(scoreCard)
-  // TODO: RESOLVE WINNER
-
   const winningStatement = `Game over - the winner is ${winner}`
 
   return (
