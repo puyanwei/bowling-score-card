@@ -67,13 +67,24 @@ export function BowlingPage() {
   function updateBoardPosition(currentBowl: Points): void {
     const isLastPlayer = currentPlayer === scoreCard.length
     const isTenthFrame = frameNumber === 10
+    const tenthFrameFirstBowl = scoreCard[currentPlayer - 1].frames[9].first
     const nextPlayer = ((currentPlayer % totalPlayers) +
       1) as CurrentPlayerNumber
 
     if (isTenthFrame) {
       if (bowlNumber === 1 && isStrike(currentBowl)) setRemainingPins(10)
       if (bowlNumber === 1) setBowlNumber((bowlNumber + 1) as BowlNumber)
-      if (bowlNumber === 2) setBowlNumber((bowlNumber + 1) as BowlNumber)
+      if (bowlNumber === 2) {
+        if (typeof tenthFrameFirstBowl === 'string') return
+        if (typeof currentBowl === 'string') return
+        if (tenthFrameFirstBowl + currentBowl === 10) {
+          setBowlNumber((bowlNumber + 1) as BowlNumber)
+          setRemainingPins(10)
+          return
+        }
+        setCurrentPlayer(nextPlayer)
+        setBowlNumber(1)
+      }
       if (bowlNumber === 3) {
         setCurrentPlayer(nextPlayer)
         setBowlNumber(1)
