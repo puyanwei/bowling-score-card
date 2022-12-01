@@ -355,7 +355,7 @@ describe('Multiple player tests', () => {
 
       cy.getById('game-over').should('have.text', `Game over - it's a tie!`)
     })
-    it.only('all 3 players have a perfect game, and announces all players as being tied', () => {
+    it('all 3 players have a perfect game, and announces all players as being tied', () => {
       cy.getById('input-player-name').type('Chun Li')
       cy.getById('update-player-btn').click()
       cy.getById('add-player-btn').click()
@@ -374,7 +374,7 @@ describe('Multiple player tests', () => {
       cy.getById('player-3-name').contains('Ken')
       cy.getById('player-4-name').contains('Guile')
 
-      for (let index = 0; index < 12 * 4; index++) {
+      for (let index = 0; index < 48; index++) {
         cy.getById('button-10').click()
       }
 
@@ -382,27 +382,21 @@ describe('Multiple player tests', () => {
       cy.getById('player-1-frame-10-first-bowl').should('have.text', 'X')
       cy.getById('player-1-frame-10-second-bowl').should('have.text', 'X')
       cy.getById('player-1-frame-10-third-bowl').should('have.text', 'X')
+
       cy.getById('player-2-frame-10-total-score').should('have.text', '300')
       cy.getById('player-2-frame-10-first-bowl').should('have.text', 'X')
       cy.getById('player-2-frame-10-second-bowl').should('have.text', 'X')
       cy.getById('player-2-frame-10-third-bowl').should('have.text', 'X')
+
       cy.getById('player-3-frame-10-total-score').should('have.text', '300')
       cy.getById('player-3-frame-10-first-bowl').should('have.text', 'X')
       cy.getById('player-3-frame-10-second-bowl').should('have.text', 'X')
       cy.getById('player-3-frame-10-third-bowl').should('have.text', 'X')
+
       cy.getById('player-4-frame-10-total-score').should('have.text', '300')
-      cy.getById('<player-4></player-4>-frame-10-first-bowl').should(
-        'have.text',
-        'X'
-      )
-      cy.getById('<player-4></player-4>-frame-10-second-bowl').should(
-        'have.text',
-        'X'
-      )
-      cy.getById('<player-4></player-4>-frame-10-third-bowl').should(
-        'have.text',
-        'X'
-      )
+      cy.getById('player-4-frame-10-first-bowl').should('have.text', 'X')
+      cy.getById('player-4-frame-10-second-bowl').should('have.text', 'X')
+      cy.getById('player-4-frame-10-third-bowl').should('have.text', 'X')
 
       cy.getById('game-over').should('have.text', `Game over - it's a tie!`)
     })

@@ -1,11 +1,11 @@
-import { CurrentPlayerNumber, ScoreCard } from '@/constants/types'
+import { PlayerNumber, ScoreCard } from '@/constants/types'
 import { ReactNode } from 'react'
 import { Frame } from './Frame'
 
 interface PlayerProps {
   scoreCard: ScoreCard
   isCurrentPlayer: boolean
-  index: CurrentPlayerNumber
+  index: PlayerNumber
 }
 
 export function Player({

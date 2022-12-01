@@ -7,7 +7,7 @@ import {
 import { Player } from '../Player'
 import {
   BowlNumber,
-  CurrentPlayerNumber,
+  PlayerNumber,
   Frame,
   FrameNumber,
   Points,
@@ -24,7 +24,7 @@ export function BowlingPage() {
   const [scoreCard, setScoreCard] = useState<ScoreCard[]>(initialScoreCard)
   const [bowlNumber, setBowlNumber] = useState<BowlNumber>(1)
   const [frameNumber, setFrameNumber] = useState<FrameNumber>(1)
-  const [currentPlayer, setCurrentPlayer] = useState<CurrentPlayerNumber>(1)
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerNumber>(1)
   const [remainingPins, setRemainingPins] = useState<number>(10)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
   const [hasGameStarted, setGameStarted] = useState<boolean>(false)
@@ -68,30 +68,9 @@ export function BowlingPage() {
   function updateBoardPosition(currentBowl: Points): void {
     const isLastPlayer = currentPlayer === scoreCard.length
     const isTenthFrame = frameNumber === 10
-    const tenthFrameFirstBowl = scoreCard[currentPlayer - 1].frames[9].first
-    const nextPlayer = ((currentPlayer % totalPlayers) +
-      1) as CurrentPlayerNumber
+    const nextPlayer = ((currentPlayer % totalPlayers) + 1) as PlayerNumber
 
-    if (isTenthFrame) {
-      if (bowlNumber === 1 && isStrike(currentBowl)) setRemainingPins(10)
-      if (bowlNumber === 1) setBowlNumber((bowlNumber + 1) as BowlNumber)
-      if (bowlNumber === 2) {
-        if (typeof tenthFrameFirstBowl === 'string') return
-        if (typeof currentBowl === 'string') return
-        if (tenthFrameFirstBowl + currentBowl === 10) {
-          setBowlNumber((bowlNumber + 1) as BowlNumber)
-          setRemainingPins(10)
-          return
-        }
-        setCurrentPlayer(nextPlayer)
-        setBowlNumber(1)
-      }
-      if (bowlNumber === 3) {
-        setCurrentPlayer(nextPlayer)
-        setBowlNumber(1)
-      }
-      return
-    }
+    if (isTenthFrame) return resolveTenthFrame(currentBowl, nextPlayer)
 
     if (isStrike(currentBowl)) {
       setRemainingPins(10)
@@ -106,6 +85,58 @@ export function BowlingPage() {
     if (bowlNumber === 2) setCurrentPlayer(nextPlayer)
     if (!isTenthFrame && !isStrike(currentBowl))
       setBowlNumber(bowlNumber === 1 ? 2 : 1)
+    return
+  }
+
+  function resolveTenthFrame(currentBowl: Points, nextPlayer: PlayerNumber) {
+    console.log({ scoreCard })
+    console.log({ bowlNumber })
+    console.log({ frameNumber })
+    console.log({ currentBowl })
+    const tenthFrameFirstBowl =
+      scoreCard[currentPlayer - 1].frames[9].first === ''
+        ? 0
+        : scoreCard[currentPlayer - 1].frames[9].first
+    if (typeof tenthFrameFirstBowl === 'string') return
+    if (typeof currentBowl === 'string') return
+
+    const isSpare = tenthFrameFirstBowl + currentBowl === 10
+    if (bowlNumber === 1 && isStrike(currentBowl)) {
+      setRemainingPins(10)
+      setBowlNumber(2)
+      console.log('108 :>> ', 108)
+      return
+    }
+    if (bowlNumber === 1) {
+      setBowlNumber(2)
+      console.log('113 :>> ', 113)
+      return
+    }
+    if (bowlNumber === 2 && isStrike(currentBowl)) {
+      setRemainingPins(10)
+      setBowlNumber(3)
+      console.log('119 :>> ', 119)
+      return
+    }
+    if (bowlNumber === 2 && isSpare) {
+      setRemainingPins(10)
+      setBowlNumber(3)
+      console.log('125 :>> ', 125)
+      return
+    }
+    if (bowlNumber === 2 && tenthFrameFirstBowl === 10) {
+      setBowlNumber(3)
+      console.log('129 :>> ', 129)
+      return
+    }
+    if (bowlNumber === 3) {
+      setRemainingPins(10)
+      setCurrentPlayer(nextPlayer)
+      setBowlNumber(1)
+      console.log('132 :>> ', 132)
+      return
+    }
+    console.log('end!!')
     return
   }
 
@@ -269,7 +300,7 @@ export function BowlingPage() {
               scoreCard={player}
               isCurrentPlayer={currentPlayer === index + 1}
               key={index}
-              index={index as CurrentPlayerNumber}
+              index={index as PlayerNumber}
             />
           ))}
         </div>
