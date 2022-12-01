@@ -100,7 +100,10 @@ export function BowlingPage() {
     const isStrike = currentBowl === 10
 
     if (bowlNumber === 1 && isStrike) setBowlNumber(2)
-    if (bowlNumber === 1 && !isStrike) setBowlNumber(2)
+    if (bowlNumber === 1 && !isStrike) {
+      setBowlNumber(2)
+      return setRemainingPins(10 - currentBowl)
+    }
 
     if (bowlNumber === 2 && isStrike) {
       setBowlNumber(3)
