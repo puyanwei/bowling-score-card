@@ -125,6 +125,7 @@ export function BowlingPage() {
       return
     }
     if (bowlNumber === 2 && tenthFrameFirstBowl === 10) {
+      setRemainingPins(10 - currentBowl)
       setBowlNumber(3)
       console.log('129 :>> ', 129)
       return

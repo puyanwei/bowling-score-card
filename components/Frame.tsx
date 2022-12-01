@@ -11,6 +11,7 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
   if (!frame) throw new Error('Scorecard data not found')
 
   const { totalScore, first, second, third } = { ...frame }
+
   function resolveSecondBowl(first: Points, second: Points): string {
     const isTenthFrameDoubleStrike =
       frame.frameNumber === 10 && first === 10 && second === 10
@@ -27,9 +28,23 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
       ? '/'
       : `${second}`
   }
+
+  function resolveThirdBowl(
+    first: Points,
+    second: Points,
+    third: Points | undefined
+  ) {
+    if (typeof second === 'string') return ''
+    if (typeof third === 'string') return ''
+    if (typeof third === 'undefined') return ''
+    if (first === 10 && second + third === 10) return '/'
+    return (!!third && third === 10 ? 'X' : third) || ''
+  }
+
   const borderEndsX = isTenthFrame
     ? 'border-r-[1px] border-l-[1px]'
     : 'border-l-[1px]'
+
   const bowlStyle = `w-8 h-8 border-r-[1px] border-b-[1px] border-black text-center`
 
   return (
@@ -46,7 +61,7 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
         </Bowl>
         {isTenthFrame && (
           <Bowl testId={`${testId}-third-bowl`} className={bowlStyle}>
-            {(!!third && third === 10 ? 'X' : third) || ''}
+            {resolveThirdBowl(first, second, third)}
           </Bowl>
         )}
       </div>
