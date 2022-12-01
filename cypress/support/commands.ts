@@ -1,3 +1,4 @@
+//@ts-nocheck
 /// <reference types="cypress" />
 
 // Not sure how to solve this typescript error on the value parameter
