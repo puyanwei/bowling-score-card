@@ -6,12 +6,7 @@ export default function Document() {
       <Head>
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='true'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400&display=swap'
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap'
           rel='stylesheet'
         />
       </Head>
