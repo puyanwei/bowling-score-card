@@ -11,8 +11,7 @@ export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
 
     if (isTiedTopScores(finalScores)) return `Game over - it's a tie!`
     const topScore = Math.max(...finalScores)
-    const winningPlayerIndex = finalScores.reverse().indexOf(topScore)
-    // Why is this mapping reversed?
+    const winningPlayerIndex = finalScores.indexOf(topScore)
     const winner = scoreCard[winningPlayerIndex].name
     const winningStatement = `Game over - the winner is ${winner}`
     return winningStatement
@@ -21,9 +20,9 @@ export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
   function isTiedTopScores(array: number[]): boolean {
     const hasDuplicates = new Set(array).size !== array.length
     const highestNumberElement = Math.max(...array)
-    const sortedArray = array.sort((a, b) => b - a)
-    const lastElementOfArray = sortedArray[sortedArray.length - 1]
-    const secondToLastElementOfArray = sortedArray[sortedArray.length - 1]
+    const ascendingArray = array.sort((a, b) => a - b)
+    const lastElementOfArray = ascendingArray[ascendingArray.length - 1]
+    const secondToLastElementOfArray = ascendingArray[ascendingArray.length - 1]
 
     if (!hasDuplicates) return false
     if (
@@ -38,7 +37,7 @@ export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
 
   return (
     <div className='text-center'>
-      <div className='my-4 text-5xl' data-testid='game-over'>
+      <div className='my-4 text-3xl' data-testid='game-over'>
         <h2>{winningText}</h2>
       </div>
       <button

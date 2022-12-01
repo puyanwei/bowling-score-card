@@ -1,8 +1,8 @@
-import { useState, MouseEvent, Dispatch, SetStateAction, useRef } from 'react'
+import { useState, MouseEvent } from 'react'
 import {
   frameNumbers,
+  initialFrames,
   initialScoreCard,
-  labels,
 } from '@/constants/initialScoreCard'
 import { Player } from '../Player'
 import {
@@ -44,6 +44,7 @@ export function BowlingPage() {
       if (index !== currentPlayer - 1) return player
       return { ...player, frames }
     })
+
     setScoreCard([...updatedScoreCard])
     updateBoardPosition(currentBowl)
     if (isTheGameOver(frames, frameNumber)) setIsGameOver(true)
@@ -135,6 +136,7 @@ export function BowlingPage() {
         second,
         didPrevFrameStrike
       )
+
       const totalScore: number = updateTotalScores({
         frames: scoreCard[currentPlayer - 1].frames,
         bowlNumber,
@@ -218,11 +220,11 @@ export function BowlingPage() {
   }
 
   function addPlayer() {
-    const updatedScoreCard = [
-      ...scoreCard,
-      { ...scoreCard[totalPlayers - 1], name: `Player ${totalPlayers + 1}` },
-    ]
-    const newScoreCard = [...updatedScoreCard]
+    const newPlayer: ScoreCard = {
+      name: `Player ${totalPlayers + 1}`,
+      frames: structuredClone(initialFrames),
+    }
+    const newScoreCard: ScoreCard[] = [...scoreCard, newPlayer]
     setScoreCard(newScoreCard)
     return
   }
@@ -233,7 +235,7 @@ export function BowlingPage() {
 
   return (
     <div data-testid='bowling-page border-2'>
-      <h1 className='mt-4 text-center text-7xl'>Bowling Scorecard</h1>
+      <h1 className='my-4 text-center text-7xl'>Bowling Scorecard</h1>
       {!hasGameStarted && (
         <PlayerForm
           updatePlayerName={updatePlayerName}
@@ -242,7 +244,7 @@ export function BowlingPage() {
           totalPlayers={totalPlayers}
         />
       )}
-      <div className='p-2 m-2 border-2 rounded-md'>
+      <div className='p-2 mx-2 my-4 border-2 rounded-md'>
         {hasGameStarted && !isGameOver && (
           <PointsButtons
             className='grid grid-cols-11'

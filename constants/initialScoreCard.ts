@@ -1,4 +1,4 @@
-import { ButtonLabels, FrameNumber, ScoreCard } from './types'
+import { ButtonLabels, Frame, FrameNumber, ScoreCard } from './types'
 
 export const initialScoreCard: ScoreCard[] = [
   {
@@ -96,6 +96,100 @@ export const initialScoreCard: ScoreCard[] = [
         nextTwoBowls: ['', ''],
       },
     ],
+  },
+]
+
+export const initialFrames: Frame[] = [
+  {
+    frameNumber: 1,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 2,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 3,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 4,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 5,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 6,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 7,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 8,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 9,
+    first: '',
+    second: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
+  },
+  {
+    frameNumber: 10,
+    first: '',
+    second: '',
+    third: '',
+    didPrevFrameStrike: false,
+    didPrevFrameSpare: false,
+    totalScore: 0,
+    nextTwoBowls: ['', ''],
   },
 ]
 

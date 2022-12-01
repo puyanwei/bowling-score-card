@@ -81,8 +81,8 @@ describe('Multiple player tests', () => {
       cy.getById('player-2-frame-10-total-score').should('have.text', '0')
     })
   })
-  context('Bowl box score interactions only', () => {
-    it.only('pressing non spare or strike buttons renders the chosen numbers in the scorecard, and should announce player 2 as the winner', () => {
+  context('Bowl box score interactions', () => {
+    it('pressing non spare or strike buttons renders the correct bowls and totals, and announces player 2 as the winner', () => {
       cy.getById('input-player-name').type('Peter')
       cy.getById('update-player-btn').click()
       cy.getById('add-player-btn').click()
@@ -213,7 +213,147 @@ describe('Multiple player tests', () => {
       cy.getById('player-2-frame-10-second-bowl').should('have.text', '1')
       cy.getById('player-2-frame-10-total-score').should('have.text', '73')
 
-      cy.getById('game-over').should('have.text', 'Game over - the winner is Joanna')
+      cy.getById('game-over').should(
+        'have.text',
+        'Game over - the winner is Joanna'
+      )
+    })
+    it('announces a tie if there is at least two players with the same score that is the highest', () => {
+      cy.getById('input-player-name').type('John')
+      cy.getById('update-player-btn').click()
+      cy.getById('add-player-btn').click()
+      cy.getById('input-player-name').type('Mike')
+      cy.getById('update-player-btn').click()
+      cy.getById('add-player-btn').click()
+      cy.getById('input-player-name').type('Susan')
+      cy.getById('update-player-btn').click()
+      cy.getById('start-game-btn').click()
+
+      cy.getById('player-1-name').contains('John')
+      cy.getById('player-2-name').contains('Mike')
+      cy.getById('player-3-name').contains('Susan')
+
+      cy.getById('button-0').click()
+      cy.getById('button-1').click()
+      cy.getById('player-1-frame-1-total-score').should('have.text', '1')
+
+      cy.getById('button-2').click()
+      cy.getById('button-4').click()
+      cy.getById('player-2-frame-1-total-score').should('have.text', '6')
+
+      cy.getById('button-2').click()
+      cy.getById('button-4').click()
+      cy.getById('player-3-frame-1-total-score').should('have.text', '6')
+
+      cy.getById('button-5').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-2-total-score').should('have.text', '8')
+
+      cy.getById('button-2').click()
+      cy.getById('button-4').click()
+      cy.getById('player-2-frame-2-total-score').should('have.text', '12')
+
+      cy.getById('button-2').click()
+      cy.getById('button-4').click()
+      cy.getById('player-3-frame-2-total-score').should('have.text', '12')
+
+      cy.getById('button-2').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-3-total-score').should('have.text', '12')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-2-frame-3-total-score').should('have.text', '21')
+
+      cy.getById('button-8').click()
+      cy.getById('button-1').click()
+      cy.getById('player-3-frame-3-total-score').should('have.text', '21')
+
+      cy.getById('button-2').click()
+      cy.getById('button-5').click()
+      cy.getById('player-1-frame-4-total-score').should('have.text', '19')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-2-frame-4-total-score').should('have.text', '30')
+
+      cy.getById('button-8').click()
+      cy.getById('button-1').click()
+      cy.getById('player-3-frame-4-total-score').should('have.text', '30')
+
+      cy.getById('button-2').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-5-total-score').should('have.text', '23')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-2-frame-5-total-score').should('have.text', '39')
+
+      cy.getById('button-8').click()
+      cy.getById('button-1').click()
+      cy.getById('player-3-frame-5-total-score').should('have.text', '39')
+
+      cy.getById('button-0').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-6-total-score').should('have.text', '25')
+
+      cy.getById('button-7').click()
+      cy.getById('button-1').click()
+      cy.getById('player-2-frame-6-total-score').should('have.text', '47')
+
+      cy.getById('button-2').click()
+      cy.getById('button-2').click()
+      cy.getById('player-3-frame-6-total-score').should('have.text', '43')
+
+      cy.getById('button-0').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-7-total-score').should('have.text', '27')
+
+      cy.getById('button-7').click()
+      cy.getById('button-1').click()
+      cy.getById('player-2-frame-7-total-score').should('have.text', '55')
+
+      cy.getById('button-2').click()
+      cy.getById('button-2').click()
+      cy.getById('player-3-frame-7-total-score').should('have.text', '47')
+
+      cy.getById('button-0').click()
+      cy.getById('button-2').click()
+      cy.getById('player-1-frame-8-total-score').should('have.text', '29')
+
+      cy.getById('button-7').click()
+      cy.getById('button-1').click()
+      cy.getById('player-2-frame-8-total-score').should('have.text', '63')
+
+      cy.getById('button-2').click()
+      cy.getById('button-2').click()
+      cy.getById('player-3-frame-8-total-score').should('have.text', '51')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-1-frame-9-total-score').should('have.text', '38')
+
+      cy.getById('button-0').click()
+      cy.getById('button-1').click()
+      cy.getById('player-2-frame-9-total-score').should('have.text', '64')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-3-frame-9-total-score').should('have.text', '60')
+
+      cy.getById('button-5').click()
+      cy.getById('button-4').click()
+      cy.getById('player-1-frame-10-total-score').should('have.text', '47')
+
+      cy.getById('button-2').click()
+      cy.getById('button-3').click()
+      cy.getById('player-2-frame-10-total-score').should('have.text', '69')
+
+      cy.getById('button-9').click()
+      cy.getById('button-0').click()
+      cy.getById('player-3-frame-10-total-score').should('have.text', '69')
+
+      cy.getById('game-over').should('have.text', `Game over - it's a tie!`)
     })
     //   it('a forward slash should show in the UI to represent a spare', () => {
     //     cy.get('@button6').click().get('@frame1bowl1').should('have.text', '6')
