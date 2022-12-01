@@ -355,17 +355,58 @@ describe('Multiple player tests', () => {
 
       cy.getById('game-over').should('have.text', `Game over - it's a tie!`)
     })
-    //   it('a forward slash should show in the UI to represent a spare', () => {
-    //     cy.get('@button6').click().get('@frame1bowl1').should('have.text', '6')
-    //     cy.get('@button4').click().get('@frame1bowl2').should('have.text', '/')
-    //     cy.get('@button0').click().get('@frame2bowl1').should('have.text', '0')
-    //     cy.get('@button10').click().get('@frame2bowl2').should('have.text', '/')
-    //   })
-    //   it('a X should show in the UI to represent a strike', () => {
-    //     cy.get('@button10').click().get('@frame1bowl1').should('have.text', 'X')
-    //     cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
-    //     cy.get('@button10').click().get('@frame2bowl1').should('have.text', 'X')
-    //   })
+    it.only('all 3 players have a perfect game, and announces all players as being tied', () => {
+      cy.getById('input-player-name').type('Chun Li')
+      cy.getById('update-player-btn').click()
+      cy.getById('add-player-btn').click()
+      cy.getById('input-player-name').type('Ryu')
+      cy.getById('update-player-btn').click()
+      cy.getById('add-player-btn').click()
+      cy.getById('input-player-name').type('Ken')
+      cy.getById('update-player-btn').click()
+      cy.getById('add-player-btn').click()
+      cy.getById('input-player-name').type('Guile')
+      cy.getById('update-player-btn').click()
+      cy.getById('start-game-btn').click()
+
+      cy.getById('player-1-name').contains('Chun Li')
+      cy.getById('player-2-name').contains('Ryu')
+      cy.getById('player-3-name').contains('Ken')
+      cy.getById('player-4-name').contains('Guile')
+
+      for (let index = 0; index < 12 * 4; index++) {
+        cy.getById('button-10').click()
+      }
+
+      cy.getById('player-1-frame-10-total-score').should('have.text', '300')
+      cy.getById('player-1-frame-10-first-bowl').should('have.text', 'X')
+      cy.getById('player-1-frame-10-second-bowl').should('have.text', 'X')
+      cy.getById('player-1-frame-10-third-bowl').should('have.text', 'X')
+      cy.getById('player-2-frame-10-total-score').should('have.text', '300')
+      cy.getById('player-2-frame-10-first-bowl').should('have.text', 'X')
+      cy.getById('player-2-frame-10-second-bowl').should('have.text', 'X')
+      cy.getById('player-2-frame-10-third-bowl').should('have.text', 'X')
+      cy.getById('player-3-frame-10-total-score').should('have.text', '300')
+      cy.getById('player-3-frame-10-first-bowl').should('have.text', 'X')
+      cy.getById('player-3-frame-10-second-bowl').should('have.text', 'X')
+      cy.getById('player-3-frame-10-third-bowl').should('have.text', 'X')
+      cy.getById('player-4-frame-10-total-score').should('have.text', '300')
+      cy.getById('<player-4></player-4>-frame-10-first-bowl').should(
+        'have.text',
+        'X'
+      )
+      cy.getById('<player-4></player-4>-frame-10-second-bowl').should(
+        'have.text',
+        'X'
+      )
+      cy.getById('<player-4></player-4>-frame-10-third-bowl').should(
+        'have.text',
+        'X'
+      )
+
+      cy.getById('game-over').should('have.text', `Game over - it's a tie!`)
+    })
+
     //   it('pressing the reset button should reset the scores back to its initial state', () => {
     //     cy.get('@button0').click().get('@frame1bowl1').should('have.text', '0')
     //     cy.get('@button1').click().get('@frame1bowl2').should('have.text', '1')
