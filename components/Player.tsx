@@ -6,18 +6,20 @@ interface PlayerProps {
   scoreCard: ScoreCard
   isCurrentPlayer: boolean
   index: PlayerNumber
+  totalPlayers: PlayerNumber
 }
 
 export function Player({
-  scoreCard: { name, frames },
+  scoreCard,
   isCurrentPlayer,
   index,
+  totalPlayers,
 }: PlayerProps) {
+  const { name, frames } = scoreCard
   if (!name) throw new Error('Player name not found')
   if (!frames || !frames.length) throw new Error('Scorecard data not found')
 
   const currentPlayerStyle = isCurrentPlayer ? 'underline' : 'none'
-
   const playerNumberId = `player-${index + 1}`
   return (
     <>

@@ -29,7 +29,7 @@ export function BowlingPage() {
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
   const [hasGameStarted, setGameStarted] = useState<boolean>(false)
 
-  const totalPlayers = scoreCard.length
+  const totalPlayers = scoreCard.length as PlayerNumber
 
   function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const currentBowl = parseInt(e.currentTarget.innerText) as Points
@@ -291,6 +291,7 @@ export function BowlingPage() {
               isCurrentPlayer={currentPlayer === index + 1}
               key={index}
               index={index as PlayerNumber}
+              totalPlayers={totalPlayers}
             />
           ))}
         </div>

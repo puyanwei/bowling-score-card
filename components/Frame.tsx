@@ -40,14 +40,11 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
     if (first === 10 && second + third === 10) return '/'
     return (!!third && third === 10 ? 'X' : third) || ''
   }
-
   const borderEndsX = isTenthFrame ? 'border-r-2 border-l-2' : 'border-l-2'
-
   const bowlStyle = `w-8 h-8 border-r-2 border-b-2 border-white`
-
   return (
     <div
-      className={`flex flex-col border-white border-y-2 w-full h-24 ${borderEndsX}`}
+      className={`flex flex-col w-full h-24 border-b-2 ${borderEndsX}`}
       data-testid={testId}
     >
       <div className='flex'>
