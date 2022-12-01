@@ -89,55 +89,38 @@ export function BowlingPage() {
   }
 
   function resolveTenthFrame(currentBowl: Points, nextPlayer: PlayerNumber) {
-    console.log({ scoreCard })
-    console.log({ bowlNumber })
-    console.log({ frameNumber })
-    console.log({ currentBowl })
     const tenthFrameFirstBowl =
       scoreCard[currentPlayer - 1].frames[9].first === ''
         ? 0
         : scoreCard[currentPlayer - 1].frames[9].first
+
     if (typeof tenthFrameFirstBowl === 'string') return
     if (typeof currentBowl === 'string') return
-
     const isSpare = tenthFrameFirstBowl + currentBowl === 10
-    if (bowlNumber === 1 && isStrike(currentBowl)) {
-      setRemainingPins(10)
-      setBowlNumber(2)
-      console.log('108 :>> ', 108)
-      return
-    }
-    if (bowlNumber === 1) {
-      setBowlNumber(2)
-      console.log('113 :>> ', 113)
-      return
-    }
-    if (bowlNumber === 2 && isStrike(currentBowl)) {
-      setRemainingPins(10)
+    const isStrike = currentBowl === 10
+
+    if (bowlNumber === 1 && isStrike) setBowlNumber(2)
+    if (bowlNumber === 1 && !isStrike) setBowlNumber(2)
+
+    if (bowlNumber === 2 && isStrike) {
       setBowlNumber(3)
-      console.log('119 :>> ', 119)
-      return
+      return setRemainingPins(10)
     }
-    if (bowlNumber === 2 && isSpare) {
-      setRemainingPins(10)
-      setBowlNumber(3)
-      console.log('125 :>> ', 125)
-      return
-    }
+    if (bowlNumber === 2 && isSpare) setBowlNumber(3)
     if (bowlNumber === 2 && tenthFrameFirstBowl === 10) {
       setRemainingPins(10 - currentBowl)
-      setBowlNumber(3)
-      console.log('129 :>> ', 129)
-      return
+      return setBowlNumber(3)
     }
-    if (bowlNumber === 3) {
-      setRemainingPins(10)
+    if (bowlNumber === 2 && !isSpare && !isStrike) {
       setCurrentPlayer(nextPlayer)
       setBowlNumber(1)
-      console.log('132 :>> ', 132)
-      return
     }
-    console.log('end!!')
+
+    if (bowlNumber === 3) {
+      setCurrentPlayer(nextPlayer)
+      setBowlNumber(1)
+    }
+    setRemainingPins(10)
     return
   }
 
