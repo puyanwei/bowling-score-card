@@ -16,9 +16,7 @@ export function Player({
   if (!name) throw new Error('Player name not found')
   if (!frames || !frames.length) throw new Error('Scorecard data not found')
 
-  const currentPlayerStyle = isCurrentPlayer
-    ? 'border-[1px] border-slate-400 rounded p-2'
-    : 'none'
+  const currentPlayerStyle = isCurrentPlayer ? 'underline' : 'none'
 
   const playerNumberId = `player-${index + 1}`
   return (

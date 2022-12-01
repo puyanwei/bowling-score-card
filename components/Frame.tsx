@@ -41,15 +41,13 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
     return (!!third && third === 10 ? 'X' : third) || ''
   }
 
-  const borderEndsX = isTenthFrame
-    ? 'border-r-[1px] border-l-[1px]'
-    : 'border-l-[1px]'
+  const borderEndsX = isTenthFrame ? 'border-r-2 border-l-2' : 'border-l-2'
 
-  const bowlStyle = `w-8 h-8 border-r-[1px] border-b-[1px] border-black text-center`
+  const bowlStyle = `w-8 h-8 border-r-2 border-b-2 border-white`
 
   return (
     <div
-      className={`flex flex-col border-black border-b-[1px] w-full h-24 ${borderEndsX}`}
+      className={`flex flex-col border-white border-y-2 w-full h-24 ${borderEndsX}`}
       data-testid={testId}
     >
       <div className='flex'>
@@ -66,7 +64,10 @@ export function Frame({ frame, isTenthFrame, testId }: FrameProps) {
         )}
       </div>
       <div className='flex flex-grow' />
-      <div data-testid={`${testId}-total-score`} className='p-2 text-3xl'>
+      <div
+        data-testid={`${testId}-total-score`}
+        className='p-2 text-3xl text-left'
+      >
         {totalScore}
       </div>
     </div>

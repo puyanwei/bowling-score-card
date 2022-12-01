@@ -252,8 +252,11 @@ export function BowlingPage() {
   }
 
   return (
-    <div data-testid='bowling-page border-2'>
-      <h1 className='my-4 text-center text-7xl'>Bowling Scorecard</h1>
+    <div
+      className='mx-auto my-0 text-center max-w-7xl'
+      data-testid='bowling-page border'
+    >
+      <h1 className='my-4 text-7xl'>Bowling Scorecard</h1>
       {!hasGameStarted && (
         <PlayerForm
           updatePlayerName={updatePlayerName}
@@ -262,7 +265,7 @@ export function BowlingPage() {
           totalPlayers={totalPlayers}
         />
       )}
-      <div className='p-2 mx-2 my-4 border-2 rounded-md'>
+      <div className='p-2 mx-2 my-4 border rounded-md'>
         {hasGameStarted && !isGameOver && (
           <PointsButtons
             className='grid grid-cols-11'

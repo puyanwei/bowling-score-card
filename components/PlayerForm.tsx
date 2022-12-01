@@ -42,14 +42,15 @@ export function PlayerForm({
     setPlayerName('')
   }
 
-  const buttonStyle = `px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white text-sm`
+  const buttonStyle = `px-4 py-1 mx-2 rounded text-blue-500 bg-slate-200 hover:bg-slate-800 hover:text-white text-sm`
 
   return (
-    <div className='p-2 m-2 space-y-2 text-xl border-2 rounded-md'>
+    <div className='p-2 m-2 space-y-2 text-xl text-left border rounded-md w-fit'>
       <div>
+        <h2 className='mt-2 mb-4 text-2xl bold'>Game Setup</h2>
         <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[totalPlayers]}?`}</label>
         <input
-          className='border-[1px] border-slate-200 rounded-md ml-2 px-2 py-1 text-sm'
+          className='border-[1px] backdrop:rounded-md ml-2 px-2 py-1 text-sm'
           data-testid='input-player-name'
           id='name'
           name='name'

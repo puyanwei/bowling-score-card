@@ -6,7 +6,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  backgroundcolor: slategray;
+  background: cornflowerblue;
+  color: white;
 }
 
 a {
