@@ -3,7 +3,7 @@ import { labels } from '@/constants/initialScoreCard'
 import { Button } from './Button'
 
 interface PointsButtonProps {
-  onClick: () => void
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
   reset: () => void
   remainingPins: number
   className: string

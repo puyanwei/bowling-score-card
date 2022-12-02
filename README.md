@@ -46,7 +46,13 @@ Once this is achieved that player receives 10 points as well as the next two bow
 
 I added End to End testing using Cypress to help build out the app and get visibility of its features especially when refactoring.
 
+![image](https://user-images.githubusercontent.com/14803518/205377551-34379816-2021-4bf8-8e53-d39456fff522.png)
+
+![image](https://user-images.githubusercontent.com/14803518/205377665-171ac05a-fcef-401a-89aa-f6c7cedbc566.png)
+
 I used Jest to unit test at my discretion, mainly at a rather more complex function I was writing.
+
+![image](https://user-images.githubusercontent.com/14803518/205377843-27b11ed6-14f1-44a6-9956-39b113e2e3a8.png)
 
 To run these tests locally;
 
