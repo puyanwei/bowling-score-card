@@ -1,4 +1,5 @@
 import { ScoreCard } from '@/constants/types'
+import { Button } from './Button'
 
 interface GameOverBannerProps {
   reset: () => void
@@ -40,13 +41,9 @@ export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
       <div className='my-4 text-3xl' data-testid='game-over'>
         <h2>{winningText}</h2>
       </div>
-      <button
-        data-testid='button-reset-game-end'
-        className='px-4 py-1 mx-2 rounded bg-slate-200 hover:bg-slate-800 hover:text-white'
-        onClick={() => reset()}
-      >
+      <Button data-testid='button-reset-game-end' onClick={reset}>
         Reset
-      </button>
+      </Button>
     </div>
   )
 }

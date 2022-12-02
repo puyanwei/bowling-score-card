@@ -1,4 +1,5 @@
 import { FormEvent, KeyboardEvent, useState } from 'react'
+import { Button } from './Button'
 
 const numbersToWordedNumbers: Record<number, string> = {
   1: 'one',
@@ -42,8 +43,6 @@ export function PlayerForm({
     setPlayerName('')
   }
 
-  const buttonStyle = `px-4 py-1 mx-2 rounded text-blue-500 bg-slate-200 hover:bg-slate-800 hover:text-white text-sm`
-
   return (
     <div className='p-2 m-2 space-y-2 text-xl text-left border rounded-md w-fit'>
       <div>
@@ -62,35 +61,29 @@ export function PlayerForm({
           }
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyPress(e)}
         />
-        <button
-          className={buttonStyle}
+        <Button
           data-testid='update-player-btn'
           onClick={() => handleUpdateName()}
         >
           Update
-        </button>
+        </Button>
       </div>
       {totalPlayers < 8 && (
         <div>
           <label>Add another player</label>
-          <button
-            className={buttonStyle}
+          <Button
             onClick={() => handleAddPlayer()}
             data-testid='add-player-btn'
           >
             Add
-          </button>
+          </Button>
         </div>
       )}
       <div>
         <label>Start game</label>
-        <button
-          className={buttonStyle}
-          onClick={() => startGame()}
-          data-testid='start-game-btn'
-        >
+        <Button onClick={() => startGame()} data-testid='start-game-btn'>
           Start
-        </button>
+        </Button>
       </div>
     </div>
   )

@@ -269,7 +269,7 @@ export function BowlingPage() {
         {hasGameStarted && !isGameOver && (
           <PointsButtons
             className='grid grid-cols-11'
-            handleClick={handleClick}
+            onClick={handleClick}
             remainingPins={remainingPins}
             reset={reset}
           />
