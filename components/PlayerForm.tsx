@@ -50,7 +50,7 @@ export function PlayerForm({
         <h2 className='mt-2 mb-4 text-2xl font-bold'>Game Setup</h2>
         <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[totalPlayers]}?`}</label>
         <input
-          className='border-[1px] backdrop:rounded-md ml-2 px-2 py-1 text-sm rounded'
+          className='border-[1px] backdrop:rounded-md ml-2 px-2 py-1 text-sm rounded text-black'
           data-testid='input-player-name'
           id='name'
           name='name'
