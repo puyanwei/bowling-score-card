@@ -61,27 +61,21 @@ export function PlayerForm({
           }
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyPress(e)}
         />
-        <Button
-          data-testid='update-player-btn'
-          onClick={() => handleUpdateName()}
-        >
+        <Button testId='update-player-btn' onClick={handleUpdateName}>
           Update
         </Button>
       </div>
       {totalPlayers < 8 && (
         <div>
           <label>Add another player</label>
-          <Button
-            onClick={() => handleAddPlayer()}
-            data-testid='add-player-btn'
-          >
+          <Button onClick={handleAddPlayer} testId='add-player-btn'>
             Add
           </Button>
         </div>
       )}
       <div>
         <label>Start game</label>
-        <Button onClick={() => startGame()} data-testid='start-game-btn'>
+        <Button onClick={startGame} testId='start-game-btn'>
           Start
         </Button>
       </div>

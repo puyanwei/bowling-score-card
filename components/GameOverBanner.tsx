@@ -41,7 +41,7 @@ export function GameOverBanner({ reset, scoreCard }: GameOverBannerProps) {
       <div className='my-4 text-3xl' data-testid='game-over'>
         <h2>{winningText}</h2>
       </div>
-      <Button data-testid='button-reset-game-end' onClick={reset}>
+      <Button testId='button-reset-game-end' onClick={reset}>
         Reset
       </Button>
     </div>
