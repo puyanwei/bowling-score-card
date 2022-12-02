@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bowling Scorecard
 
-## Getting Started
+https://bowling-score-card.vercel.app/
 
-First, run the development server:
+![image](https://user-images.githubusercontent.com/14803518/205291630-ff0d8145-a093-450e-bcac-753fe755a5d4.png)
 
-```bash
-npm run dev
-# or
-yarn dev
+![image](https://user-images.githubusercontent.com/14803518/205291586-c9673b48-8a57-454b-9e5f-9875c44c0ced.png)
+
+A web app which allows a user to input in the scores of a bowling game.
+
+## Features
+
+- User can add in extra players or none (defaults to one player)
+- User can rename the current player before the game starts
+- Clicking start confirms players are ready to bowl!
+- Scores are input via buttons and correctly calculates the scores
+- Strikes and spares are estimated until its criteria are met (see below)
+- Frame 10 allows for an extra bowl if the 2nd bowl makes a spare or strike, or if the first bowl is a strike
+- At game over, it will announce the winner or tied winners
+
+### Spares
+
+A spare is where you knock down 10 pins with two bowls. This includes getting zero on the first bowl and knocking down 10 on the second.
+
+Once this is achieved that player receives 10 points as well as the points of the next bowl of the next frame.
+
+### Strikes
+
+A strike is where you knock down all 10 pins on a first bowl. That frame is over and there is no 2nd bowl.
+
+Once this is achieved that player receives 10 points as well as the next two bowls.
+
+# Tech Stack
+
+- React
+- Typescript
+- Next.js
+- Tailwind CSS
+- Jest
+- Cypress
+
+## Testing - Jest & Cypress
+
+I added End to End testing using Cypress to help build out the app and get visibility of its features especially when refactoring.
+
+I used Jest to unit test at my discretion, mainly at a rather more complex function I was writing.
+
+To run these tests locally;
+
+```
+git clone git@github.com:puyanwei/bowling-score-card.git
+cd bowling-score-card
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- to run jest tests type `yarn test`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- to run cypress tests type `yarn run cy`. This will open up Cypress in another app. Then choose 'End to End' option and then click the tests you want to run.
