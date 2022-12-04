@@ -2,9 +2,9 @@
 
 https://bowling-score-card.vercel.app/
 
-![image](https://user-images.githubusercontent.com/14803518/205291630-ff0d8145-a093-450e-bcac-753fe755a5d4.png)
+![image](https://user-images.githubusercontent.com/14803518/205494190-6440aed4-9da2-4bb2-8149-f1cf7cbca76e.png)
 
-![image](https://user-images.githubusercontent.com/14803518/205291586-c9673b48-8a57-454b-9e5f-9875c44c0ced.png)
+![image](https://user-images.githubusercontent.com/14803518/205494272-d3065c0d-76a2-483b-be47-36d725c08c1f.png)
 
 A web app which allows a user to input in the scores of a bowling game.
 
