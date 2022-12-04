@@ -1,6 +1,7 @@
 import { PlayerNumber, ScoreCard } from '@/constants/types'
 import { ReactNode } from 'react'
 import { Frame } from './Frame'
+import PlayerName from './PlayerName'
 
 interface PlayerProps {
   scoreCard: ScoreCard
@@ -23,28 +24,21 @@ export function Player({
   const playerNumberId = `player-${index + 1}`
   return (
     <>
-      <PlayerName>
-        <span className={`px-2 break-words self-center text-center col-span-1`}>
-          <p
-            data-testid={`${playerNumberId}-name`}
-            className={currentPlayerStyle}
-          >
-            {name}
-          </p>
-        </span>
-      </PlayerName>
+      <PlayerName
+        testId={`${playerNumberId}-name`}
+        name={name}
+        className={currentPlayerStyle}
+      />
       {frames.map((frame, index) => (
-        <Frame
-          testId={`${playerNumberId}-frame-${index + 1}`}
-          frame={frame}
-          isTenthFrame={frame.frameNumber === 10}
-          key={index}
-        />
+        <>
+          <Frame
+            testId={`${playerNumberId}-frame-${index + 1}`}
+            frame={frame}
+            isTenthFrame={frame.frameNumber === 10}
+            key={index}
+          />
+        </>
       ))}
     </>
   )
-}
-
-function PlayerName({ children }: { children: ReactNode }) {
-  return <>{children}</>
 }

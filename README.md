@@ -95,6 +95,6 @@ It's always hard to know where to start, that is backend (i.e the logic) or fron
 
 Glad I finally did it, it is a lot more complex on first appearance! The design can be improved of course, and other features like adding in keyboard inputs for the buttons would be nice. But I'm glad I can put this to rest, and its nice to see the progress I have made in comparison to the other attempts.
 
-Kingpin is an awesome movie!
+Kingpin is an awesome movie if you like comedy!
 
 ![Kingpin-Sequel](https://user-images.githubusercontent.com/14803518/205329589-231aeaeb-9d4a-45b8-b779-30fbd41d85ac.jpg)

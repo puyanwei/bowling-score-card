@@ -265,7 +265,7 @@ export function BowlingPage() {
           totalPlayers={totalPlayers}
         />
       )}
-      <div className='p-2 mx-2 my-4 border rounded-md'>
+      <div className='p-2 mx-2 my-4 rounded-md'>
         {hasGameStarted && !isGameOver && (
           <PointsButtons
             className='grid grid-cols-11'
@@ -275,7 +275,9 @@ export function BowlingPage() {
           />
         )}
         <div className='grid grid-cols-11'>
-          <span className='col-span-1' />
+          <div className='col-span-1 border-t-2 border-l-2 border-b-2 p-2'>
+            Name
+          </div>
           {frameNumbers.map((frameNumber, index) => (
             <FrameTitle
               frameNumber={frameNumber}

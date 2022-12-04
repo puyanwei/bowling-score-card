@@ -44,40 +44,52 @@ export function PlayerForm({
   }
 
   return (
-    <div className='p-2 m-2 space-y-2 text-xl text-left border rounded-md w-fit'>
-      <div>
-        <h2 className='mt-2 mb-4 text-2xl font-bold'>Game Setup</h2>
-        <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[totalPlayers]}?`}</label>
-        <input
-          className='border-[1px] backdrop:rounded-md ml-2 px-2 py-1 text-sm rounded text-black'
-          data-testid='input-player-name'
-          id='name'
-          name='name'
-          value={playerName}
-          minLength={1}
-          maxLength={20}
-          onInput={(e: FormEvent<HTMLInputElement>) =>
-            setPlayerName(e.currentTarget.value)
-          }
-          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => handleKeyPress(e)}
-        />
-        <Button testId='update-player-btn' onClick={handleUpdateName}>
-          Update
-        </Button>
-      </div>
-      {totalPlayers < 8 && (
+    <div className='p-6 pl-8 m-4 space-y-4 text-xl text-left border rounded-md w-fit'>
+      <h2 className=' mb-4 text-2xl font-bold'>Game Setup</h2>
+      <div className='flex gap-8'>
         <div>
-          <label>Add another player</label>
-          <Button onClick={handleAddPlayer} testId='add-player-btn'>
-            Add
-          </Button>
+          <label htmlFor='name'>{`Name of Player ${numbersToWordedNumbers[totalPlayers]}?`}</label>
+          <div className='space-y-4'>
+            <input
+              className='border-[1px] backdrop:rounded-md  px-2 py-1 text-sm rounded text-black mr-2'
+              data-testid='input-player-name'
+              id='name'
+              name='name'
+              value={playerName}
+              minLength={1}
+              maxLength={20}
+              onInput={(e: FormEvent<HTMLInputElement>) =>
+                setPlayerName(e.currentTarget.value)
+              }
+              onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                handleKeyPress(e)
+              }
+            />
+            <Button testId='update-player-btn' onClick={handleUpdateName}>
+              Update
+            </Button>
+          </div>
         </div>
-      )}
-      <div>
-        <label>Start game</label>
-        <Button onClick={startGame} testId='start-game-btn'>
-          Start
-        </Button>
+        <div className='flex-col flex gap-4'>
+          {totalPlayers < 8 && (
+            <div className='flex justify-between'>
+              <label>Add another player</label>
+              <Button
+                className='ml-4'
+                onClick={handleAddPlayer}
+                testId='add-player-btn'
+              >
+                Add
+              </Button>
+            </div>
+          )}
+          <div className='flex justify-between'>
+            <label>Start game</label>
+            <Button onClick={startGame} testId='start-game-btn'>
+              Start
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )
